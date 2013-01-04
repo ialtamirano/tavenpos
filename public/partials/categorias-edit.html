@@ -1,0 +1,37 @@
+
+
+<div class="row-fluid">
+    <form name="form" class="">
+    <div class="span9">
+    
+        <div ui-show="showHide">        
+            <div class="">
+                <input type="text" placeholder="Nombre de la categoria" class="input-block-level" ng-model="currentCategoria.CategoriaNombre" required>
+                <span class="help-inline"></span>
+            </div>
+        </div>
+                
+        <div ui-toggle="showHide">                                            
+            <div class="">
+                <textarea type="text" placeholder="Detalles de la categoria (opcional)" class="input-block-level" ng-model="currentcategoria.CategoriaDescripcion"></textarea>
+                <span class="help-inline"></span>
+            </div>
+        </div>
+        <div ui-hide="showHide"></div>            
+        
+    </div>
+  
+  <div class="span3"> 
+    <a ng-click="showHide=!showHide" class="btn btn-info">
+        <i class="icon-caret-down" ng-hide="showHide"></i>
+        <i class="icon-caret-up" ng-show="showHide"></i>
+        
+    </a>      
+    <button ng-click="addCategoria()"  ng-disabled="form.$invalid" class="btn btn-info"> + Agregar</button>     
+  </div>
+  
+  </form>  
+  
+    
+</div>
+

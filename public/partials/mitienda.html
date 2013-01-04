@@ -1,0 +1,120 @@
+
+  <div class="row-fluid" ng-controller="POSCtrl">
+    
+    
+    <div class="span6 well well-small">
+        <div class="control-group taven-list-bordered">                
+            <input type="text" style="height:16px" class="input-medium search-query" placeholder="buscar articulos..." x-webkit-speech="true" lang="es">                                   
+        </div>
+        <ul class="nav nav-pills">
+              <li ng-repeat="categoria in categorias">
+                    <a >{{ categoria.CategoriaNombre }}</a>
+              </li>
+         </ul>
+         <ul class="nav nav-pills">
+            <li >
+                <div class="taven-thumbnail">
+                        <h6>Thumbnail label</h6>
+                        
+                     <small class="text-info">Thumbnail caption...</small>
+                </div>
+            </li>
+            <li >
+                <div class="taven-thumbnail">
+                        <h6>Thumbnail label</h6>
+                        
+                     <small class="text-info">Thumbnail caption...</small>
+                </div>
+            </li>
+            <li >
+                <div class="taven-thumbnail">
+                        <h6>Thumbnail label</h6>
+                        
+                     <small class="text-info">Thumbnail caption...</small>
+                </div>
+            </li>
+            <li >
+                <div class="taven-thumbnail">
+                        <h6>Thumbnail label</h6>
+                        
+                     <small class="text-info">Thumbnail caption...</small>
+                </div>
+            </li>
+            <li >
+                <div class="taven-thumbnail">
+                        <h6>Thumbnail label</h6>
+                        
+                     <small class="text-info">Thumbnail caption...</small>
+                </div>
+            </li>
+         </ul>
+         
+    </div>
+    
+    <div class="span6 well well-small">
+        <form class="form-horizontal">
+
+           <div class="control-group ">
+                <div class="span2">
+                    <img src="http://placehold.it/48x48" alt="">
+                </div>
+                <div class="span6">{{ venta.currentArticulo.ArticuloDescripcion }}</div>
+                <div class="span2"><input type="number" min="0" max="99"  class="input-mini" ng-model="venta.currentArticulo.ArticuloCantidad"> </div>
+                <div class="span2" ><button class="btn btn-info" ng-click="agregaArticulo()"><i class="icon-plus icon-white"></i></button></div>
+                
+            </div>
+            
+            <div class="control-group taven-list-frame " style="overflow-y: scroll; height:300px">
+                   <table class="table">
+                    <thead>
+                        <tr>
+                          <th>Articulo</th>
+                          <th>Cant</th>
+                          <th><span class="pull-right">Precio</span></th>
+                          <th><span class="pull-right">Total</span></th>
+                          <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="articulo in venta.articulos">
+                          <td>{{articulo.ArticuloDescripcion}}</td>
+                          <td><input class="input-mini" type="number" ng-model="articulo.ArticuloCantidad"></td>
+                          <td><span class="pull-right">$ {{articulo.ArticuloPrecio}}</span></td>
+                          <td><span class="pull-right">$ {{articulo.ArticuloCantidad * articulo.ArticuloPrecio}}</span></td>
+                          <td><button class="btn btn-mini btn-danger" type="button" ng-click="removerArticulo($index)"><i class=" icon-trash icon-white"></i></button>
+                          </td>
+                        </tr>
+                        
+                        
+                    </tbody>
+                 </table>
+            </div>
+            <div class="control-group taven-list-bordered">
+                <div class="span6">
+                    <input class="input-medium "   type="text" style="height:14px;" placeholder="busca cliente..."><button class="btn btn-mini" type="button"><i class="icon-plus-sign"></i></button>                    
+                </div> 
+                <div class="span6">
+                    <div class="row">
+                        <div class="span4">Subtotal </div>
+                        <div class="span8"><span class=" pull-right">{{ subtotal() | currency }}</span></div>
+                    </div>    
+                    <div class="row">
+                        <div class="span6">IVA <input class="input-mini" type="number" min="0" max="16" ng-model="venta.iva"></div>
+                        <div class="span6"><span class=" pull-right"> {{ iva() | currency }}</span></div>
+                    </div>
+                    <div class="row">
+                        <div class="span4">Total</div>
+                        <div class="span8"><span class=" pull-right">{{ total() | currency}}</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group taven-align-center">
+                <input class="btn" type="button" value="Cancelar">
+                <input class="btn" type="button" value="Notas">
+                <input class="btn" type="button" value="Descuentos">
+                <input class="btn btn-success" type="button" value="Pagar">
+            </div>
+        </form>
+    </div>
+  </div>
+  

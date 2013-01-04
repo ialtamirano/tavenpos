@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <title>Taven POS - Clientes API Test</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" >
+
+
+    function nuevoCliente(){
+        
+        $.ajax({
+          type: "POST",
+          url: "http://tavenpos.pagodabox.com/api/articulos/new", 
+          data: JSON.stringify({ ArticuloCodigo: "Ivan", ArticuloNombre:"Articulo de prueba"}),
+          dataType: "json",
+          beforeSend: function(x) {
+            if (x && x.overrideMimeType) {
+              x.overrideMimeType("application/j-son;charset=UTF-8");
+            }
+          },
+        }).done(function( response ) {
+            
+          $(".container").html(response.toString());
+          
+        });
+    
+    }
+    
+     function actualizaCliente(){
+        
+        $.ajax({
+          type: "POST",
+          url: "http://tavenpos.pagodabox.com/api/articulos/"+$("#ArticuloId").attr('value'), 
+          data: JSON.stringify({ ArticuloCodigo: "Ivan", ArticuloNombre:"Articulo de prueba actualizado"}),
+          dataType: "json",
+          beforeSend: function(x) {
+            if (x && x.overrideMimeType) {
+              x.overrideMimeType("application/j-son;charset=UTF-8");
+            }
+          },
+        }).done(function( response ) {
+            
+          $(".container").html(response.toString());
+          
+        });
+    
+    }
+    
+    function eliminaCliente(){
+        
+        
+        
+        $.ajax({
+          type: "DELETE",
+          url: "http://tavenpos.pagodabox.com/api/articulos/" + $("#ArticuloId").attr('value'), 
+          data: JSON.stringify({ ArticuloCodigo: "Ivan", ArticuloNombre:"Articulo de prueba actualizado"}),
+          dataType: "json",
+          beforeSend: function(x) {
+            if (x && x.overrideMimeType) {
+              x.overrideMimeType("application/j-son;charset=UTF-8");
+            }
+          },
+        }).done(function( response ) {
+            
+          $(".container").html(response.toString());
+          
+        });
+    
+    }
+    
+
+
+</script>
+<body>
+<input type="text" id="ArticuloId">
+<input type="button" value="Nuevo" id="btn3"  onclick="nuevoCliente();"/>
+<input type="button" value="Actualizar" id="btn3"  onclick="actualizaCliente();"/>
+<input type="button" value="Eliminar" id="btn3"  onclick="eliminaCliente();"/>
+El Mensaje:
+<div class="container" >
+
+</div>
+</body>
+</html>

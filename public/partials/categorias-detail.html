@@ -1,0 +1,48 @@
+<form name="form" class="form-horizontal">
+<div>
+
+   
+   
+            
+                <button ng-click="saveCategoria()"  ng-disabled="form.$invalid" class="btn btn-primary">Guardar</button>
+     
+   
+  </div>
+<div class="row-fluid">
+    <div class="span3">
+        <div ng-include src=" 'partials/articulos/nav.html' "></div>
+    </div>
+    <div class="span6">
+
+            <fieldset>
+              
+            <div class="control-group">
+        
+                  <!-- Text input-->
+                  <label class="control-label"  >Nombre</label>
+                  <div class="controls">
+                    <input type="text" placeholder="Nombre de Categoria" class="" ng-model="categoria.CategoriaNombre" required>
+                    <span class="help-inline"></span>
+                  </div>
+            </div>
+        
+            <div class="control-group">
+        
+                <!-- Text input-->
+                <label class="control-label" >Descripcion</label>
+                <div class="controls">
+                    <input type="text" placeholder="" class="" ng-model="categoria.CategoriaDescripcion">
+                    <span class="help-inline"></span>
+                </div>
+            </div>
+        
+        
+            </fieldset>
+
+    </div>
+  
+    
+    
+</div>
+
+</form>

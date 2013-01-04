@@ -1,0 +1,54 @@
+
+<div class="row-fluid" ng-controller="CategoriasCtrl">
+
+
+    <div class="span12 taven-container">
+       <div ng-include src=" 'partials/articulos/header.html' "></div>
+       
+       <div class="well taven-blue">
+            <div ng-include src=" 'partials/categorias-edit.html' "></div>
+        </div>
+                     
+        <div>
+            <table class ="table taven-table">
+                <thead>
+                    <tr>                        
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="categoria in categorias | orderBy:'CategoriaNombre'">                      
+                        <td><h4><span class="taven-grid-attribute">{{categoria.CategoriaNombre}}</span></h4></td>
+                        <td><h5>{{categoria.CategoriaDescripcion}}</h5></td>
+                        <td>
+                            <a class="btn btn-small " ng-click="update(categoria)"><i class="icon-pencil"></i> Modificar</a>
+                            <a class="btn btn-small btn-danger" ng-click="removeCategoria(categoria)"><i class="icon-trash icon-white"></i> Eliminar</a>                    
+                        </td>
+                    </tr>
+                </tbody>
+            </table>        
+        </div>
+    </div>
+    
+    <div class="fade ng-valid modal hide ng-dirty" ui-modal="" ng-model="modalShown" style="display: none;">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="modalShown=false" aria-hidden="true">×</button>      
+            <h3>{{ categoria.CategoriaNombre }}</h3>
+        </div>
+    	<div class="modal-body">
+    	    <form name="form" class="">
+                <div class="">
+                    <input type="text" placeholder="Nombre de la categoria" class="input-block-level" ng-model="categoria.CategoriaNombre" required>
+                    <textarea type="text" placeholder="Detalles de la categoria (opcional)" class="input-block-level" ng-model="categoria.CategoriaDescripcion"></textarea>
+                </div>
+            </form>  
+        </div>
+    	<div class="modal-footer">
+            <a class="btn" ng-click="modalShown=false" href="">Cancelar</a>
+    		<a class="btn btn-info" ng-click="updateCategoria()" href="">Guardar</a>
+    	</div>
+    </div> 
+    
+ </div>

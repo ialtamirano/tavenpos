@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="venderapp">
+    <head>
+    <meta charset="utf-8">
+    <title>Taven POS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/app.css" rel="stylesheet" />
+    </head>
+    
+    <body >
+        <div id="mainnavbar" class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Taven POS</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              
+              
+              
+              
+              <li><a href="#/configuracion">Configuraci&oacute;n</a></li>
+
+            </ul>
+            <form class="navbar-search pull-left" action="">
+              
+                <input type="text" class="search-query " placeholder="Buscar" ng-model="query">
+              
+           
+          </form><-..z-<Z
+
+          <ul class="nav pull-right">
+            <li><a href="#">Link</a></li>
+            <li class="divider-vertical"></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    
+    <div class="container" >
+    
+         <div class="row">
+      
+                <ul  id="toolbar" class="nav nav-pills">
+                    <li >
+                        <a href="#/dashboard" class="toolbar-option" ><div class="toolbar-image"><img src="img/home.png" alt=""></div><div class="caption">Home</div></a> 
+                    </li>
+                    <li>
+                        <a href="#/inbox" class=" toolbar-option"><div class="toolbar-image"><img src="img/envelope.png" alt=""></div><div class="caption">Inbox</div></a> 
+                    </li>
+                    <li>
+                        <a href="#/mitienda" class=" toolbar-option"><div class="toolbar-image"><img src="img/cart.png" alt=""></div><div class="caption">Mi tienda</div></a> 
+                    </li>
+                    <li>
+                        <a href="#/mercancias" class=" toolbar-option"><div class="toolbar-image"><img src="img/list.png" alt=""></div><div class="caption">Mercancias</div></a> 
+                    </li>
+                    <li>
+                        <a href="#/clientes" class=" toolbar-option"><div class="toolbar-image"><img src="img/group.png" alt=""></div><div class="caption">Clientes</div></a> 
+                    </li>
+
+
+                    <li>
+                        <a href="#/compras" class=" toolbar-option"><div class="toolbar-image"><img src="img/shopping_bag.png" alt></div><div class="caption">Compras</div></a> 
+                    </li>
+                    <li>
+                        <a href="#/proveedores" class=" toolbar-option" ><div class="toolbar-image"><img src="img/adress_book.png" alt></div><div class="caption">Proveedores</div></a> 
+                    </li>
+                      <li>
+                        <a href="#/categorias" class=" toolbar-option" ><div class="toolbar-image"><img src="img/adress_book.png" alt></div><div class="caption">Categorias</div></a> 
+                    </li>
+                      
+                    <li>                    
+                        <a href="#/reportes" class=" toolbar-option"><div class="toolbar-image"><img src="img/charts.png" alt /></div><div class="caption">Reportes</div></a> 
+                    </li>
+                    <li>
+                        <a href="#/configuracion" class=" toolbar-option"><div class="toolbar-image"><img src="img/adjust.png" alt /></div><div class="caption">Ajustes</div></a> 
+                    </li>
+                           
+
+
+                </ul>
+             
+        </div>
+        <div  class="row well" ng-view>
+        
+        </div>
+                 
+    </div>
+    <script src="lib/angular/angular-1.0.1.js"></script>
+    <script src="lib/angular/angular-resource.js"></script>
+    <script src="lib/vender-app.js"></script>
+    <script src="lib/vender-controllers.js"></script>
+    <script src="lib/vender-directives.js"></script>
+    <script src="lib/vender-filters.js"></script>
+    <script src="lib/vender-services.js"></script>
+    <script src="js/jquery.min.js"></script>      
+    <script src="js/bootstrap.js"></script>
+   
+    <script src="js/scripts.js"></script>
+    </body>
+</html

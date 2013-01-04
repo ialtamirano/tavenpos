@@ -1,0 +1,26 @@
+<div class="row-fluid">
+    <form name="form" class="">
+    
+    <div class="span9">
+        <div ui-show="showHide">
+            <input type="text" placeholder="Cuando ?" class="span3" ng-model="nuevaVenta.VentaFecha" ui-date="{showOn: 'both', buttonText: 'Choose'}">
+            <input type="text" placeholder="Que se vendio?" class="span6" ng-model="nuevaVenta.VentaDescripcion">
+            <input type="text" placeholder="Cuanto?" class="span3" ng-model="nuevaVenta.VentaTotal">
+            <span class="help-inline"></span>
+        </div>
+        
+        <div ui-toggle="showHide">
+            <input type="text" placeholder="Referencia" class="span6" ng-model="nuevaVenta.VentaReferencia">   
+        </div>
+        <div ui-hide="showHide"></div>            
+        
+    </div>
+    <div class="span3"> 
+        <a ng-click="showHide=!showHide" class="btn btn-info">
+            <i class="icon-caret-down" ng-hide="showHide"></i>
+            <i class="icon-caret-up" ng-show="showHide"></i>    
+        </a>      
+        <button ng-click="addVenta()"  ng-disabled="form.$invalid" class="btn btn-info"> + Agregar</button>     
+    </div>
+  </form>
+</div>

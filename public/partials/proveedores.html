@@ -1,0 +1,61 @@
+<div>
+    <ul class="breadcrumb">
+        <li ng-class="getClass('/proveedores')"><a href="#">Proveedores</a> <span class="divider">/</span></li>        
+        <li >Mas</li>
+    </ul>
+
+</div>
+  
+    <div class="row-fluid" >
+       
+        <div class="span12 taven-container"  ng-init="currentPage = 0; pageSize = 10;">
+            <div class="alert alert-success" ng-show="errorMessage!=''" ng-hide="errorMessage==''">
+                <button type="button" class="close" ng-click="errorMessage=''">×</button>
+                <strong>Well done!</strong> {{ errorMessage }}
+            </div>
+            
+            <a href="#/proveedores/new" class="btn btn-info pull-right"><i class=" icon-plus icon-white"></i> Agregar</a>
+            
+            <div>
+                <table class ="table taven-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Proveedor</th>
+                            <th>Email</th>
+                            <th>Telefono</th>
+                            <th>Pagina web</th>
+                            <th>Ciudad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="proveedor in proveedores | filter:search | orderBy:'ProveedorNombre' | startFrom:currentPage*pageSize | limitTo:pageSize  ">                      
+                            <td>
+                                <a class="btn btn-small" href="#/proveedores/{{proveedor.ProveedorId}}"><i class="icon-pencil"></i> Modificar</a>
+                                <a class="btn btn-small btn-danger" ng-click="remove(proveedor)"><i class="icon-trash icon-white"></i> Eliminar</a>                    
+                            </td>
+                            <td><h4><span class="taven-grid-attribute">{{proveedor.ProveedorNombre}}</span></h4></td>
+                            <td><h5>{{proveedor.ProveedorEmail}}</h5></td>
+                            <td><h5>{{proveedor.ProveedorTelefono}}</h5></td>
+                            <td><h5>{{proveedor.ProveedorWebSite}}</h5></td>
+                            <td><h5>{{proveedor.ProveedorCiudad}}</h5></td>
+                            
+                        </tr>
+                        
+                        
+                    </tbody>
+                    
+                </table>
+                
+                <div class="btn-group">
+                    
+                        <button class="btn" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1;">Prev</button>
+                        <button class="btn" ng-repeat="page in pageList()"  ng-class="{ 'btn-info' : page == currentPage+1 }" ng-click="setPage(page)">{{page}}</button>
+                        <button class="btn" ng-disabled="currentPage+1 >= pageCount()" ng-click="currentPage=currentPage+1">Next</button>
+                   
+                </div>              
+            </div>
+         </div>
+        
+
+   </div>

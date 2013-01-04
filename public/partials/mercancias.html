@@ -1,0 +1,22 @@
+
+<div class="row-fluid">
+   
+    <div class="span12 taven-container">
+     <div ng-include src=" 'partials/articulos/header.html' "></div>
+       
+    {{ errorMessage }}
+        <ul class="taven-listing">
+            <li ng-repeat="articulo in articulos | orderBy:'ArticuloNombre' ">
+                <div class="span2">
+                    <a class="btn btn-small"><i class="icon-pencil"></i></a>
+                    <a class="btn btn-small btn-danger"><i class="icon-trash"></i></a>
+                        
+                    </div>
+                <div class="span2">{{ArticuloFoto}}</div>
+                <div class="span4"> {{articulo.ArticuloCodigo}} | {{articulo.ArticuloNombre}}</div>
+                <div class="span2"> {{articulo.ArticuloDescripcion}} </div>
+                <div class="span2"> {{articulo.ArticuloBarcode}} </div>                        
+            </li>
+        </ul>
+    </div>
+</div>

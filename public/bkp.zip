@@ -1,0 +1,24 @@
+<div class="row">
+        
+                  <ul  id="toolbar" class="nav nav-pills">
+  
+-                     <li>
+-                         <a href="#/compras" class=" toolbar-option"><div class="toolbar-image"><img src="img/shopping_bag.png" alt></div><div class="caption">Compras</div></a> 
+-                     </li>
+                      <li>
+                          <a href="#/proveedores" class=" toolbar-option" ><div class="toolbar-image"><img src="img/adress_book.png" alt></div><div class="caption">Proveedores</div></a> 
+                      </li>
+                      
+                      <li>
+                          <a href="#/categorias" class=" toolbar-option" ><div class="toolbar-image"><img src="img/adress_book.png" alt></div><div class="caption">Categorias</div></a> 
+                      </li>
+                      
+                      <li>                    
+                          <a href="#/reportes" class=" toolbar-option"><div class="toolbar-image"><img src="img/charts.png" alt /></div><div class="caption">Reportes</div></a> 
+                      </li>
+                      <li>
+                          <a href="#/configuracion" class=" toolbar-option"><div class="toolbar-image"><img src="img/adjust.png" alt /></div><div class="caption">Ajustes</div></a> 
+                      </li>
+                  </ul>
+               
+          </div>

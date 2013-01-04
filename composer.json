@@ -1,0 +1,19 @@
+{
+    "name": "slim/pagodabox-quickstart",
+    "description": "The official Slim Framework quickstart for Pagodabox",
+    "keywords": ["microframework","rest","router"],
+    "homepage": "http://github.com/codeguy/Slim-Pagodabox-Quickstart",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Josh Lockhart",
+            "email": "info@joshlockhart.com",
+            "homepage": "http://www.joshlockhart.com/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+        
+        
+    }
+}

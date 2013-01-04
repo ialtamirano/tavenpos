@@ -1,0 +1,131 @@
+<form name="form" class="">
+<div id="/ProveedoresDetail" class="">
+        <h3  class="taven-title">Proveedor: {{proveedor.ProveedorId}} , {{proveedor.ProveedorNombre}} {{mensaje}}<small></small>
+            <div class="pull-right">
+                <a ng-href="#/proveedores" class="btn">Cancelar</a>
+                <button ng-click="saveProveedor()"  ng-disabled="form.$invalid" class="btn btn-success">Guardar</button>    
+            </div>
+            
+        </h3>
+  </div>
+<div class="row-fluid">
+    
+    <div class="span6 taven-container taven-blue">
+
+            <fieldset>
+              
+            <div class="control-group">
+        
+                  <!-- Text input-->
+                  <label class="control-label" >Nombre</label>
+                  <div class="controls">
+                    <input type="text" placeholder="Nombre del proveedor" class="span8" ng-model="proveedor.ProveedorNombre" required>
+                    
+                  </div>
+            </div>
+        
+    
+            <div class="control-group">
+        
+                <!-- Text input-->
+                <label class="control-label">Contacto</label>
+                <div class="controls">
+                    <input type="text" placeholder="Teléfono o celular" class="span5" ng-model="proveedor.ProveedorTelefono">
+                    <input type="text" name="correo" placeholder="correo@ejemplo.com" class="span6" ng-model="proveedor.ProveedorEmail">
+                    <span class="help-inline">
+                         <div ng-show="form.correo.$dirty" class="taven-error">
+                            <span ng-show="form.correo.$error.email" >la direccion de correo electronica es invalida.</span>
+                        </div>
+                    </span>
+                </div>
+            </div>
+            <div class="control-group">
+        
+                  <!-- Text input-->
+                  <label class="control-label"></label>
+                  <div class="controls">
+                    <input type="text" placeholder="Sitio web" class="span11" ng-model="proveedor.ProveedorWebSite">
+                    
+                  </div>
+            </div>
+            
+        
+            
+    
+        
+            <div class="control-group">
+        
+                  <!-- Text input-->
+                  <label class="control-label">Direccion</label>
+                  <div class="controls">
+                    <input type="text" placeholder="Calle # , Colonia" class="span8" ng-model="proveedor.ProveedorDireccion">
+                    <input type="text" placeholder="CP" class="span3" ng-model="proveedor.ProveedorCP">
+                    <span class="help-inline"></span>
+                  </div>
+            </div>
+        
+            <div class="control-group">
+        
+                  <!-- Text input-->
+                  <label class="control-label"></label>
+                  <div class="controls">
+                    <input type="text" placeholder="Provincia, Estado" class="span6" ng-model="proveedor.ProveedorCiudad">
+                    <input type="text" placeholder="Pais" class="span5" ng-model="proveedor.ProveedorPais">
+                  </div>
+            </div>
+
+        
+
+        
+            <div class="control-group">
+        
+                  <!-- Textarea -->
+                  <label class="control-label">Notas</label>
+                  <div class="controls">
+                    <div class="textarea ">
+                          <textarea type="" class="span11" ng-model="proveedor.ProveedorNotas"> </textarea>
+                    </div>
+                  </div>
+            </div>
+        
+        
+
+            </fieldset>
+
+    </div>
+  
+    <div class="span6 taven-container">
+        <div class="">
+    		<h6>Haz clic sobre el mapa para agregar direcciones</h6>            
+           
+		
+           
+            
+            <!-- this is the confusing part. we have to point the map marker directive
+                    at an existing google.maps.Marker object, so it can hook up events -->
+            <div ng-repeat="marker in myMarkers" ui-map-marker="myMarkers[$index]"
+                ui-event="{'map-click': 'openMarkerInfo(marker)'}">
+            </div>
+            
+            <div ui-map-info-window="myInfoWindow">
+                <h1>Direccion</h1>
+                Lat: <input ng-model="currentMarkerLat">, Lng: <input ng-model="currentMarkerLng">
+                <a ng-click="setMarkerPosition(currentMarker, currentMarkerLat, currentMarkerLng)">Set Position</a>
+            </div>
+
+            <div ui-map="myMap" class="taven-map" ui-event="{'map-click': 'addMarker($event)', 'map-zoom_changed': 'setZoomMessage(myMap.getZoom())' }"
+                ui-options="mapOptions">
+            </div>
+            
+            <ul>
+                <li ng-repeat="marker in myMarkers">
+                    <a ng-click="myMap.panTo(marker.getPosition())">Posicionar en direccion {{$index}}</a>
+                </li>
+            </ul>
+            
+            
+             
+		</div>
+    </div>    
+</div>
+</form>
