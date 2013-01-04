@@ -1,2 +1,2 @@
-# TavenPOS is a Web Responsive Point Of Sale
+# TavenPOS is a Web Responsive Point Of Sale .
 
