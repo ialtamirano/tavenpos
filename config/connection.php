@@ -1,7 +1,7 @@
 <?php
 
 //Development
-/*
+
 function getConnection() {
     $dbhost="localhost";
     $dbuser="root";
@@ -15,12 +15,12 @@ function getConnection() {
 ORM::configure('mysql:host=localhost;dbname=tavenposdb');
 ORM::configure('username', 'root');
 ORM::configure('password', '');
-*/
+
 
 
 
 //Production
-
+/*
 function getConnection() {
     $dbhost="tunnel.pagodabox.com";
     $dbuser="analisa";
@@ -34,5 +34,5 @@ function getConnection() {
 ORM::configure('mysql:host=tunnel.pagodabox.com;dbname=tavenposdb');
 ORM::configure('username', 'analisa');
 ORM::configure('password', 'gPBehkCR');
-
+*/
 ?>
