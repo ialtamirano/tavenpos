@@ -2,6 +2,8 @@
 
 //development 
 require '../Slim/Slim.php';
+//require '../vendor/redbean/rb.php';
+require '../vendor/php-activerecord/activerecord.php';
 
 
 //production

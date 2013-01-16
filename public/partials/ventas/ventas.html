@@ -16,36 +16,43 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="venta in ventas | orderBy:'VentasFecha'">                      
+                    <tr ng-repeat="venta in ventas | orderBy:'venta.ventasfecha'">                      
                         
-                        <td><h5><span class="taven-grid-attribute">{{ venta.VentaFecha | date:'fullDate'  }}  </span></h5></td>
-                        <td><h5>{{venta.VentaDescripcion}}</h5></td>
-                        <td><h5>{{venta.VentaTotal | currency }}</h5></td>
+                        <td><h5><span class="taven-grid-attribute">{{ venta.ventafecha | date:'fullDate'  }}  </span></h5></td>
+                        <td><h5>{{venta.ventadescripcion}}</h5></td>
+                        <td><h5>{{venta.ventatotal | currency }}</h5></td>
                         <td>
                             <a class="btn btn-small " ng-click="update(venta)"><i class="icon-pencil"></i> Modificar</a>
                             <a class="btn btn-small btn-danger" ng-click="removeVenta(venta)"><i class="icon-trash icon-white"></i> Eliminar</a>                    
                         </td>
                     </tr>
+                    <tr>
+                        <td></td>
+                        <td >Total</td>
+                        <td ><h4>{{ totalize() | currency }}</h4></td>
+                        <td></td>
+                    </tr>
+
                 </tbody>
             </table>    
         </div>
         
-        <div class="pull-right">Total: {{ totalize() | currency }}</div>
+       
         
     </div>
     
     <div class="fade ng-valid modal hide ng-dirty" ui-modal="" ng-model="modalShown" style="display: none;">
         <div class="modal-header">
             <button type="button" class="close" ng-click="modalShown=false" aria-hidden="true">×</button>      
-            <h3>{{ venta.VentaDescripcion }} {{venta.VentaFecha}}</h3>
+            <h3>{{ venta.ventadescripcion }} {{venta.ventafecha}}</h3>
         </div>
         <div class="modal-body">
     	    <form name="form" class="">
                 <div class="">
-                    <input type="text" placeholder="Cuando?" class="span3" ng-model="venta.VentaFecha" >
-                    <input type="text" placeholder="Que se vendio?" class="span6" ng-model="venta.VentaDescripcion">
-                    <input type="text" placeholder="Cuanto?" class="span3" ng-model="venta.VentaTotal">
-                    <input type="text" placeholder="Referencia" class="span6" ng-model="venta.VentaReferencia"> 
+                    <input type="text" placeholder="Cuando?" class="span3" ng-model="venta.ventafecha" ui-date>
+                    <input type="text" placeholder="Que se vendio?" class="span6" ng-model="venta.ventadescripcion">
+                    <input type="text" placeholder="Cuanto?" class="span3" ng-model="venta.ventatotal">
+                    <input type="text" placeholder="Referencia" class="span6" ng-model="venta.ventareferencia"> 
                 </div>
             </form>  
         </div>

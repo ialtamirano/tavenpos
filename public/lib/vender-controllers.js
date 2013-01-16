@@ -97,9 +97,13 @@ function  POSCtrl($scope,Categoria)
 function VentasCtrl($scope,Venta)
 {
 
-     
-    $scope.ventas = Venta.query(function(){
-       
+    $scope.ventas = [];
+
+    Venta.query(function(response){
+      
+        $scope.ventas = response;
+        //$scope.total = $scope.totalize($scope.ventas);
+
     });
     
     
@@ -114,9 +118,10 @@ function VentasCtrl($scope,Venta)
     $scope.totalize = function() {
         var t = 0;
         if($scope.ventas.length > 0){
-        angular.forEach($scope.ventas, function(venta) {
-            t += venta.VentaTotal;
-        });
+
+            angular.forEach($scope.ventas, function(venta1) {
+                t += venta1.ventatotal;
+            });
         
         }
         
@@ -127,7 +132,7 @@ function VentasCtrl($scope,Venta)
     
     $scope.removeVenta = function (venta)
     {
-        Venta.remove(   {VentaId : venta.VentaId},
+        Venta.remove(   {VentaId : venta.ventaid},
                         function(data, status, headers, config) { 
                             //Handle Success here
                             var index = $scope.ventas.indexOf(venta,0); 
@@ -138,7 +143,7 @@ function VentasCtrl($scope,Venta)
                             }
                                 
                             $scope.errorMessage = "La venta se elimino correctamente.";
-                            $scope.total = $scope.totalize();
+                            
             
                         },
                         function(data, status, headers, config ){
@@ -153,17 +158,17 @@ function VentasCtrl($scope,Venta)
     
     $scope.updateVenta = function(){
         
-        $scope.venta.$save({VentaId:$scope.venta.VentaId } , 
+        $scope.venta.$save({VentaId:$scope.venta.ventaid } , 
         function(){
             
-            //Si el valor de categoria agregado trajo algun valor de regreso entonces nos regresamos, 
+            //Si el valor del resource agregado trajo algun valor de regreso entonces nos regresamos, 
             //al listado de Categorias        
-            if($scope.venta.VentaId > 0)
+            if($scope.venta.ventaid > 0)
             {
                $scope.modalShown = false;
             }
             
-            $scope.total = $scope.totalize();
+            
         });  
     };
     
@@ -175,11 +180,11 @@ function VentasCtrl($scope,Venta)
          $scope.nuevaVenta.$save({VentaId:"new"} , function() {
                 //Si el valor de categoria agregado trajo algun valor de regreso entonces nos regresamos
                 //al listado de Categorias
-                if($scope.nuevaVenta.VentaId > 0)
+                if($scope.nuevaVenta.ventaid > 0)
                 {
                   $scope.ventas.push($scope.nuevaVenta);
                   $scope.nuevaVenta = new Venta({VentaId:0});
-                  $scope.total = $scope.totalize();
+                  
                 }
             });
             
@@ -440,7 +445,8 @@ function CategoriasCtrl( $scope, Categoria){
                 $scope.categorias.push($scope.currentCategoria);
                 $scope.currentCategoria = new Categoria({CategoriaId:0});
             }
-        });    
+        }
+        );    
     };
     
     $scope.removeCategoria = function (categoria)
