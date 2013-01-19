@@ -16,9 +16,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="venta in ventas | orderBy:'venta.ventasfecha'">                      
+                    <tr ng-repeat="venta in ventas | orderBy:'ventasfecha'">                      
                         
-                        <td><h5><span class="taven-grid-attribute">{{ venta.ventafecha | date:'fullDate'  }}  </span></h5></td>
+                        <td><h5><span class="taven-grid-attribute">{{ venta.ventafecha | date:'mediumDate' }}  </span></h5></td>
                         <td><h5>{{venta.ventadescripcion}}</h5></td>
                         <td><h5>{{venta.ventatotal | currency }}</h5></td>
                         <td>
@@ -44,12 +44,12 @@
     <div class="fade ng-valid modal hide ng-dirty" ui-modal="" ng-model="modalShown" style="display: none;">
         <div class="modal-header">
             <button type="button" class="close" ng-click="modalShown=false" aria-hidden="true">×</button>      
-            <h3>{{ venta.ventadescripcion }} {{venta.ventafecha}}</h3>
+            <h3>{{ venta.ventadescripcion }} {{venta.ventafecha | date:'mediumDate'}}</h3>
         </div>
         <div class="modal-body">
     	    <form name="form" class="">
                 <div class="">
-                    <input type="text" placeholder="Cuando?" class="span3" ng-model="venta.ventafecha" ui-date>
+                    <input type="text" placeholder="Cuando?" class="span3" ng-model="venta.ventafecha" >
                     <input type="text" placeholder="Que se vendio?" class="span6" ng-model="venta.ventadescripcion">
                     <input type="text" placeholder="Cuanto?" class="span3" ng-model="venta.ventatotal">
                     <input type="text" placeholder="Referencia" class="span6" ng-model="venta.ventareferencia"> 

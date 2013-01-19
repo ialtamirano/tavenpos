@@ -7,15 +7,25 @@
     {{ errorMessage }}
         <ul class="taven-listing">
             <li ng-repeat="articulo in articulos | orderBy:'ArticuloNombre' ">
-                <div class="span2">
-                    <a class="btn btn-small"><i class="icon-pencil"></i></a>
-                    <a class="btn btn-small btn-danger"><i class="icon-trash"></i></a>
+                <div ng-show="isEditMode">
+                    <div class="span2">
+                        <a class="btn btn-small btn-info" ng-click="isEditMode=false">Save</a>    
+                    </div>
+                    
+                    <div class="span2"><input type="text" ng-model="articulo.ArticuloCodigo"> <input type="text" ng-model="articulo.ArticuloNombre"></div>
+                    <div class="span6"><input type="text" ng-model="articulo.ArticuloDescripcion"></div>
+                    <div class="span2"><input type="text" ng-model="articulo.ArticuloBarcode"> </div> 
+                </div>
+                <div ng-hide="isEditMode">
+                    <div class="span2">
+                        <a class="btn btn-small" ng-click="isEditMode=true"><i class="icon-pencil"></i></a>
+                        <a class="btn btn-small btn-danger"><i class="icon-trash"></i></a>
                         
                     </div>
-                <div class="span2">{{ArticuloFoto}}</div>
-                <div class="span4"> {{articulo.ArticuloCodigo}} | {{articulo.ArticuloNombre}}</div>
-                <div class="span2"> {{articulo.ArticuloDescripcion}} </div>
-                <div class="span2"> {{articulo.ArticuloBarcode}} </div>                        
+                    <div class="span2"> {{articulo.ArticuloCodigo}} | {{articulo.ArticuloNombre}}</div>
+                    <div class="span6"> {{articulo.ArticuloDescripcion}} </div>
+                    <div class="span2"> {{articulo.ArticuloBarcode}} </div> 
+                </div>
             </li>
         </ul>
     </div>

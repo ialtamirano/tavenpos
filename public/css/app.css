@@ -1,7 +1,7 @@
   body
   {
     /*background-image:  url("../img/whitey.png");*/
-    background-image:  url("http://subtlepatterns.com/patterns/45degreee_fabric.png");
+    /*background-image:  url("http://subtlepatterns.com/patterns/45degreee_fabric.png");*/
     background-repeat: repeat-x repeat-y;
   }
   
@@ -20,7 +20,7 @@
     -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
   }
-      
+
     .toolbar-option {
           width:80px;
           height:52px;
@@ -52,7 +52,7 @@
     
     .taven-table td {
         
-        color: #B5B1AE;
+        color: #777;
     }
     
     .taven-list-header {
@@ -191,7 +191,7 @@
         
         
         background-color: #f5f5f5;
-        border: 1px solid #d4d1d2;
+        border-bottom: 1px solid #d4d1d2;
         -webkit-border-radius: 3px;
         border-radius: 3px;
         
