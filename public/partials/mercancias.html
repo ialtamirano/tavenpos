@@ -5,28 +5,45 @@
      <div ng-include src=" 'partials/articulos/header.html' "></div>
        
     {{ errorMessage }}
+       
+     
+                
         <ul class="taven-listing">
-            <li ng-repeat="articulo in articulos | orderBy:'ArticuloNombre' ">
-                <div ng-show="isEditMode">
-                    <div class="span2">
-                        <a class="btn btn-small btn-info" ng-click="isEditMode=false">Save</a>    
-                    </div>
+            <li ng-repeat="articulo in articulos" ng-mouseover="over">
+                <div ng-show="inEditMode" class="well well-small taven-blue">
+                    <div class="">
+                        <span><input class="input-mini" type="text" ng-model="articulo.ArticuloCodigo" placeholder="Codigo"></span>
+                        <span><input type="text" ng-model="articulo.ArticuloNombre" placeholder="Nombre"></span>
+                        <span></span>
+                        <span></span>
                     
-                    <div class="span2"><input type="text" ng-model="articulo.ArticuloCodigo"> <input type="text" ng-model="articulo.ArticuloNombre"></div>
-                    <div class="span6"><input type="text" ng-model="articulo.ArticuloDescripcion"></div>
-                    <div class="span2"><input type="text" ng-model="articulo.ArticuloBarcode"> </div> 
-                </div>
-                <div ng-hide="isEditMode">
-                    <div class="span2">
-                        <a class="btn btn-small" ng-click="isEditMode=true"><i class="icon-pencil"></i></a>
-                        <a class="btn btn-small btn-danger"><i class="icon-trash"></i></a>
-                        
+                        <br>
+                        <span><textarea type="text" ng-model="articulo.ArticuloDescripcion" placeholder="Descripcion"></textarea>
+
                     </div>
-                    <div class="span2"> {{articulo.ArticuloCodigo}} | {{articulo.ArticuloNombre}}</div>
-                    <div class="span6"> {{articulo.ArticuloDescripcion}} </div>
-                    <div class="span2"> {{articulo.ArticuloBarcode}} </div> 
+                    <div>
+                        <span>
+                            <button class="btn btn-info" ng-click="inEditMode=false;updateArticulo(articulo);"><i class="icon-ok"></i> Guardar</button>
+                        </span>
+                        <span>
+                            <button class="btn " ng-click="inEditMode=false;"><i class=" icon-undo"></i> Cancel</button>
+                        </span>
+                    </div>
                 </div>
+
+                <div ng-hide="inEditMode" class="">
+                    <span class="span1"><img class="" height="30" src="https://asset1.basecamp.com/2117048/people/3384570-ivan-altamirano/photo/avatar.40.gif" title="Ivan Altamirano" width="30">
+                    </span>
+                    <span class="span1">{{articulo.ArticuloCodigo}}</span>
+                    <span>{{articulo.ArticuloNombre}} {{articulo.ArticuloDescripcion}}</span>
+                    <span></span>
+                    <span>
+                        <button class="btn" ng-click="inEditMode=true"><i class="icon-pencil"></i> Editar</button>
+                    </span>
+                <div>
             </li>
-        </ul>
+        <ul>
+     
+
     </div>
 </div>

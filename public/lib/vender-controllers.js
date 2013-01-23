@@ -94,18 +94,37 @@ function  POSCtrl($scope,Categoria)
 }
 
 
-function VentasCtrl($scope,Venta)
+function VentasCtrl($scope,$filter,Venta)
 {
 
     $scope.ventas = [];
+    $scope.currentMonth=new Date().getMonth();
+    
+    $scope.months = ['Ene','Feb','Mar','Abr','May','Jun',
+                     'Jul','Ago','Sep','Oct','Nov','Dic'];
+    $scope.year = 2012;
+    $scope.search = {
+         ventafecha : '2012-09'
+    };
 
     Venta.query(function(response){
       
         $scope.ventas = response;
-        //$scope.total = $scope.totalize($scope.ventas);
 
     });
     
+
+
+    
+    $scope.setDateFilter=function(index){
+        var strMonth= index+1;
+
+        if(index<10){
+            strMonth='0' + (index +1);
+        }
+
+        $scope.search.ventafecha = $scope.year + '-' + strMonth ;
+    }
     
     $scope.nuevaVenta = new Venta({VentaId:0});
     
@@ -129,7 +148,6 @@ function VentasCtrl($scope,Venta)
     };
     
 
-    
     $scope.removeVenta = function (venta)
     {
         Venta.remove(   {VentaId : venta.ventaid},
@@ -192,12 +210,18 @@ function VentasCtrl($scope,Venta)
 }
 
 
-function MercanciasCtrl($scope,Articulo,$location){
+function MercanciasCtrl($scope,Articulo,Categoria,$location){
 
     $scope.errorMessage = "";
-    $scope.articulos  = Articulo.query();
+    $scope.articulos  = [];
+
+
+
     $scope.currentPage = 0;
     $scope.pageSize = 10;
+    
+    $scope.categorias = Categoria.query();
+    $scope.nuevoArticulo = new Articulo({ArticuloId:0});
     
     $scope.pageCount = function() {
         return $scope.articulos.length / $scope.pageSize;
@@ -210,6 +234,46 @@ function MercanciasCtrl($scope,Articulo,$location){
         }
         return p;
     };
+
+    Articulo.query(function(response){
+
+        $scope.articulos = response;
+
+    });
+
+
+     $scope.addArticulo = function(){
+                
+        
+         $scope.nuevoArticulo.$save({ArticuloId:"new"} , function() {
+                //Si el valor de categoria agregado trajo algun valor de regreso entonces nos regresamos
+                //al listado de Categoriaso
+                if($scope.nuevoArticulo.ArticuloId > 0)
+                {
+                  $scope.articulos.push($scope.nuevoArticulo);
+                  $scope.nuevoArticulo = new Articulo({ArticuloId:0});
+                  
+                }
+            });
+            
+    };
+
+     $scope.updateArticulo = function(articulo){
+        
+        articulo.$save({ArticuloId: articulo.ArticuloId } , 
+        function(){
+            
+            //Si el valor del resource agregado trajo algun valor de regreso entonces nos regresamos, 
+            //al listado de Categorias        
+            if(articulo.ArticuloId > 0)
+            {
+              // $scope.modalShown = false;
+            }
+            
+            
+        });  
+    };
+
     
     $scope.setPage = function(page) {
         $scope.currentPage = page - 1;

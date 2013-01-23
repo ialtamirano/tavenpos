@@ -2,6 +2,25 @@
     <div class="span12 taven-container">
         <div class="well taven-blue">
             <div ng-include src=" 'partials/ventas/ventas-edit.html' "></div>
+            <hr>
+            <div class="controls controls-row"> 
+
+               
+                <div class="">                        
+                    <select class="span2" ng-model="year" >
+                        <option value="2013">2013</option>
+                        <option value="2012">2012</option>
+                        <option value="2011">2011</option>
+                        <option value="2010">2010</option>
+                        <option value="2009">2009</option>
+                    </select>
+                </div>
+
+                    <div class="btn-group">
+                        <button class="btn" ng-repeat="month in months" ng-click="setDateFilter($index)">{{month}}</button>
+                    </div>
+                
+            </div>
         </div>
         
         <div>
@@ -16,9 +35,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="venta in ventas | orderBy:'ventasfecha'">                      
+                    <tr ng-repeat="venta in ventas | filter:search | orderBy:'ventafecha'">                      
                         
-                        <td><h5><span class="taven-grid-attribute">{{ venta.ventafecha | date:'mediumDate' }}  </span></h5></td>
+                        <td><h5><span class="taven-grid-attribute">{{ venta.ventafecha | date:'yyyy-MM-dd' }}  </span></h5></td>
                         <td><h5>{{venta.ventadescripcion}}</h5></td>
                         <td><h5>{{venta.ventatotal | currency }}</h5></td>
                         <td>
@@ -49,7 +68,7 @@
         <div class="modal-body">
     	    <form name="form" class="">
                 <div class="">
-                    <input type="text" placeholder="Cuando?" class="span3" ng-model="venta.ventafecha" >
+                    <input type="text" placeholder="Cuando?" class="span3" ng-model="venta.ventafecha" value="{{venta.ventafecha | date:'yyyy-MM-dd'}}" ui-date >
                     <input type="text" placeholder="Que se vendio?" class="span6" ng-model="venta.ventadescripcion">
                     <input type="text" placeholder="Cuanto?" class="span3" ng-model="venta.ventatotal">
                     <input type="text" placeholder="Referencia" class="span6" ng-model="venta.ventareferencia"> 
