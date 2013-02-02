@@ -98,11 +98,14 @@ function VentasCtrl($scope,$filter,Venta)
 {
 
     $scope.ventas = [];
+    $scope.filteredVentas = [];
     $scope.currentMonth=new Date().getMonth();
     
     $scope.months = ['Ene','Feb','Mar','Abr','May','Jun',
                      'Jul','Ago','Sep','Oct','Nov','Dic'];
     $scope.year = 2012;
+    
+
     $scope.search = {
          ventafecha : '2012-09'
     };
@@ -113,13 +116,11 @@ function VentasCtrl($scope,$filter,Venta)
 
     });
     
-
-
     
-    $scope.setDateFilter=function(index){
+    $scope.setSelectedMonth=function(index){
         var strMonth= index+1;
 
-        if(index<10){
+        if(index<9){
             strMonth='0' + (index +1);
         }
 
@@ -136,9 +137,9 @@ function VentasCtrl($scope,$filter,Venta)
     
     $scope.totalize = function() {
         var t = 0;
-        if($scope.ventas.length > 0){
+        if($scope.filteredVentas.length > 0){
 
-            angular.forEach($scope.ventas, function(venta1) {
+            angular.forEach($scope.filteredVentas, function(venta1) {
                 t += venta1.ventatotal;
             });
         
@@ -150,25 +151,20 @@ function VentasCtrl($scope,$filter,Venta)
 
     $scope.removeVenta = function (venta)
     {
-        Venta.remove(   {VentaId : venta.ventaid},
+        Venta.remove({VentaId : venta.ventaid},
                         function(data, status, headers, config) { 
                             //Handle Success here
                             var index = $scope.ventas.indexOf(venta,0); 
                             
-                            if (index != -1 )
-                            {
-                                $scope.ventas.splice(index,1) ;   
-                            }
-                                
+                            if (index != -1 ) $scope.ventas.splice(index,1) ;   
+     
                             $scope.errorMessage = "La venta se elimino correctamente.";
                             
-            
                         },
                         function(data, status, headers, config ){
                             //Handle error here
                             $scope.errorMessage = "Ocurrio un error al eliminar";
-                        }
-                    );
+                        });
          
     };  
     
@@ -176,25 +172,19 @@ function VentasCtrl($scope,$filter,Venta)
     
     $scope.updateVenta = function(){
         
-        $scope.venta.$save({VentaId:$scope.venta.ventaid } , 
-        function(){
-            
-            //Si el valor del resource agregado trajo algun valor de regreso entonces nos regresamos, 
-            //al listado de Categorias        
-            if($scope.venta.ventaid > 0)
-            {
-               $scope.modalShown = false;
-            }
-            
-            
-        });  
+        $scope.venta.$save({VentaId:$scope.venta.ventaid } ,function(){
+                                //Si el valor del resource agregado trajo algun valor de regreso entonces nos regresamos, 
+                                //al listado de Categorias        
+                                if($scope.venta.ventaid > 0)
+                                {
+                                   $scope.modalShown = false;
+                                }
+                        });  
     };
-    
     
     
     $scope.addVenta = function(){
                 
-        
          $scope.nuevaVenta.$save({VentaId:"new"} , function() {
                 //Si el valor de categoria agregado trajo algun valor de regreso entonces nos regresamos
                 //al listado de Categorias
@@ -202,7 +192,6 @@ function VentasCtrl($scope,$filter,Venta)
                 {
                   $scope.ventas.push($scope.nuevaVenta);
                   $scope.nuevaVenta = new Venta({VentaId:0});
-                  
                 }
             });
             

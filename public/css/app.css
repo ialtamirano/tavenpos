@@ -208,7 +208,7 @@
     }
     
     .ui-show {
-        
+        display:block;
     }
 
     .ui-hide {

@@ -16,9 +16,9 @@
                     </select>
                 </div>
 
-                    <div class="btn-group">
-                        <button class="btn" ng-repeat="month in months" ng-click="setDateFilter($index)">{{month}}</button>
-                    </div>
+                <div class="btn-group">
+                    <button class="btn btn-warning" ng-repeat="month in months" ng-click="setSelectedMonth($index)">{{month}}</button>
+                </div>
                 
             </div>
         </div>
@@ -27,7 +27,6 @@
             <table class ="table taven-table">
                 <thead>
                     <tr>
-                        
                         <th></th>
                         <th>Descripcion</th>
                         <th>Importe</th>
@@ -35,8 +34,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="venta in ventas | filter:search | orderBy:'ventafecha'">                      
-                        
+                    <tr ng-repeat="venta in filteredVentas=(ventas |  filter: search)   | orderBy:'ventafecha'">
                         <td><h5><span class="taven-grid-attribute">{{ venta.ventafecha | date:'yyyy-MM-dd' }}  </span></h5></td>
                         <td><h5>{{venta.ventadescripcion}}</h5></td>
                         <td><h5>{{venta.ventatotal | currency }}</h5></td>

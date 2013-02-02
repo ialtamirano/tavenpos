@@ -1,0 +1,29 @@
+<div class="row-fluid">
+    <div class="span12 animates">
+         <div ui-show="showHide" >
+                        
+
+        </div>
+        <div ui-toggle="showHide" > 
+            <div>
+                <span><input type="text" ng-model="nuevoArticulo.ArticuloCodigo" placeholder="Codigo" class="span2"></span>
+                <span><input type="text" ng-model="nuevoArticulo.ArticuloNombre" placeholder="Nombre" class="span4"></span>
+                <span><input type="text" ng-model="nuevoArticulo.ArticuloPrecio" placeholder="$ Precio" class="span2"></span>
+                <span>
+                    <select ng-model="nuevoArticulo.CategoriaId" ng-options="categoria.CategoriaId as categoria.CategoriaNombre for categoria in categorias" class="span2" ></select>
+                </span> 
+            </div>
+            <div>
+                <textarea type="text" ng-model="nuevoArticulo.ArticuloDescripcion" placeholder="Descripcion" class="span10"></textarea>
+            </div>
+
+            <button class="btn btn-success" ng-click="addArticulo(articulo);"><i class=" icon-ok"></i> Guardar articulo</button>
+             <a ng-click="showHide=!showHide" class="btn ">Cancelar</a> 
+
+        </div>
+        <div ui-hide="showHide" >
+            <a ng-click="showHide=!showHide" class="btn btn-info"><i class=" icon-plus"></i> Agregar articulo</a> 
+        </div>    
+    </div>
+    
+</div>

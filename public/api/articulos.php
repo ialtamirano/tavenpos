@@ -83,6 +83,7 @@ function saveOrUpdateArticulo($id,$articulo_json)
         if(isset($articulo_json->ArticuloDescripcion)) $articulo->ArticuloDescripcion=$articulo_json->ArticuloDescripcion;
         if(isset($articulo_json->ArticuloParentId)) $articulo->ArticuloParentId=$articulo_json->ArticuloParentId;
         if(isset($articulo_json->ArticuloTipo)) $articulo->ArticuloTipo=$articulo_json->ArticuloTipo;
+        if(isset($articulo_json->ArticuloPrecio)) $articulo->ArticuloPrecio=$articulo_json->ArticuloPrecio;
           
         $articulo->save();
         
