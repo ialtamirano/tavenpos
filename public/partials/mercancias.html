@@ -1,21 +1,30 @@
-
-<div class="row-fluid">
+<div class="span8">
    
-    <div class="span12 taven-container">
-     <div ng-include src=" 'partials/articulos/header.html' "></div>
-       
+    <div class="span8 taven-horizontal-margin">
+        
+            <div  ng-include src="'partials/articulos/header.html'"> </div>
+            
+        
+   </div>
+
+      
     {{ errorMessage }}
       
-        <div class="well well-small taven-blue">  
-            <div ng-include src=" 'partials/articulos/articulos-edit.html' "></div>
-            <hr>
+    <div class="span8 taven-horizontal-margin">  
+        <div ng-include src=" 'partials/articulos/articulos-edit.html' "></div>
+    </div>
 
-            <div class="controls controls-row"> 
-                <div class="btn-group">
-                    <button class="btn btn-warning" ng-repeat="categoria in categorias" >{{categoria.CategoriaNombre}}</button>
-                </div>        
+    <div class="span8 taven-horizontal-margin">
+            <div class="controls  well well-small">
+                <span style="display:inline-block"><i class="icon-filter"></i> </span>
+                <input  class="span4" type="text" placeholder="Buscar..." ng-model="search.$">
+                
+                <select class="span2" ng-model="search.CategoriaId" ng-options="categoria.CategoriaId as categoria.CategoriaNombre for categoria in categorias" >              
+                            </select>        
             </div>
-        </div>         
+    </div> 
+
+    <div class="span8 taven-horizontal-margin">
         <ul class="taven-listing">
             <li ng-repeat="articulo in articulos | orderBy: 'ArtculoCodigo'" >
 
@@ -49,11 +58,13 @@
                     <span class="span1">
                         <img class="" height="30" src="https://asset1.basecamp.com/2117048/people/3384570-ivan-altamirano/photo/avatar.40.gif" title="Ivan Altamirano" width="30" />
                     </span>
-                    <span class="span1">{{articulo.ArticuloCodigo}}</span>
+                    <span class="">{{articulo.ArticuloCodigo}}</span>
                     <span class="span4">{{articulo.ArticuloNombre}} {{articulo.ArticuloDescripcion}}  </span>
-                    <span class="span2">{{articulo.ArticuloPrecio | currency}} </span>
-                    <span >
-                        <button class="btn" ng-click="inEditMode=true"><i class="icon-pencil"></i> Editar</button>
+                    <span class="">{{articulo.CategoriaId}} </span>
+                    <span class="">{{articulo.ArticuloPrecio | currency}} </span>
+                    <span class="">
+                        <button class="btn btn-small" ng-click="inEditMode=true"><i class="icon-pencil"></i> Editar</button>
+                        <button class="btn btn-small btn-danger" ng-click="inEditMode=true"><i class="icon-remove"></i> Eliminar</button>
                     </span>
                 <div>
             </li>
@@ -61,4 +72,6 @@
      
 
     </div>
+</div>
+<div class="span4">
 </div>

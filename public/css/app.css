@@ -178,22 +178,24 @@
         background-color: #E8F4F6;
     }
     
+    .taven-listing ul{
+        margin: 0 0 0px 0px;
+    }
     .taven-listing li{
         
         min-height: 40px;
         display:block;
-        margin: 0 0 10px 0px; 
+        /*margin: 0 0 0px 0px;*/ 
         
-        padding-left :10px;
-        padding-right:10px;
+        padding-left :5px;
+        padding-right:5px;
         padding-bottom: 6px;
         padding-top: 6px;
         
         
-        background-color: #f5f5f5;
+       
         border-bottom: 1px solid #d4d1d2;
-        -webkit-border-radius: 3px;
-        border-radius: 3px;
+  
 
         }
 
@@ -207,11 +209,29 @@
         border-radius: 3px;
     }
     
+
+
+    .taven-section-title a {
+        font-family: Segoe UI;
+        font-size: 22px;
+        color: #cccccc;
+    }
+
+    .taven-section-title .active {
+        font-family: Segoe UI;
+        color: #0088cc;
+    }
+
     .ui-show {
         display:block;
     }
 
     .ui-hide {
 	    display:none;
+    }
+
+    .taven-horizontal-margin {
+        margin-top:5px;
+        margin-bottom:5px;
     }
 
