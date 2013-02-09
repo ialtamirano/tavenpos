@@ -1,77 +1,85 @@
-<div class="span8">
+<div class="span12">
    
-    <div class="span8 taven-horizontal-margin">
-        
-            <div  ng-include src="'partials/articulos/header.html'"> </div>
-            
-        
+    <div class=" taven-horizontal-margin">
+        <div ng-include src="'partials/articulos/header.html'"></div>
    </div>
 
       
     {{ errorMessage }}
       
-    <div class="span8 taven-horizontal-margin">  
-        <div ng-include src=" 'partials/articulos/articulos-edit.html' "></div>
-    </div>
-
-    <div class="span8 taven-horizontal-margin">
-            <div class="controls  well well-small">
-                <span style="display:inline-block"><i class="icon-filter"></i> </span>
-                <input  class="span4" type="text" placeholder="Buscar..." ng-model="search.$">
-                
-                <select class="span2" ng-model="search.CategoriaId" ng-options="categoria.CategoriaId as categoria.CategoriaNombre for categoria in categorias" >              
-                            </select>        
-            </div>
-    </div> 
-
-    <div class="span8 taven-horizontal-margin">
-        <ul class="taven-listing">
-            <li ng-repeat="articulo in articulos | orderBy: 'ArtculoCodigo'" >
-
-                <div ng-show="inEditMode" class=" ">
-                    <div class="">
-                        <span><input class="input-mini" type="text" ng-model="articulo.ArticuloCodigo" placeholder="Codigo"></span>
-                        <span><input type="text" ng-model="articulo.ArticuloNombre" placeholder="Nombre"></span>
-                        <span><input type="text" ng-model="articulo.ArticuloPrecio" placeholder="$ Precio" class="input-small"></span>
-
-                        <span>
-                            <select class="span2" ng-model="articulo.CategoriaId" ng-options="categoria.CategoriaId as categoria.CategoriaNombre for categoria in categorias" >              
-                            </select>
-                        </span>
-                    
-                        <br>
-                        <span><textarea type="text" ng-model="articulo.ArticuloDescripcion" placeholder="Descripcion"></textarea>
-                        </span>
-                    </div>
-
-                    <div>
-                        <span>
-                            <button class="btn btn-info" ng-click="inEditMode=false;updateArticulo(articulo);"><i class="icon-ok"></i> Guardar</button>
-                        </span>
-                        <span>
-                            <a class=" " ng-click="inEditMode=false;"><i class=" icon-undo"></i> Cancel</a>
-                        </span>
+   <div class="row-fluid">
+        <div class="span8">
+            <div class=" taven-horizontal-margin">
+                <div class=" navbar">
+                    <div class="navbar-inner">
+                        <div class="navbar-form">
+                            <input  class="span8" type="text" placeholder="Buscar..." ng-model="search.$">
+                            
+                            <select class="span4" ng-model="search.CategoriaId" ng-options="categoria.CategoriaId as categoria.CategoriaNombre for categoria in categorias" >              
+                            <option value="">Categoria...</option>
+                            </select>  
+                        </div>      
                     </div>
                 </div>
+            </div> 
 
-                <div ng-hide="inEditMode" class="">
-                    <span class="span1">
-                        <img class="" height="30" src="https://asset1.basecamp.com/2117048/people/3384570-ivan-altamirano/photo/avatar.40.gif" title="Ivan Altamirano" width="30" />
-                    </span>
-                    <span class="">{{articulo.ArticuloCodigo}}</span>
-                    <span class="span4">{{articulo.ArticuloNombre}} {{articulo.ArticuloDescripcion}}  </span>
-                    <span class="">{{articulo.CategoriaId}} </span>
-                    <span class="">{{articulo.ArticuloPrecio | currency}} </span>
-                    <span class="">
-                        <button class="btn btn-small" ng-click="inEditMode=true"><i class="icon-pencil"></i> Editar</button>
-                        <button class="btn btn-small btn-danger" ng-click="inEditMode=true"><i class="icon-remove"></i> Eliminar</button>
-                    </span>
-                <div>
-            </li>
-        <ul>
-     
+             <div class=" taven-horizontal-margin">  
+                <div ng-include src=" 'partials/articulos/articulos-edit.html' "></div>
+            </div>
 
+            <div class=" taven-horizontal-margin">
+                <ul class="taven-listing">
+                    <li ng-repeat="articulo in articulos | filter:search | orderBy: 'ArtculoCodigo'" >
+
+                        <div ng-show="inEditMode" class=" ">
+                            <div class="">
+                                <span><input class="span2" type="text" ng-model="articulo.ArticuloCodigo" placeholder="Codigo"></span>
+                                <span><input class="span6" type="text" ng-model="articulo.ArticuloNombre" placeholder="Nombre"></span>
+                                <span><input class="span2" type="text" ng-model="articulo.ArticuloPrecio" placeholder="$ Precio" class="input-small"></span>
+
+                                <span>
+                                    <select class="span2" ng-model="articulo.CategoriaId" ng-options="categoria.CategoriaId as categoria.CategoriaNombre for categoria in categorias" >              
+                                    </select>
+                                </span>
+                            
+                                <br>
+                                <span><textarea class="span12" type="text" ng-model="articulo.ArticuloDescripcion" placeholder="Descripcion"></textarea>
+                                </span>
+                            </div>
+
+                            <div>
+                                <span>
+                                    <button class="btn btn-info" ng-click="inEditMode=false;updateArticulo(articulo);"><i class="icon-ok"></i> Guardar</button>
+                                </span>
+                                <span>
+                                    <a class=" " ng-click="inEditMode=false;"> Cancel</a>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div ng-hide="inEditMode" class="">
+                            <span class="span1"> {{articulo.ArticuloCodigo}} </span>
+                            <span class="span6">
+                               
+                                <span class="taven-text-title">{{articulo.ArticuloNombre}}</span> 
+                                <span class="taven-text-description">{{articulo.ArticuloDescripcion}}</span>  
+                                
+                            </span>
+                            <span class="span1"><span class="label">{{articulo.CategoriaId}}</span> </span>
+                            <span class="span2">{{articulo.ArticuloPrecio | currency}} </span>
+                            <span class="span2">
+                                <button class="btn " ng-click="inEditMode=true"><i class="icon-pencil"></i> </button>
+                                <button class="btn btn-danger" ng-click="remove(articulo);"><i class="icon-remove"></i> </button>
+                            </span>
+                        <div>
+                    </li>
+                <ul>
+             
+
+            </div>
+        </div>
+        <div class="span4">
+            <h5>Articulos mas vendidos</h5>
+        </div>
     </div>
-</div>
-<div class="span4">
 </div>

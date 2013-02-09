@@ -1,37 +1,32 @@
 
 
-<div class="row-fluid">
-    <form name="form" class="">
-    <div class="span9">
+<div class="well well-small taven-blue"> 
     
-        <div ui-show="showHide">        
-            <div class="">
-                <input type="text" placeholder="Nombre de la categoria" class="input-block-level" ng-model="currentCategoria.CategoriaNombre" required>
-                <span class="help-inline"></span>
-            </div>
+        <div ui-show="showHide">      
+                
         </div>
                 
-        <div ui-toggle="showHide">                                            
-            <div class="">
-                <textarea type="text" placeholder="Detalles de la categoria (opcional)" class="input-block-level" ng-model="currentCategoria.CategoriaDescripcion"></textarea>
-                <span class="help-inline"></span>
-            </div>
+        <div ui-toggle="showHide">   
+        <form name="form">                                             
+            <input type="text" placeholder="Nombre de la categoria" class="input-block-level" ng-model="currentCategoria.CategoriaNombre" required>
+                
+            <textarea type="text" placeholder="Detalles de la categoria (opcional)" class="input-block-level" ng-model="currentCategoria.CategoriaDescripcion"></textarea>
+              
+            <button class="btn btn-success" ng-disabled="form.$invalid" ng-click="addCategoria()"><i class=" icon-ok"></i> Guardar categoria</button>
+            
+            <buttom ng-click="showHide=!showHide" class="btn ">Cancelar</button> 
+           </form>
         </div>
-        <div ui-hide="showHide"></div>            
+        <div ui-hide="showHide">
+            <a  ng-click="showHide=!showHide" class="btn btn-info "><i class=" icon-plus"></i> Agregar categoria</a>
+        </div>            
         
-    </div>
+</div>
   
-  <div class="span3"> 
-    <a ng-click="showHide=!showHide" class="btn btn-info">
-        <i class="icon-caret-down" ng-hide="showHide"></i>
-        <i class="icon-caret-up" ng-show="showHide"></i>
-        
-    </a>      
-    <button ng-click="addCategoria()"  ng-disabled="form.$invalid" class="btn btn-info"> + Agregar</button>     
-  </div>
+
   
-  </form>  
+  
   
     
-</div>
+
 

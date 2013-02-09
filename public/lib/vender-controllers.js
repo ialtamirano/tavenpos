@@ -273,11 +273,11 @@ function MercanciasCtrl($scope,Articulo,Categoria,$location){
         Articulo.remove({ArticuloId : articulo.ArticuloId},
                             function(data, status, headers, config) { 
                                 //Handle Success here
-                                var index = $scope.articulos.indexOf(articulo,0); 
+                                var indice = $scope.articulos.indexOf(articulo,0); 
             
-                                if (index != -1 )
+                                if (indice != -1 )
                                 {
-                                    $scope.articulos.splice(index,1);    
+                                    $scope.articulos.splice(indice,1);    
                                 }
                                 
                                 $scope.errorMessage = "El articulo se elimino correctamente.";
