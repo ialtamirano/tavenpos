@@ -1,29 +1,36 @@
-<div class="row-fluid" ng-controller="VentasCtrl">
-    <div class="span12 taven-container">
-        <div class="well taven-blue">
-            <div ng-include src=" 'partials/ventas/ventas-edit.html' "></div>
-            <hr>
-            <div class="controls controls-row"> 
+<div class="span12" ng-controller="VentasCtrl">
+    <div class=" ">
+        <div class="taven-horizontal-margin" > 
+            <div class="navbar"> 
+                <div class="navbar-inner">
+                    <div class="navbar-form">
+                        <div class="controls-row">          
+                            <input  class="span4" type="text" placeholder="Buscar..." ng-model="search.$"> 
+                             <span>&nbsp;</span>              
+                            <select class="" ng-model="year" ng-click="selectedDate()">
+                                <option value="2013">2013</option>
+                                <option value="2012">2012</option>
+                                <option value="2011">2011</option>
+                                <option value="2010">2010</option>
+                                <option value="2009">2009</option>
+                            </select>
 
-               
-                <div class="">                        
-                    <select class="span2" ng-model="year" >
-                        <option value="2013">2013</option>
-                        <option value="2012">2012</option>
-                        <option value="2011">2011</option>
-                        <option value="2010">2010</option>
-                        <option value="2009">2009</option>
-                    </select>
-                </div>
+                            <span>&nbsp;</span>
 
-                <div class="btn-group">
-                    <button class="btn btn-warning" ng-repeat="month in months" ng-click="setSelectedMonth($index)">{{month}}</button>
+                            <div class="btn-group">
+                                <button class="btn btn-small btn-warning" ng-repeat="month in months" ng-click="currentMonth=month.Month;selectedDate()">{{month.Name}}</button>
+                            </div>
+                         </div>
+                    </div>
                 </div>
-                
             </div>
         </div>
+
+        <div class="taven-horizontal-margin">
+            <div ng-include src=" 'partials/ventas/ventas-edit.html' "></div>
+        </div>
         
-        <div>
+        <div class="taven-horizontal-margin">
             <table class ="table taven-table">
                 <thead>
                     <tr>

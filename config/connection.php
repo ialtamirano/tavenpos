@@ -1,7 +1,7 @@
 <?php
 
 //Development
-/*
+
 function getConnection() {
     $dbhost="localhost";
     $dbuser="root";
@@ -24,10 +24,10 @@ ActiveRecord\Config::initialize(function($cfg){
     //$cfg->set_default_connection('development');
 
 });
-*/
+
 
 //Production
-
+/*
 function getConnection() {
     $dbhost="tunnel.pagodabox.com";
     $dbuser="dina";
@@ -50,5 +50,5 @@ ActiveRecord\Config::initialize(function($cfg){
 
 });
 
-
+*/
 ?>

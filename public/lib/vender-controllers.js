@@ -100,15 +100,30 @@ function VentasCtrl($scope,$filter,Venta)
     $scope.ventas = [];
     $scope.filteredVentas = [];
     $scope.currentMonth=new Date().getMonth();
+    $scope.year = new Date().getFullYear();
     
-    $scope.months = ['Ene','Feb','Mar','Abr','May','Jun',
-                     'Jul','Ago','Sep','Oct','Nov','Dic'];
-    $scope.year = 2012;
+    $scope.months = [{Month:0,Name:'Ene'},
+                     {Month:1,Name:'Feb'},
+                     {Month:2,Name:'Mar'},
+                     {Month:3,Name:'Abr'},
+                     {Month:4,Name:'May'},
+                     {Month:5,Name:'Jun'},
+                     {Month:6,Name:'Jul'},
+                     {Month:7,Name:'Ago'},
+                     {Month:8,Name:'Sep'},
+                     {Month:9,Name:'Oct'},
+                     {Month:10,Name:'Nov'},
+                     {Month:11,Name:'Dic'}];
+
+    
     
 
     $scope.search = {
-         ventafecha : '2012-09'
+         ventafecha :''
     };
+
+    
+
 
     Venta.query(function(response){
       
@@ -116,16 +131,20 @@ function VentasCtrl($scope,$filter,Venta)
 
     });
     
-    
-    $scope.setSelectedMonth=function(index){
-        var strMonth= index+1;
+    $scope.selectedDate=function(){
 
-        if(index<9){
-            strMonth='0' + (index +1);
+        var strMonth= $scope.currentMonth+1;
+
+        if($scope.currentMonth<9){
+            strMonth='0' + ($scope.currentMonth +1);
         }
 
         $scope.search.ventafecha = $scope.year + '-' + strMonth ;
     }
+
+    $scope.selectedDate();
+    
+
     
     $scope.nuevaVenta = new Venta({VentaId:0});
     
