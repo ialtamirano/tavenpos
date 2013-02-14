@@ -3,7 +3,7 @@
 //development 
 require '../Slim/Slim.php';
 //require '../vendor/redbean/rb.php';
-require '../localvendor/php-activerecord/activerecord.php';
+require '../localvendor/php-activerecord/ActiveRecord.php';
 
 
 //production
