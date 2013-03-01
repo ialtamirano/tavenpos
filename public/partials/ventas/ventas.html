@@ -1,27 +1,22 @@
 <div class="span12" ng-controller="VentasCtrl">
-    <div class=" ">
+    <div class="">
         <div class="taven-horizontal-margin" > 
             <div class="navbar"> 
                 <div class="navbar-inner">
-                    <div class="navbar-form">
-                        <div class="controls-row">          
-                            <input  class="span4" type="text" placeholder="Buscar..." ng-model="search.$"> 
-                             <span>&nbsp;</span>              
-                            <select class="" ng-model="year" ng-click="selectedDate()">
-                                <option value="2013">2013</option>
-                                <option value="2012">2012</option>
-                                <option value="2011">2011</option>
-                                <option value="2010">2010</option>
-                                <option value="2009">2009</option>
-                            </select>
-
-                            <span>&nbsp;</span>
-
-                            <div class="btn-group">
-                                <button class="btn btn-small btn-warning" ng-repeat="month in months" ng-click="currentMonth=month.Month;selectedDate()">{{month.Name}}</button>
-                            </div>
-                         </div>
+                    <div class="navbar-search ">
+                        <input  class="span4" type="text" placeholder="Buscar..." ng-model="search.$"> 
                     </div>
+                    <select ui-select2 class="span2 " ng-model="year" ng-click="selectedDate()">
+                        <option value="2013">2013</option>
+                        <option value="2012">2012</option>
+                        <option value="2011">2011</option>
+                        <option value="2010">2010</option>
+                        <option value="2009">2009</option>
+                    </select> 
+                    <select ui-select2 class="span3" ng-model="currentMonth" ng-click="selectedDate()">
+                        <option ng-repeat="month in months" value="{{ month.Month }}">{{month.Name}}</option>
+                    </select>
+                    
                 </div>
             </div>
         </div>
@@ -31,59 +26,46 @@
         </div>
         
         <div class="taven-horizontal-margin">
-            <table class ="table taven-table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Descripcion</th>
-                        <th>Importe</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="venta in filteredVentas=(ventas |  filter: search)   | orderBy:'ventafecha'">
-                        <td><h5><span class="taven-grid-attribute">{{ venta.ventafecha | date:'yyyy-MM-dd' }}  </span></h5></td>
-                        <td><h5>{{venta.ventadescripcion}}</h5></td>
-                        <td><h5>{{venta.ventatotal | currency }}</h5></td>
-                        <td>
-                            <a class="btn btn-small " ng-click="update(venta)"><i class="icon-pencil"></i> Modificar</a>
-                            <a class="btn btn-small btn-danger" ng-click="removeVenta(venta)"><i class="icon-trash icon-white"></i> Eliminar</a>                    
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td >Total</td>
-                        <td ><h4>{{ totalize() | currency }}</h4></td>
-                        <td></td>
-                    </tr>
 
-                </tbody>
-            </table>    
-        </div>
+            <ul class="taven-listing">
+                <li ng-repeat="venta in filteredVentas=(ventas | filter:search) | orderBy:'ventafecha'">
+
+                    <div ng-show="inEditMode" class="taven-page">
+                        <form name="form" class="">
+                            <input type="text" placeholder="Cuando ?" class="span2" ng-model="venta.ventafecha"  ui-date="{'dateFormat' : 'yy-mm-dd'}">
+                            <input type="text" placeholder="Cuanto?" class="span3" ng-model="venta.ventatotal">
+                            <input type="text" placeholder="Que se vendio?" class="span6" ng-model="venta.ventadescripcion">
         
-       
-        
+                            <input type="text" placeholder="Referencia" class="input-block-level" ng-model="venta.ventareferencia"> 
+
+                        <button ng-click="inEditMode=false;updateVenta(venta)"  ng-disabled="form.$invalid" class="btn btn-success"><i class="icon-check"></i> Guardar</button>    
+                        <buttom ng-click="inEditMode=false" class="btn ">Cancelar</button>   
+                            </form>
+                    </div>
+                    <div ng-hide="inEditMode">
+                        <span class="span2 taven-text-title">{{ venta.ventafecha  }} </span>
+                        <span class="span4">{{venta.ventadescripcion}}</span>
+                        <span class="span2 taven-text-price">{{venta.ventatotal | currency }}</span>
+                        <span class="span2 pull-right">
+                            <a class="btn  " ng-click="inEditMode=true"><i class="icon-edit"></i> Modificar</a>
+                            <a class="btn btn-danger" ng-click="removeVenta(venta)"><i class="icon-trash icon-white"></i> </a>
+                        </span>
+                    </div>
+                </li>
+            </ul>
+             <div ng-hide="inEditMode">
+                        <span class="span2">&nbsp;</span>
+                        <span class="span4">&nbsp;</span>
+                        <span class="span2 taven-text-price"> <h5>{{ totalize() | currency }}</h5></span>
+                        <span class="span2 pull-right">
+                            &nbsp;
+                        </span>
+                    </div>
+           
+
+
+            
+        </div>        
     </div>
-    
-    <div class="fade ng-valid modal hide ng-dirty" ui-modal="" ng-model="modalShown" style="display: none;">
-        <div class="modal-header">
-            <button type="button" class="close" ng-click="modalShown=false" aria-hidden="true">×</button>      
-            <h3>{{ venta.ventadescripcion }} {{venta.ventafecha | date:'mediumDate'}}</h3>
-        </div>
-        <div class="modal-body">
-    	    <form name="form" class="">
-                <div class="">
-                    <input type="text" placeholder="Cuando?" class="span3" ng-model="venta.ventafecha" value="{{venta.ventafecha | date:'yyyy-MM-dd'}}" ui-date >
-                    <input type="text" placeholder="Que se vendio?" class="span6" ng-model="venta.ventadescripcion">
-                    <input type="text" placeholder="Cuanto?" class="span3" ng-model="venta.ventatotal">
-                    <input type="text" placeholder="Referencia" class="span6" ng-model="venta.ventareferencia"> 
-                </div>
-            </form>  
-        </div>
-    	<div class="modal-footer">
-            <a class="btn" ng-click="modalShown=false" href="">Cancelar</a>
-    		<a class="btn btn-info" ng-click="updateVenta()" href="">Guardar</a>
-    	</div>
-    </div> 
-       
+     
 </div>

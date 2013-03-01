@@ -12,13 +12,13 @@
                 
             <textarea type="text" placeholder="Detalles de la categoria (opcional)" class="input-block-level" ng-model="currentCategoria.CategoriaDescripcion"></textarea>
               
-            <button class="btn btn-success" ng-disabled="form.$invalid" ng-click="addCategoria()"><i class=" icon-ok"></i> Guardar categoria</button>
+            <button class="btn btn-success" ng-disabled="form.$invalid" ng-click="addCategoria()"><i class=" icon-check"></i> Guardar categoria</button>
             
             <buttom ng-click="showHide=!showHide" class="btn ">Cancelar</button> 
            </form>
         </div>
         <div ui-hide="showHide">
-            <a  ng-click="showHide=!showHide" class="btn btn-info "><i class=" icon-plus"></i> Agregar categoria</a>
+            <a  ng-click="showHide=!showHide" class="btn btn-info "><i class=" icon-plus"></i> Agregue una categoria</a>
         </div>            
         
 </div>

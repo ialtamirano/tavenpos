@@ -102,21 +102,18 @@ function VentasCtrl($scope,$filter,Venta)
     $scope.currentMonth=new Date().getMonth();
     $scope.year = new Date().getFullYear();
     
-    $scope.months = [{Month:0,Name:'Ene'},
-                     {Month:1,Name:'Feb'},
-                     {Month:2,Name:'Mar'},
-                     {Month:3,Name:'Abr'},
-                     {Month:4,Name:'May'},
-                     {Month:5,Name:'Jun'},
-                     {Month:6,Name:'Jul'},
-                     {Month:7,Name:'Ago'},
-                     {Month:8,Name:'Sep'},
-                     {Month:9,Name:'Oct'},
-                     {Month:10,Name:'Nov'},
-                     {Month:11,Name:'Dic'}];
-
-    
-    
+    $scope.months = [{Month:0,Name:'Enero'},
+                     {Month:1,Name:'Febrero'},
+                     {Month:2,Name:'Marzo'},
+                     {Month:3,Name:'Abril'},
+                     {Month:4,Name:'Mayo'},
+                     {Month:5,Name:'Junio'},
+                     {Month:6,Name:'Julio'},
+                     {Month:7,Name:'Agosto'},
+                     {Month:8,Name:'Septiembre'},
+                     {Month:9,Name:'Octubre'},
+                     {Month:10,Name:'Noviembre'},
+                     {Month:11,Name:'Diciembre'}];
 
     $scope.search = {
          ventafecha :''
@@ -131,12 +128,15 @@ function VentasCtrl($scope,$filter,Venta)
 
     });
     
+
+
     $scope.selectedDate=function(){
 
-        var strMonth= $scope.currentMonth+1;
+        //var strMonth= $scope.currentMonth + 1;
+        var strMonth= parseInt($scope.currentMonth) + 1; //WA because ui-selec2 missfunction
 
-        if($scope.currentMonth<9){
-            strMonth='0' + ($scope.currentMonth +1);
+        if(parseInt($scope.currentMonth)<9){
+            strMonth='0' + (parseInt($scope.currentMonth) +1);
         }
 
         $scope.search.ventafecha = $scope.year + '-' + strMonth ;
@@ -146,13 +146,10 @@ function VentasCtrl($scope,$filter,Venta)
     
 
     
-    $scope.nuevaVenta = new Venta({VentaId:0});
+    $scope.nuevaVenta = new Venta({ ventaid:0,ventafecha:new Date()});
     
     
-    $scope.update = function(venta){ 
-        $scope.venta = venta;
-        $scope.modalShown = true;
-    };
+
     
     $scope.totalize = function() {
         var t = 0;
@@ -189,14 +186,14 @@ function VentasCtrl($scope,$filter,Venta)
     
 
     
-    $scope.updateVenta = function(){
+    $scope.updateVenta = function(venta){
         
-        $scope.venta.$save({VentaId:$scope.venta.ventaid } ,function(){
+        venta.$save({VentaId:venta.ventaid } ,function(){
                                 //Si el valor del resource agregado trajo algun valor de regreso entonces nos regresamos, 
                                 //al listado de Categorias        
-                                if($scope.venta.ventaid > 0)
+                                if(venta.ventaid > 0)
                                 {
-                                   $scope.modalShown = false;
+                                   
                                 }
                         });  
     };
@@ -210,7 +207,7 @@ function VentasCtrl($scope,$filter,Venta)
                 if($scope.nuevaVenta.ventaid > 0)
                 {
                   $scope.ventas.push($scope.nuevaVenta);
-                  $scope.nuevaVenta = new Venta({VentaId:0});
+                  $scope.nuevaVenta = new Venta({ventaid:0,ventafecha:new Date()});
                 }
             });
             
@@ -491,17 +488,18 @@ function CategoriasCtrl( $scope, Categoria){
     
     
     //Call to API Functions
-    $scope.updateCategoria = function(){
+    $scope.updateCategoria = function(categoria){
         
-        $scope.categoria.$save({CategoriaId:$scope.categoria.CategoriaId } , 
+        categoria.$save({CategoriaId:categoria.CategoriaId } , 
         function(){
         
-        //Si el valor de categoria agregado trajo algun valor de regreso entonces nos regresamos, 
-        //al listado de Categorias        
-        if($scope.categoria.CategoriaId > 0)
-        {
-           $scope.modalShown = false;
-        }
+            //Si el valor de categoria agregado trajo algun valor de regreso entonces nos regresamos, 
+            //al listado de Categorias        
+            if(categoria.CategoriaId > 0)
+            {
+               $scope.modalShown = false;
+            }
+
         });  
     };
         

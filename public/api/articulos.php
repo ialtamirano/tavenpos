@@ -19,13 +19,23 @@
 
 function getArticulos()
 {
+    
     $articulos = Model::factory('Articulo')->find_many();
     
     $data=array();
 
-    foreach ($articulos as $articulo) {    
-            $articulos_array = $articulo->as_array();
-            array_push( $data,$articulos_array  );
+    foreach ($articulos as $articulo) 
+    {    
+
+     
+
+      $articulos_array = $articulo->as_array();
+
+      $articulos_array['categoria'] = getArticuloCategoriaAsArray($articulo);
+
+      
+
+      array_push( $data,$articulos_array);
     }
     
     echo json_encode($data);
@@ -86,8 +96,10 @@ function saveOrUpdateArticulo($id,$articulo_json)
         if(isset($articulo_json->ArticuloPrecio)) $articulo->ArticuloPrecio=$articulo_json->ArticuloPrecio;
           
         $articulo->save();
-        
-        echo json_encode($articulo->as_array());  
+        $articulos_array = $articulo->as_array();
+        $articulos_array['categoria'] = getArticuloCategoriaAsArray($articulo);
+
+        echo json_encode($articulos_array);  
         
     }
     catch(Exception $e)
@@ -108,6 +120,19 @@ function deleteArticulo($id)
     {
         echo '{"error":{"text":'. $e->getMessage() .'}}'; 
     }
+}
+
+function getArticuloCategoriaAsArray($articulo)
+{
+  $categoria = $articulo->categoria()->find_one();
+
+  if(!empty($categoria))
+      { 
+        return $categoria->as_array();
+      }
+
+      return null ;
+
 }
 
 function findArticuloByName($query)

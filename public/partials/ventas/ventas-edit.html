@@ -8,19 +8,22 @@
         
         <div ui-toggle="showHide">
             <form name="form" class="">
+                
                 <input type="text" placeholder="Cuando ?" class="span2" ng-model="nuevaVenta.ventafecha" ui-date="{ dateFormat: 'yy-mm-dd' }">
-                <input type="text" placeholder="Que se vendio?" class="span6" ng-model="nuevaVenta.ventadescripcion">
+            
                 <input type="text" placeholder="Cuanto?" class="span3" ng-model="nuevaVenta.ventatotal">
+                <input type="text" placeholder="Que se vendio?" class="span6" ng-model="nuevaVenta.ventadescripcion">
+                
                 
                 <input type="text" placeholder="Referencia" class="input-block-level" ng-model="nuevaVenta.ventareferencia"> 
 
-            <button ng-click="addVenta()"  ng-disabled="form.$invalid" class="btn btn-info"> + Guardar</button>    
+            <button ng-click="addVenta()"  ng-disabled="form.$invalid" class="btn btn-success"><i class="icon-check"></i> Guardar</button>    
             <buttom ng-click="showHide=!showHide" class="btn ">Cancelar</button>   
                 </form>
         </div>
 
         <div ui-hide="showHide">
-            <a  ng-click="showHide=!showHide" class="btn btn-info "><i class=" icon-plus"></i> Registrar venta </a>
+            <a  ng-click="showHide=!showHide" class="btn btn-info "><i class=" icon-plus"></i> Registre una nueva venta </a>
         </div>            
         
     

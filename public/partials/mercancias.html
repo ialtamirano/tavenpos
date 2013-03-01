@@ -8,22 +8,24 @@
     {{ errorMessage }}
       
    <div class="row-fluid">
-        <div class="span8">
-            <div class=" taven-horizontal-margin">
+        <div class="span12">
+            <div class="taven-horizontal-margin">
                 <div class=" navbar">
                     <div class="navbar-inner">
                         <div class="navbar-form">
                             <input  class="span8" type="text" placeholder="Buscar..." ng-model="search.$">
                             
-                            <select class="span4" ng-model="search.CategoriaId" ng-options="categoria.CategoriaId as categoria.CategoriaNombre for categoria in categorias" >              
-                            <option value="">Categoria...</option>
+                            <select class="span4" ng-model="search.CategoriaId"  ng-options="categoria.CategoriaId as categoria.CategoriaNombre for categoria in categorias" >              
+                                <option value="">Todas las categorias...</option>
                             </select>  
+
+                            <span></span>
                         </div>      
                     </div>
                 </div>
             </div> 
 
-             <div class=" taven-horizontal-margin">  
+            <div class=" taven-horizontal-margin">  
                 <div ng-include src=" 'partials/articulos/articulos-edit.html' "></div>
             </div>
 
@@ -31,7 +33,7 @@
                 <ul class="taven-listing">
                     <li ng-repeat="articulo in articulos | filter:search | orderBy: 'ArtculoCodigo'" >
 
-                        <div ng-show="inEditMode" class=" ">
+                        <div ng-show="inEditMode" class="taven-page">
                             <div class="">
                                 <span><input class="span2" type="text" ng-model="articulo.ArticuloCodigo" placeholder="Codigo"></span>
                                 <span><input class="span6" type="text" ng-model="articulo.ArticuloNombre" placeholder="Nombre"></span>
@@ -49,27 +51,29 @@
 
                             <div>
                                 <span>
-                                    <button class="btn btn-info" ng-click="inEditMode=false;updateArticulo(articulo);"><i class="icon-ok"></i> Guardar</button>
+                                    <button class="btn btn-success" ng-click="inEditMode=false;updateArticulo(articulo);"><i class="icon-check"></i> Guardar</button>
                                 </span>
                                 <span>
-                                    <a class=" " ng-click="inEditMode=false;"> Cancel</a>
+                                    <a class="btn" ng-click="inEditMode=false;"> Cancel</a>
                                 </span>
                             </div>
                         </div>
 
                         <div ng-hide="inEditMode" class="">
                             <span class="span1"> {{articulo.ArticuloCodigo}} </span>
-                            <span class="span6">
+                            <span class="span3">
                                
-                                <span class="taven-text-title">{{articulo.ArticuloNombre}}</span> 
-                                <span class="taven-text-description">{{articulo.ArticuloDescripcion}}</span>  
+                                <span class="taven-text-title">{{articulo.ArticuloNombre}}</span>   
                                 
                             </span>
-                            <span class="span1"><span class="label">{{articulo.CategoriaId}}</span> </span>
+                            <span class="taven-text-description span3">{{articulo.ArticuloDescripcion}}</span>  
+                            <span class="span1"><span class="label">{{articulo.categoria.CategoriaNombre}}</span> </span>
                             <span class="span2">{{articulo.ArticuloPrecio | currency}} </span>
-                            <span class="span2">
-                                <button class="btn " ng-click="inEditMode=true"><i class="icon-pencil"></i> </button>
-                                <button class="btn btn-danger" ng-click="remove(articulo);"><i class="icon-remove"></i> </button>
+                            <span class="span2 pull-right">
+                                <div class="">
+                                <button class="btn " ng-click="inEditMode=true"><i class="icon-edit"></i> Editar</button>
+                                <button class="btn btn-danger" ng-click="remove(articulo);"><i class="icon-trash"></i> </button>
+                                </div>
                             </span>
                         <div>
                     </li>
@@ -78,8 +82,6 @@
 
             </div>
         </div>
-        <div class="span4">
-            <h5>Articulos mas vendidos</h5>
-        </div>
+        
     </div>
 </div>

@@ -3,7 +3,21 @@
 function getVentas() {
 
 
-    $ventas = Venta::find('all');
+
+   $sql = "select * FROM ventas";
+    try {
+        $db = getConnection();
+        $stmt = $db->query($sql);  
+        $ventas = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        echo json_encode($ventas);
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+    }
+
+
+
+    /*$ventas = Venta::find('all');
 
     $data=array( );
 
@@ -11,7 +25,7 @@ function getVentas() {
         array_push($data,$venta->to_array());    
     }
     
-    echo json_encode($data);
+    echo json_encode($data);*/
     
 }
 
@@ -62,7 +76,8 @@ function saveOrUpdateVenta($id, $venta_json)
         //print_r($venta_json);
         
         $venta->ventafecha=$venta_json->ventafecha;
-        if(isset($venta_json->ventadescripcion)) $venta->ventadescripcion=$venta_json->ventadescripcion;
+        if(isset($venta_json->ventadescripcion)) {$venta->ventadescripcion=$venta_json->ventadescripcion;}
+        else {   $venta->ventadescripcion = "Registro de venta"; }
         if(isset($venta_json->ventatotal)) $venta->ventatotal=$venta_json->ventatotal;
         if(isset($venta_json->ventatipo)) $venta->ventatipo=$venta_json->ventatipo;
         if(isset($venta_json->ventareferencia)) $venta->ventaReferencia=$venta_json->ventareferencia;
