@@ -2,38 +2,25 @@
 <?php
 function getVentas() {
 
-
-
-   $sql = "select * FROM ventas";
-    try {
-        $db = getConnection();
-        $stmt = $db->query($sql);  
-        $ventas = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-        echo json_encode($ventas);
-    } catch(PDOException $e) {
-        echo '{"error":{"text":'. $e->getMessage() .'}}'; 
-    }
-
-
-
-    /*$ventas = Venta::find('all');
+    $ventas = Model::factory('Venta')->find_many();
 
     $data=array( );
 
-    foreach ($ventas as $venta) {    
-        array_push($data,$venta->to_array());    
+    foreach ($ventas as $venta) {   
+        $venta_array=$venta->as_array();
+        array_push($data,$venta_array);    
     }
     
-    echo json_encode($data);*/
+    echo json_encode($data);
     
 }
 
 function getVenta($id) {
+        
+    $venta = Model::factory('Venta')->find_one($id);
     
-    $venta = Venta::find($id);//factory('Venta')->find_one($id);
-    //var_dump($venta);
-    if(!empty($venta)) echo json_encode($venta->to_array());
+    if(!empty($venta)) echo json_encode($venta->as_array());
+
 }
 
 function addVenta() {
@@ -62,31 +49,29 @@ function saveOrUpdateVenta($id, $venta_json)
 
         if(empty($id)){
 
-            $venta = new Venta();//::factory('Venta')->create();
-            $venta->cdate  = date("Y-m-d H:i:s");
-            $venta->lmdate = date("Y-m-d H:i:s");
+            $venta = Model::factory('Venta')->create();
+            $venta->CDate  = date("Y-m-d H:i:s");
+            $venta->LMDate = date("Y-m-d H:i:s");
 
         }
         else{
 
-            $venta = Venta::find($id); //->find_one($id);
-            $venta->lmdate = date("Y-m-d H:i:s");
+            $venta = Model::factory('Venta')->find_one($id);
+            $venta->LMDate = date("Y-m-d H:i:s");
         }
-
-        //print_r($venta_json);
         
-        $venta->ventafecha=$venta_json->ventafecha;
-        if(isset($venta_json->ventadescripcion)) {$venta->ventadescripcion=$venta_json->ventadescripcion;}
-        else {   $venta->ventadescripcion = "Registro de venta"; }
-        if(isset($venta_json->ventatotal)) $venta->ventatotal=$venta_json->ventatotal;
-        if(isset($venta_json->ventatipo)) $venta->ventatipo=$venta_json->ventatipo;
-        if(isset($venta_json->ventareferencia)) $venta->ventaReferencia=$venta_json->ventareferencia;
-        if(isset($venta_json->clienteid)) $venta->clienteid=$venta_json->clienteid;
+        $venta->VentaFecha=$venta_json->VentaFecha;
+        if(isset($venta_json->VentaDescripcion)) {$venta->VentaDescripcion=$venta_json->VentaDescripcion;}
+        else {   $venta->VentaDescripcion = "Registro de venta"; }
+        if(isset($venta_json->VentaTotal)) $venta->VentaTotal=$venta_json->VentaTotal;
+        if(isset($venta_json->VentaTipo)) $venta->VentaTipo=$venta_json->VentaTipo;
+        if(isset($venta_json->VentaReferencia)) $venta->VentaReferencia=$venta_json->VentaReferencia;
+        if(isset($venta_json->ClienteId)) $venta->ClienteId=$venta_json->ClienteId;
         
         
         $venta->save();
        
-        echo json_encode($venta->to_array());  
+        echo json_encode($venta->as_array());  
     }
     catch(Exception $e)
     {
@@ -96,7 +81,7 @@ function saveOrUpdateVenta($id, $venta_json)
 
 function deleteVenta($id) {
     try{
-        $venta = Venta::find($id);//->find_one($id);
+        $venta = Model::factory('Venta')->find_one($id);
         $venta->delete();
     }
     catch(Exception $e)

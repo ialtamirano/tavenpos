@@ -2,7 +2,33 @@
 
 
 // Declare app level module which depends on filters, and services
-var mainmodule = angular.module('venderapp', ['venderapp.filters', 'venderapp.services', 'venderapp.directives','ui']);
+var mainmodule = angular.module('venderapp', [
+    'venderapp.filters', 
+    'venderapp.services', 
+    'venderapp.directives',
+    'ui',
+    'services.authentication',
+    'services.httpRequestTracker',
+    'services.notifications',
+    'services.i18nNotifications',
+    'services.localizedMessages',
+    'login']);
+
+//TODO: move those messages to a separate module
+angular.module('venderapp').constant('I18N.MESSAGES', {
+  'errors.route.changeError':'Route change error',
+  'crud.user.save.success':"A user with id '{{id}}' was saved successfully.",
+  'crud.user.remove.success':"A user with id '{{id}}' was removed successfully.",
+  'crud.user.save.error':"Something went wrong when saving a user...",
+  'crud.project.save.success':"A project with id '{{id}}' was saved successfully.",
+  'crud.venta.save.success':"A sale with id '{{id}}' was saved successfully.",
+  'crud.project.remove.success':"A project with id '{{id}}' was removed successfully.",
+  'crud.project.save.error':"Something went wrong when saving a project...",
+
+  'login.error.notAuthorized':"You do not have the necessary access permissions.  Do you want to login as someone else?",
+  'login.error.notAuthenticated':"You must be logged in to access this part of the application."
+});
+
 
  mainmodule.config(function($routeProvider,$locationProvider,$httpProvider) {
    
@@ -10,11 +36,17 @@ var mainmodule = angular.module('venderapp', ['venderapp.filters', 'venderapp.se
     //por ejemplo, 
     $routeProvider.
     when('/home', {templateUrl: 'partials/home.html', controller: HomeCtrl}).    
-    when('/dashboard', {templateUrl: 'partials/home.html', controller: DashboardCtrl}).
     when('/inbox', {templateUrl: 'partials/inbox.html', controller: InboxCtrl}).
     when('/mitienda', {templateUrl: 'partials/mitienda.html', controller: POSCtrl}).
     when('/ventas', {templateUrl: 'partials/ventas/ventas.html', controller: VentasCtrl}).
-    when('/mercancias', {templateUrl: 'partials/mercancias.html', controller: MercanciasCtrl});
+    when('/mercancias', {
+        templateUrl: 'partials/mercancias.html', 
+        controller: MercanciasCtrl, 
+        resolve: { mainmodule : ['AuthenticationService',function(AuthenticationService){
+            return AuthenticationService.requireAdminUser();
+        }] 
+        }
+    });
 
     //Proveedores
     $routeProvider.
@@ -24,8 +56,6 @@ var mainmodule = angular.module('venderapp', ['venderapp.filters', 'venderapp.se
     //Categorias
     $routeProvider.
     when('/categorias', {templateUrl: 'partials/categorias.html', controller: CategoriasCtrl});
-   
-
 
     //Compras
     $routeProvider.when('/compras', {templateUrl: 'partials/compras.html', controller: ComprasCtrl});
@@ -43,13 +73,10 @@ var mainmodule = angular.module('venderapp', ['venderapp.filters', 'venderapp.se
 
     $routeProvider.otherwise({redirectTo: '/home'});
     
-    $httpProvider.responseInterceptors.push('onCompleteInterceptor');
-    
-
-
+    //$httpProvider.responseInterceptors.push('onCompleteInterceptor');
     
   });
   
-  mainmodule.run(function($http, onStartInterceptor) {
+ /* mainmodule.run(function($http, onStartInterceptor) {
   $http.defaults.transformRequest.push(onStartInterceptor);
-});
+});*/

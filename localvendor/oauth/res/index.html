@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.3.6), see www.w3.org">
+  <meta charset="utf-8">
+
+  <title>Demo OAuth Service</title>
+  <style type="text/css">
+  table { border: 1px solid #000; border-collapse: collapse}
+    td, th { padding: 5px; }
+    td, th { border: 1px solid #000; }
+    th { background-color: #ddd; }
+    th.bw { background-color: #000; color: #fff; font-weight: bold; padding: 5px 10px; }
+    div.footer { text-align: center; }
+  </style>
+</head>
+
+<body>
+  <h1>Demo OAuth Service</h1>
+
+  <p>This page lists all the available components and services installed and some sample user accounts configured.</p>
+
+  <p>The code for the script that installs this environment can be found <a href="https://github.com/fkooman/oauth-install-all">here</a>.</p>
+
+  <p>If you want to read more on OAuth, reading the specification is recommended. It is easy to read and comprehend if you have some basic understanding of web architecture:</p>
+
+  <ul>
+    <li><a href="https://tools.ietf.org/html/rfc6749">The OAuth 2.0 Authorization Framework</a></li>
+
+    <li><a href="https://tools.ietf.org/html/rfc6750">The OAuth 2.0 Authorization Framework: Bearer Token Usage</a></li>
+  </ul>The first one deals with communication between the client and the authorization server. The second one deals with the communication between the client and the resource server.
+
+  <h2>Service Information</h2>
+
+  <table>
+    <tr>
+      <th class="bw">URI</th>
+
+      <th class="bw">Description</th>
+    </tr>
+
+    <tr>
+      <th colspan="2">Authorization Server [<a href="https://github.com/fkooman/php-oauth">SRC</a>]</th>
+    </tr>
+
+    <tr>
+      <td><tt>{BASE_URL}/php-oauth/authorize.php</tt></td>
+
+      <td>Authorize Endpoint</td>
+    </tr>
+
+    <tr>
+      <td><tt>{BASE_URL}/php-oauth/token.php</tt></td>
+
+      <td>Token Endpoint</td>
+    </tr>
+
+    <tr>
+      <td><tt>{BASE_URL}/php-oauth/tokeninfo.php</tt></td>
+
+      <td>Token Info Endpoint, see <a href="https://developers.google.com/accounts/docs/OAuth2Login#validatingtoken">Google Documentation</a></td>
+    </tr>
+
+    <tr>
+      <th colspan="2">Resource Servers</th>
+    </tr>
+
+    <tr>
+      <td><tt>{BASE_URL}/php-oauth-grades-rs/api.php</tt></td>
+
+      <td>Grades API (<a href="{BASE_URL}/php-oauth-grades-rs/">documentation</a>)</td>
+    </tr>
+  </table>
+
+  <h2>Accounts</h2>
+
+  <p>There are 7 accounts you can use:</p>
+
+  <table>
+    <tr>
+      <th class="bw">Name</th>
+
+      <th class="bw">Account</th>
+
+      <th class="bw">Password</th>
+
+      <th class="bw">Remarks</th>
+    </tr>
+
+    <tr>
+      <td>Carlos Catalano</td>
+
+      <td><strong><tt>admin</tt></strong></td>
+
+      <td><tt>adm1n</tt></td>
+
+      <td>Has <tt>urn:x-oauth:entitlement:applications</tt> entitlement</td>
+    </tr>
+
+    <tr>
+      <td>Margie Korn</td>
+
+      <td><strong><tt>teacher</tt></strong></td>
+
+      <td><tt>teach3r</tt></td>
+
+      <td>Has <tt>urn:x-oauth:entitlement:administration</tt> entitlement</td>
+    </tr>
+
+    <tr>
+      <td>Jerry Stroud</td>
+
+      <td><tt>jstroud</tt></td>
+
+      <td><tt>xDIosd9j</tt></td>
+
+      <td>Student</td>
+    </tr>
+
+    <tr>
+      <td>Myra Wisdom</td>
+
+      <td><tt>mwisdom</tt></td>
+
+      <td><tt>LQ32xvaV</tt></td>
+
+      <td>Student</td>
+    </tr>
+
+    <tr>
+      <td>Bobby Mcatee</td>
+
+      <td><tt>bmcatee</tt></td>
+
+      <td><tt>ySVk4B9d</tt></td>
+
+      <td>Student</td>
+    </tr>
+
+    <tr>
+      <td>Janie Matson</td>
+
+      <td><tt>jmatson</tt></td>
+
+      <td><tt>8r5yyIV3</tt></td>
+
+      <td>Student</td>
+    </tr>
+
+    <tr>
+      <td>Margaret Cram</td>
+
+      <td><tt>mcram</tt></td>
+
+      <td><tt>62xX1Fid</tt></td>
+
+      <td>Student</td>
+    </tr>
+  </table>
+
+  <h2>Management Applications</h2>
+
+  <ul>
+    <li>[<a href="https://github.com/fkooman/html-manage-authorizations">SRC</a>] <a href="html-manage-authorizations/index.html">Manage OAuth Application Authorizations</a> (for all users to view and revoke their OAuth consent to applications)</li>
+
+    <li>[<a href="https://github.com/fkooman/html-manage-applications">SRC</a>] <a href="html-manage-applications/index.html">Manage OAuth Application Registrations</a> (requires <tt>urn:x-oauth:entitlement:applications</tt> entitlement, so <strong>admin</strong> account)</li>
+  </ul>
+
+  <h2>Applications</h2>
+
+  <ul>
+    <li>[<a href="https://github.com/fkooman/html-view-grades">SRC</a>] <a href="html-view-grades/index.html">View Grades</a> (with <tt>urn:x-oauth:entitlement:administration</tt> entitlement grades from all students can be viewed)</li>
+
+    <li>[<a href="https://github.com/fkooman/html-music-player">SRC</a>] <a href="html-music-player/index.html">HTML Music Player using remoteStorage</a></li>
+
+    <li>[<a href="https://github.com/fkooman/oauth-install-all/blob/master/res/oauth.php">SRC</a>] <a href="demo-oauth-app/index.php">Demo Client</a></li>
+  </ul>
+
+  <div class="footer">
+    <small>This instance was deployed on {DATE_TIME}</small>
+  </div>
+</body>
+</html>

@@ -9,14 +9,14 @@
         <div ui-toggle="showHide">
             <form name="form" class="">
                 
-                <input type="text" placeholder="Cuando ?" class="span2" ng-model="nuevaVenta.ventafecha" ui-date="{ dateFormat: 'yy-mm-dd' }">
+                <input type="text" placeholder="Cuando ?" class="span2" ng-model="nuevaVenta.VentaFecha" ui-date="dateOptions" ui-date-format>
             
-                <input type="text" placeholder="Cuanto?" class="span3" ng-model="nuevaVenta.ventatotal">
-                <input type="text" placeholder="Que se vendio?" class="span6" ng-model="nuevaVenta.ventadescripcion">
+                <input type="text" placeholder="Cuanto?" class="span3" ng-model="nuevaVenta.VentaTotal">
+                <input type="text" placeholder="Que se vendio?" class="span6" ng-model="nuevaVenta.VentadDescripcion">
                 
                 
-                <input type="text" placeholder="Referencia" class="input-block-level" ng-model="nuevaVenta.ventareferencia"> 
-
+                <input type="text" placeholder="Referencia" class="input-block-level" ng-model="nuevaVenta.VentaReferencia"> 
+                   
             <button ng-click="addVenta()"  ng-disabled="form.$invalid" class="btn btn-success"><i class="icon-check"></i> Guardar</button>    
             <buttom ng-click="showHide=!showHide" class="btn ">Cancelar</button>   
                 </form>

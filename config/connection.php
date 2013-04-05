@@ -17,14 +17,14 @@ ORM::configure('username', 'root');
 ORM::configure('password', '');
 
 
-ActiveRecord\Config::initialize(function($cfg){
+/*ActiveRecord\Config::initialize(function($cfg){
 
     $cfg->set_model_directory('models');
     $cfg->set_connections(array('development' => 'mysql://root@localhost/tavenposdb'));
     //$cfg->set_default_connection('development');
 
 });
-
+*/
 
 //Production
 /*

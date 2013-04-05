@@ -28,24 +28,25 @@
         <div class="taven-horizontal-margin">
 
             <ul class="taven-listing">
-                <li ng-repeat="venta in filteredVentas=(ventas | filter:search) | orderBy:'ventafecha'">
+                <li ng-repeat="venta in filteredVentas=(ventas | filter:search) | orderBy:'VentaFecha'">
 
                     <div ng-show="inEditMode" class="taven-page">
                         <form name="form" class="">
-                            <input type="text" placeholder="Cuando ?" class="span2" ng-model="venta.ventafecha"  ui-date="{'dateFormat' : 'yy-mm-dd'}">
-                            <input type="text" placeholder="Cuanto?" class="span3" ng-model="venta.ventatotal">
-                            <input type="text" placeholder="Que se vendio?" class="span6" ng-model="venta.ventadescripcion">
+                            <input type="text"  class="span2"  ng-model="venta.VentaFecha" ui-date="dateOptions" ui-date-format>
+                            
+                            <input type="text" placeholder="Cuanto?" class="span3" ng-model="venta.VentaTotal">
+                            <input type="text" placeholder="Que se vendio?" class="span6" ng-model="venta.VentaDescripcion">
         
-                            <input type="text" placeholder="Referencia" class="input-block-level" ng-model="venta.ventareferencia"> 
+                            <input type="text" placeholder="Referencia" class="input-block-level" ng-model="venta.VentaReferencia"> 
 
                         <button ng-click="inEditMode=false;updateVenta(venta)"  ng-disabled="form.$invalid" class="btn btn-success"><i class="icon-check"></i> Guardar</button>    
                         <buttom ng-click="inEditMode=false" class="btn ">Cancelar</button>   
                             </form>
                     </div>
                     <div ng-hide="inEditMode">
-                        <span class="span2 taven-text-title">{{ venta.ventafecha  }} </span>
-                        <span class="span4">{{venta.ventadescripcion}}</span>
-                        <span class="span2 taven-text-price">{{venta.ventatotal | currency }}</span>
+                        <span class="span2 taven-text-title">{{ venta.VentaFecha | date:'fullDate' }} </span>
+                        <span class="span4">{{venta.VentaDescripcion}}</span>
+                        <span class="span2 taven-text-price">{{venta.VentaTotal | currency }}</span>
                         <span class="span2 pull-right">
                             <a class="btn  " ng-click="inEditMode=true"><i class="icon-edit"></i> Modificar</a>
                             <a class="btn btn-danger" ng-click="removeVenta(venta)"><i class="icon-trash icon-white"></i> </a>
@@ -60,7 +61,7 @@
                         <span class="span2 pull-right">
                             &nbsp;
                         </span>
-                    </div>
+             </div>
            
 
 

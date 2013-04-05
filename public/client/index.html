@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es-Es" ng-app="venderapp">
+    <head>
+        <meta charset="utf-8">
+        <title>Taven POS</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        
+        <link rel="stylesheet" href="css/bootstrap/2.2.2/bootstrap.css" />
+        <link rel="stylesheet" href="css/bootstrap/2.2.2/bootstrap-responsive.css" />
+        <link rel="stylesheet" href="css/smoothness/jquery-ui-1.8.24.custom.css" />
+        <link rel="stylesheet" href="js/angular-ui/0.4.0/lib/angular-ui.css" />
+        
+        <link rel="stylesheet" href="js/bootstrap-datepicker.css" />    
+        <link rel="stylesheet" href="css/font-awesome.css" />
+        <link rel="stylesheet" href="css/app.css"  />
+        <link rel="stylesheet" href="js/select2/3.2.0/select2.css" />
+        
+        <style>
+          body {
+              
+            padding-top: 50px; /* 60px to make the container go all the way to the bottom of the topbar */
+            padding-bottom: 30px;
+          }
+          .ui-show {
+                color: blue;
+                transition: all 0.5s ease; 
+                -webkit-transition: all 0.5s ease; 
+            }
+        .ui-hide {
+            opacity: 0;
+            transition: all 0.5s ease;
+            -webkit-transition: all 0.5s ease;
+        }
+                </style>
+
+    </head>
+    
+    
+    <body ng-controller="AppCtrl">
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+              
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+              
+                <a class="brand" href="#">Taven POS</a>
+                
+                <ul class="nav">
+                    <li>
+                        <div ng-controller="LoadingCtrl">  <span class="taven-preloader" ng-show="hasPendingRequests()">&nbsp;</span></div>                        
+                    </li>
+                    <li ><a href="#"><i class="icon-home"></i></a></li>
+                    <li ng-class="getClass('/inbox')"><a href="#/inbox"><i class="icon-envelope"></i></a></li>
+                    <li ng-class="getClass('/mitienda')"><a href="#/mitienda"><i class="icon-qrcode"></i>Punto de Venta</a></li>
+                </ul>
+                
+              
+                <div class="nav-collapse">
+                    <ul class="nav" role="navigation">
+                        <li class="dropdown">
+                            <a id="drop2" class="dropdown-toggle" data-toggle="dropdown" >Mi tienda <b class="caret"></b></a>                    
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+                                <li ng-class="getClass('/ventas')"><a href="#/ventas"><i class="icon-book"></i> Ventas</a></li>
+                                <li ng-class="getClass('/mercancias')"><a href="#/mercancias"><i class="icon-list"></i> Mis Mercancias</a></li>
+                                <li ng-class="getClass('/clientes')"><a href="#/clientes"><i class="icon-group"></i> Mis Clientes</a></li>
+                                <li ng-class="getClass('/compras')"><a href="#/compras"><i class="icon-shopping-cart"></i> Compras</a></li>
+                                <li ng-class="getClass('/proveedores')"><a href="#/proveedores"><i class="icon-book"></i> Proveedores</a></li>                                
+                            </ul>
+                        </li>
+                        
+                        <li ng-class="getClass('/configuracion')"><a href="#/configuracion" ><i class="icon-cog"></i> Ajustes</a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </div>
+    </div>
+    <login-form></login-form>
+    <div ng-include="'notifications.tpl.html'" class="container-fluid" ng-show="notifications.getCurrent().length"></div>
+    <div class="" ng-view>
+                     
+    </div>
+    
+    
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="js/jquery-1.8.2.min.js"></script>
+    <script src="js/jquery-ui-1.8.24.custom.min.js"></script>
+     <script src="js/bootstrap/2.2.2/bootstrap.js"></script>
+    <script src="js/angular/1.0.4/angular.js"></script>
+    <script src="js/angular/1.0.4/angular-resource.js"></script>
+
+    <script src="js/angular-ui/0.4.0/lib/angular-ui.js"></script>
+ 
+    <script src="js/select2/3.2.0/select2.js"></script>
+ 
+    <script src="lib/vender-app.js"></script>
+    <script src="lib/vender-controllers.js"></script>
+    <script src="lib/vender-directives.js"></script>
+    <script src="lib/vender-filters.js"></script>
+    <script src="lib/vender-services.js"></script>
+
+    <script src="lib/services/authentication/authentication.js"></script>
+    <script src="lib/services/authentication/current-user.js"></script>
+    <script src="lib/services/authentication/interceptor.js"></script>
+    <script src="lib/services/authentication/retry-queue.js"></script>
+
+    <script src="lib/services/httpRequestTracker.js"></script>
+    <script src="lib/services/notifications.js"></script>
+    <script src="lib/services/i18nNotifications.js"></script>
+    <script src="lib/services/exceptionHandler.js"></script>
+
+
+
+    <script src="lib/services/localizedMessages.js"></script>
+
+    <script src="lib/login/login.js"></script>
+    <script src="lib/directives/modal.js"></script>
+    
+    </body>
+</html>

@@ -4,6 +4,8 @@
     Services.factory( 'Proveedor', function($resource){
         return $resource('api/proveedores/:ProveedorId',{},{});
     });
+
+    
   
     Services.factory('Tienda', function($resource){
         return $resource('api/tiendas/:TiendaId',{},{}); 
@@ -28,7 +30,7 @@
     
     
     /////Loading Services
-    Services.factory('loadingService', function() {
+    /*Services.factory('loadingService', function() {
         
         var service = {
             requestCount: 0,
@@ -66,6 +68,10 @@
         return function(promise) {
             var decrementRequestCount = function(response) {
                 loadingService.requestCount--;
+                if ( response.status == 401) {
+                    alert('no authorizado')
+                    return null;
+                }  
                 return response;
             };
         
@@ -74,4 +80,4 @@
             // ... we are delaying the response by 2 secs to allow the loading to be seen.
             //return delayedPromise(promise, 2000).then(decrementRequestCount, decrementRequestCount);
         };
-    });
+    });*/

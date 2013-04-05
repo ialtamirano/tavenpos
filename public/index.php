@@ -1,63 +1,138 @@
 <?php
 
 //development 
-require '../Slim/Slim.php';
-//require '../vendor/redbean/rb.php';
-require '../localvendor/php-activerecord/ActiveRecord.php';
 
+require '../localvendor/Slim/Slim.php';
 
-//production
-//require '../vendor/autoload.php';
-
-
-require '../paris/idiorm.php';
-require '../paris/paris.php';
+require '../localvendor/paris/idiorm.php';
+require '../localvendor/paris/paris.php';
 
 require '../config/connection.php';
 
+require '../localvendor/OAuth2/Storage/ScopeInterface.php';
+require '../localvendor/OAuth2/Storage/SessionInterface.php';
+require '../localvendor/OAuth2/Util/RequestInterface.php';
+require '../localvendor/OAuth2/Util/Request.php';
+require '../localvendor/OAuth2/Exception/OAuth2Exception.php';
+require '../localvendor/OAuth2/Exception/InvalidAccessTokenException.php';
+require '../localvendor/OAuth2/ResourceServer.php';
 
-
-
+include 'models/model_scope.php';
+include 'models/model_session.php';
 
 
 $app = new Slim(array(
-    'templates.path' => 'application/'
+    'templates.path' => 'client/'
 ));
 
 
 
-// Prepare view
-/*
-$twigView = new View_Twig();
-$twigView->twigOptions = array(
-    'charset' => 'utf-8',
-    'cache' => realpath('../var/cache'),
-    'auto_reload' => true,
-    'strict_variables' => false,
-    'autoescape' => true
-);
-$app->view($twigView);
+// Initiate the Request handler
+$request = new \OAuth2\Util\Request();
 
-*/
+// Initiate the auth server with the models
+$server = new \OAuth2\ResourceServer(new SessionModel, new ScopeModel);
 
+
+$checkToken = function () use ($server) {
+
+    return function() use ($server)
+    {
+        // Test for token existance and validity
+        try {
+            $server->isValid();
+        }
+        // The access token is missing or invalid...
+        catch (\OAuth2\Exception\InvalidAccessTokenException $e)
+        {
+
+
+            $app = Slim::getInstance();
+            $res = $app->response();
+            $res['Content-Type'] = 'application/json';
+            $res->status(403);
+
+            $res->body(json_encode(array(
+                'error' =>  $e->getMessage()
+            )));
+        }
+    };
+
+};
+
+
+function requestJson(){
+
+    $app = Slim::getInstance();
+    $request = $app->request();
+    $body = $request->getBody();
+    $data = json_decode($body);    
+    return $data;
+
+}
+
+function responseJson ($json=null)  {
+       
+        $app = Slim::getInstance();
+        $res = $app->response();
+        $res['Content-Type'] = 'application/json';
+        $res->status(200);
+        $res->body($json);
+};
 
 
 // Define routes
-$app->get('/', function () use ($app) {
-    $app->render('index.html');
+$app->get('/', function () use ($app,$server) {
+    
+        $app->render('index.html');
+    
 });
 
-//MySql
-$app->get('/mysql/', function () use ($app) {
-    $app->render('mysql/phpminiadmin.php');
+// MySql
+$app->get('/mysql/', function () use ($server,$app) {
+   
+            $app->render('../server/mysql/phpminiadmin.php');
+      
+  
 });
+
+// MySql
+$app->get('/oauth/', function () use ($server,$app) {
+   
+            $app->render('../server/oauth/index.html');
+      
+  
+});
+$app->get('/oauth/php-oauth/', function () use ($server,$app) {
+   
+            $app->render('../server/oauth/php-oauth/www/index.html');
+      
+  
+});
+
+$app->get('/oauth/php-oauth-grades-rs/', function () use ($server,$app) {
+   
+            $app->render('../server/oauth/php-oauth-grades-rs/www/index.html');
+      
+  
+});
+
 
 
 
 //Proveedores Routes
 require 'models/proveedor.php';
 require 'api/proveedores.php';
-$app->get('/api/proveedores/', 'getProveedores') ;
+/*$app->get('/api/proveedores/',$checkToken(), 'getProveedores') ;*/
+$app->get('/api/proveedores/',function () use ($server,$app){
+
+        $app = Slim::getInstance();
+        $res = $app->response();
+        $res['Content-Type'] = 'application/json';
+        $res->status(401);
+}) ;
+
+
 $app->get('/api/proveedores/:id','getProveedor');
 $app->post('/api/proveedores/new','addProveedor');
 $app->get('/api/proveedores/search/:query', 'findProveedorByName');
@@ -79,6 +154,50 @@ $app->get('/api/tiendas/test',function () use ($app){
     $app-render('api/test/testtiendas.php');
 
 });
+
+$app->post('/api/login', function () use ($app){
+
+        $json = '{
+            "user" : {  
+                "id": "1",    
+                "email": "ivan.altamirano@gmail.com", 
+                "firstName": "ivan", 
+                "lastName": "altamirano", 
+                "admin": true    
+            }
+        } ';
+        $app = Slim::getInstance();
+        $res = $app->response();
+        $res['Content-Type'] = 'application/json';
+        $res->status(200);
+        $res->body($json);
+
+
+   
+});
+
+$app->get('/api/current-user', function() use ($app){
+
+         $json = '{
+            "user" : {  
+                "id": "1",    
+                "email": "ivan.altamirano@gmail.com", 
+                "firstName": "ivan", 
+                "lastName": "altamirano", 
+                "admin": true    
+            }
+        } ';
+        $json = null;
+        $app = Slim::getInstance();
+        $res = $app->response();
+        $res['Content-Type'] = 'application/json';
+        $res->status(200);
+        $res->body($json);
+
+});
+/*
+
+*/
 
 
 //Categorias Routes
@@ -125,6 +244,61 @@ $app->post('/api/ventas/new','addVenta');
 $app->post('/api/ventas/:id', 'updateVenta');
 $app->delete('/api/ventas/:id', 'deleteVenta');
 
+//User routes
+require 'server/models/user.php';
+require 'server/controllers/usercontroller.php';
+$app->get('/api/users/', function() use ($app){ 
+
+    $user_ctrl = new UserController();
+    $json = json_encode($user_ctrl->getUsers());
+    responseJson($json);
+
+}) ;
+
+$app->get('/api/users/:id',function($id) use ($app){
+    $user_ctrl = new UserController();
+    $json = json_encode($user_ctrl->getUser($id));
+    responseJson($json);
+ });
+
+$app->post('/api/users/new',function() use ($app){
+
+    
+    $app = Slim::getInstance();
+    $request = $app->request();
+    $body = $request->getBody();
+    $data = json_decode($body);
+
+
+    $user_ctrl = new UserController();
+    $json =  json_encode($user_ctrl->addUser($data));
+
+    responseJson($json);
+});
+
+$app->post('/api/users/:id', function($id) use ($app){ 
+
+    
+    $app = Slim::getInstance();
+    $request = $app->request();
+    $body = $request->getBody();
+    
+    $data = json_decode($body);
+
+    $user_ctrl = new UserController();
+    $json = json_encode($user_ctrl->updateUser($id,$data));
+    
+    responseJson($json);
+     
+});
+
+$app->delete('/api/users/:id', function($id) use ($app){
+
+    $user_ctrl = new UserController();
+    $json =  json_encode($user_ctrl->deleteUser($id));
+    responseJson($json);
+
+});
 
 
 

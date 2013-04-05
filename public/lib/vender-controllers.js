@@ -2,8 +2,19 @@
 
 /* Controllers */
 
-function AppCtrl($scope, $location, $resource, $rootScope)
+function AppCtrl($scope, $location, $resource, $rootScope,i18nNotifications,localizedMessages)
 {
+    $scope.notifications = i18nNotifications;
+
+  $scope.removeNotification = function (notification) {
+    i18nNotifications.remove(notification);
+  };
+
+  $scope.$on('$routeChangeError', function(event, current, previous, rejection){
+    i18nNotifications.pushForCurrentRoute('errors.route.changeError', 'error', {}, {rejection: rejection});
+  });
+
+
     $scope.$location = $location;
 
 
@@ -20,21 +31,33 @@ function AppCtrl($scope, $location, $resource, $rootScope)
             return '';
           }
       }
-
-
     };
 }
 
-function LoadingCtrl($scope,loadingService)
+function LoadingCtrl($scope,httpRequestTracker)
 {
-    $scope.$watch( function() { return loadingService.isLoading(); }, function(value) { $scope.loading = value; });
-    
+    /*$scope.$watch( function() 
+                { 
+                    return loadingService.isLoading(); 
+                }, function(value) { $scope.loading = value; });*/
+    $scope.hasPendingRequests = function () {
+    return httpRequestTracker.hasPendingRequests();
+  };
 }
 
-function HomeCtrl() {
+function HomeCtrl($scope, currentUser,AuthenticationService) {
+    $scope.userInfo = currentUser.info;
+
+    $scope.doLogin = function (){
+        AuthenticationService.showLogin();
+        //AuthenticationService.requireAuthenticatedUser();
+    }
+}
+
+function LoginController(){
 
 }
-HomeCtrl.$inject = [];
+
 
 
 function DashboardCtrl(){
@@ -94,9 +117,13 @@ function  POSCtrl($scope,Categoria)
 }
 
 
-function VentasCtrl($scope,$filter,Venta)
+function VentasCtrl($scope,$filter,Venta,i18nNotifications)
 {
-
+    $scope.dateOptions = {
+        changeYear:true,
+        changeMonth:true,
+        dateformat: "mm/dd/yyyy"
+    }
     $scope.ventas = [];
     $scope.filteredVentas = [];
     $scope.currentMonth=new Date().getMonth();
@@ -116,7 +143,7 @@ function VentasCtrl($scope,$filter,Venta)
                      {Month:11,Name:'Diciembre'}];
 
     $scope.search = {
-         ventafecha :''
+         VentaFecha :''
     };
 
     
@@ -139,14 +166,14 @@ function VentasCtrl($scope,$filter,Venta)
             strMonth='0' + (parseInt($scope.currentMonth) +1);
         }
 
-        $scope.search.ventafecha = $scope.year + '-' + strMonth ;
+        $scope.search.VentaFecha = $scope.year + '-' + strMonth ;
     }
 
     $scope.selectedDate();
     
 
     
-    $scope.nuevaVenta = new Venta({ ventaid:0,ventafecha:new Date()});
+    $scope.nuevaVenta = new Venta({ VentaId:0,VentaFecha:new Date()});
     
     
 
@@ -156,7 +183,7 @@ function VentasCtrl($scope,$filter,Venta)
         if($scope.filteredVentas.length > 0){
 
             angular.forEach($scope.filteredVentas, function(venta1) {
-                t += venta1.ventatotal;
+                t += parseFloat(venta1.VentaTotal);
             });
         
         }
@@ -167,7 +194,7 @@ function VentasCtrl($scope,$filter,Venta)
 
     $scope.removeVenta = function (venta)
     {
-        Venta.remove({VentaId : venta.ventaid},
+        Venta.remove({VentaId : venta.VentaId},
                         function(data, status, headers, config) { 
                             //Handle Success here
                             var index = $scope.ventas.indexOf(venta,0); 
@@ -188,10 +215,10 @@ function VentasCtrl($scope,$filter,Venta)
     
     $scope.updateVenta = function(venta){
         
-        venta.$save({VentaId:venta.ventaid } ,function(){
+        venta.$save({VentaId:venta.VentaId } ,function(){
                                 //Si el valor del resource agregado trajo algun valor de regreso entonces nos regresamos, 
                                 //al listado de Categorias        
-                                if(venta.ventaid > 0)
+                                if(venta.VentaId > 0)
                                 {
                                    
                                 }
@@ -204,10 +231,12 @@ function VentasCtrl($scope,$filter,Venta)
          $scope.nuevaVenta.$save({VentaId:"new"} , function() {
                 //Si el valor de categoria agregado trajo algun valor de regreso entonces nos regresamos
                 //al listado de Categorias
-                if($scope.nuevaVenta.ventaid > 0)
+                if($scope.nuevaVenta.VentaId > 0)
                 {
+                  i18nNotifications.pushForCurrentRoute('crud.venta.save.success', 'success', {id : $scope.nuevaVenta.VentaId});
                   $scope.ventas.push($scope.nuevaVenta);
-                  $scope.nuevaVenta = new Venta({ventaid:0,ventafecha:new Date()});
+                  $scope.nuevaVenta = new Venta({VentaId:0,VentaFecha:new Date()});
+
                 }
             });
             
