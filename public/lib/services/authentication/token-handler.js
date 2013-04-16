@@ -6,7 +6,6 @@ angular.module('services.authentication.token-handler').factory('tokenHandler',f
 
   var currentToken = {
     update: function(info) { 
-    	//$cookies.token = info.access_token;
     	$cookieStore.put('info',info);
     	tokenInfo = info; 
     },
@@ -29,9 +28,9 @@ angular.module('services.authentication.token-handler').factory('myhttpintercept
             request : function(config){
       
                 tokenInfo = tokenHandler.info();
-                //if(tokenInfo){
+                if(tokenInfo){
              	   config.headers['Authorization']=  'Bearer ' + tokenInfo.access_token;
-            	//}
+            	}
                 return config || $q.when(config);
             }
         }

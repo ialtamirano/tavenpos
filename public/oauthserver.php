@@ -30,12 +30,16 @@ include 'SessionModel.php';
 // New Slim app
 //Implement Get Glient
 
+
+
+
 //Implement validate refresh token
 function PasswordGrantAuthentication($parameters){
 
 
+	$server = new \OAuth2\AuthServer(new ClientModel, new SessionModel, new ScopeModel);
 		
-		$server = new \OAuth2\AuthServer(new ClientModel, new SessionModel, new ScopeModel);
+		
 
 
 	 	$validateCredentials = function($u, $p) { 
@@ -61,4 +65,34 @@ function PasswordGrantAuthentication($parameters){
 		return $array;
 
 }
+
+$resourceserver = new \OAuth2\ResourceServer( new SessionModel, new ScopeModel);
+
+
+
+$checkToken = function () use ($resourceserver) {
+
+	return function() use ($resourceserver)
+	{
+		// Test for token existance and validity
+    	try {
+    		$resourceserver->isValid();
+    	}
+
+    	// The access token is missing or invalid...
+    	catch (\OAuth2\Exception\InvalidAccessTokenException $e)
+    	{
+    		$app = Slim::getInstance();
+    		$res = $app->response();
+			$res['Content-Type'] = 'application/json';
+			$res->status(403);
+
+			$res->body(json_encode(array(
+				'error'	=>	$e->getMessage()
+			)));
+    	}
+    };
+
+};
+
 ?>

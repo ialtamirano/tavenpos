@@ -6,13 +6,14 @@ require '../localvendor/Slim/Slim.php';
 require '../localvendor/paris/idiorm.php';
 require '../localvendor/paris/paris.php';
 require '../config/connection.php';
-require 'oauthserver.php';
+
 
 
 
 $app = new Slim(array(
     'templates.path' => 'client/'
 ));
+require 'oauthserver.php';
 
 
 
@@ -39,7 +40,7 @@ function responseJson ($json=null)  {
 
 
 // Define routes
-$app->get('/', function () use ($app) {
+$app->get('/', $checkToken(),function () use ($app) {
     
         $app->render('index.html');
     
@@ -136,8 +137,9 @@ $app->post('/api/login', function () use ($app){
         $res->status(200);
         $res->body($json);
 
-    }catch(Exception $ex){
-        $json = '{"error":{"text":'. $ex->getMessage() .'}}';
+    }catch(Exception $e){
+
+        $json = json_encode(array('error' => $e->getMessage()));
 
         $res['Content-Type'] = 'application/json';
         $res->status(403);

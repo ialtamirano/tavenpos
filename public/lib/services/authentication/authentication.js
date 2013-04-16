@@ -62,6 +62,7 @@ angular.module('services.authentication').factory('AuthenticationService', ['$ht
 
     logout: function(redirectTo) {
       $http.post('/api/logout').then(function() {
+        tokenHandler.clear();
         currentUser.clear();
         redirect(redirectTo);
       });
