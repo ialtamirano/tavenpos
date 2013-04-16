@@ -1,8 +1,8 @@
 // Based loosely around work by Witold Szczerba - https://github.com/witoldsz/angular-http-auth
-angular.module('services.authentication', ['services.authentication.current-user', 'services.authentication.interceptor', 'services.authentication.retry-queue']);
+angular.module('services.authentication', ['services.authentication.current-user', 'services.authentication.interceptor', 'services.authentication.retry-queue','services.authentication.token-handler']);
 
 // The AuthenticationService is the public API for this module.  Application developers should only need to use this service and not any of the others here.
-angular.module('services.authentication').factory('AuthenticationService', ['$http', '$location', '$q', 'AuthenticationRetryQueue', 'currentUser', function($http, $location, $q, queue, currentUser) {
+angular.module('services.authentication').factory('AuthenticationService', ['$http', '$location', '$q', 'AuthenticationRetryQueue', 'currentUser','tokenHandler',function($http, $location, $q, queue, currentUser,tokenHandler) {
 
   // TODO: We need a way to refresh the page to clear any data that has been loaded when the user logs out
   //  a simple way would be to redirect to the root of the application but this feels a bit inflexible.
@@ -17,6 +17,12 @@ angular.module('services.authentication').factory('AuthenticationService', ['$ht
       queue.retry();
     }
   }
+
+  function updateCurrentToken(token){
+    tokenHandler.update(token);
+   
+  }
+
 
   var service = {
     isLoginRequired: function() {
@@ -33,16 +39,16 @@ angular.module('services.authentication').factory('AuthenticationService', ['$ht
     },
 
     login: function(email, password) {
-      /*var request = $http.post('/api/login', {email: email, password: password});
-      return request.then(function(response) {
-        updateCurrentUser(response.data.user);
-        return currentUser.isAuthenticated();
-      });*/
-      var requestString = 'grant_type=password&username='+email+'&password='+password;
-      var request = $http.post('/api/login', requestString,{
+
+      var request = $http.post('/api/login', {email: email, password: password},{
         headers : { 'Content-Type' : 'application/x-www-form-urlenconded'}
       });
+
       return request.then(function(response) {
+        //set the authorization token
+
+
+        updateCurrentToken(response.data.token);
         updateCurrentUser(response.data.user);
         return currentUser.isAuthenticated();
       });

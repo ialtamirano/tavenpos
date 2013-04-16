@@ -1,4 +1,4 @@
- var Services =angular.module('venderapp.services', ['ngResource']).
+ var Services =angular.module('venderapp.services', ['ngResource','services.authentication']).
   value('version', '0.1');
 
     Services.factory( 'Proveedor', function($resource){
@@ -28,6 +28,16 @@
     });
     
     
+    /*Services.factory('MyInterceptor',function($q,$cookies,$cookieStore,tokenHandler){
+        return {
+            request : function(config){
+                console.log(tokenHandler.info)
+                return config || $q.when(config);
+            }
+        }
+
+    });*/
+
     
     /////Loading Services
     /*Services.factory('loadingService', function() {

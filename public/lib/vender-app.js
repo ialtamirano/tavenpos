@@ -33,7 +33,7 @@ angular.module('venderapp').constant('I18N.MESSAGES', {
  mainmodule.config(function($routeProvider,$locationProvider,$httpProvider) {
    
     var self = this;
-    //por ejemplo, 
+
     $routeProvider.
     when('/home', {templateUrl: 'partials/home.html', controller: HomeCtrl}).    
     when('/inbox', {templateUrl: 'partials/inbox.html', controller: InboxCtrl}).
@@ -44,7 +44,7 @@ angular.module('venderapp').constant('I18N.MESSAGES', {
         controller: MercanciasCtrl, 
         resolve: { mainmodule : ['AuthenticationService',function(AuthenticationService){
             return AuthenticationService.requireAdminUser();
-        }] 
+          }] 
         }
     });
 
@@ -72,11 +72,28 @@ angular.module('venderapp').constant('I18N.MESSAGES', {
     $routeProvider.when('/mistiendas', {templateUrl: 'partials/configuracion/tiendas.html', controller: TiendaCtrl});
 
     $routeProvider.otherwise({redirectTo: '/home'});
+
     
-    //$httpProvider.responseInterceptors.push('onCompleteInterceptor');
-    
+    /*$httpProvider.interceptors.push(function($q,tokenHandler) {
+     return {
+         'request': function(config) {
+          var tokenInfo = tokenHandler.info;//$cookieStore.get('info');
+          console.log(tokenInfo.info);
+          if(config.method ==='POST'){
+              
+              config.headers['Auth']=  'bearer ' + tokenInfo.access_token;
+          }
+          return config || $q.when(config);
+          },
+          'response': function(response) {
+            // same as above
+            return response;
+          }
+       }});*/
+
+    $httpProvider.interceptors.push('myhttpinterceptor');
+
+     
   });
   
- /* mainmodule.run(function($http, onStartInterceptor) {
-  $http.defaults.transformRequest.push(onStartInterceptor);
-});*/
+  

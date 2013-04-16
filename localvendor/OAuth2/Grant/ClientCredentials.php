@@ -1,6 +1,6 @@
 <?php
 /**
- * OAuth 2.0 Auth code grant
+ * OAuth 2.0 Client credentials grant
  *
  * @package     lncd/oauth2
  * @author      Alex Bilbie <hello@alexbilbie.com>
@@ -37,6 +37,22 @@ class ClientCredentials implements GrantTypeInterface {
     protected $responseType = null;
 
     /**
+     * AuthServer instance
+     * @var AuthServer
+     */
+    protected $authServer = null;
+
+    /**
+     * Constructor
+     * @param AuthServer $authServer AuthServer instance
+     * @return void
+     */
+    public function __construct(AuthServer $authServer)
+    {
+        $this->authServer = $authServer;
+    }
+
+    /**
      * Return the identifier
      * @return string
      */
@@ -62,7 +78,7 @@ class ClientCredentials implements GrantTypeInterface {
     public function completeFlow($inputParams = null)
     {
          // Get the required params
-        $authParams = AuthServer::getParam(array('client_id', 'client_secret'), 'post', $inputParams);
+        $authParams = $this->authServer->getParam(array('client_id', 'client_secret'), 'post', $inputParams);
 
         if (is_null($authParams['client_id'])) {
             throw new Exception\ClientException(sprintf(AuthServer::getExceptionMessage('invalid_request'), 'client_id'), 0);
@@ -73,7 +89,7 @@ class ClientCredentials implements GrantTypeInterface {
         }
 
         // Validate client ID and client secret
-        $clientDetails = AuthServer::getStorage('client')->getClient($authParams['client_id'], $authParams['client_secret']);
+        $clientDetails = $this->authServer->getStorage('client')->getClient($authParams['client_id'], $authParams['client_secret']);
 
         if ($clientDetails === false) {
             throw new Exception\ClientException(AuthServer::getExceptionMessage('invalid_client'), 8);
@@ -81,18 +97,45 @@ class ClientCredentials implements GrantTypeInterface {
 
         $authParams['client_details'] = $clientDetails;
 
+        // Validate any scopes that are in the request
+        $scope = $this->authServer->getParam('scope', 'post', $inputParams, '');
+        $scopes = explode($this->authServer->getScopeDelimeter(), $scope);
+
+        for ($i = 0; $i < count($scopes); $i++) {
+            $scopes[$i] = trim($scopes[$i]);
+            if ($scopes[$i] === '') unset($scopes[$i]); // Remove any junk scopes
+        }
+
+        if ($this->authServer->scopeParamRequired() === true && count($scopes) === 0) {
+            throw new Exception\ClientException(sprintf($this->authServer->getExceptionMessage('invalid_request'), 'scope'), 0);
+        } elseif (count($scopes) === 0 && $this->authServer->getDefaultScope()) {
+            $scopes = array($this->authServer->getDefaultScope());
+        }
+
+        $authParams['scopes'] = array();
+
+        foreach ($scopes as $scope) {
+            $scopeDetails = $this->authServer->getStorage('scope')->getScope($scope);
+
+            if ($scopeDetails === false) {
+                throw new Exception\ClientException(sprintf($this->authServer->getExceptionMessage('invalid_scope'), $scope), 4);
+            }
+
+            $authParams['scopes'][] = $scopeDetails;
+        }
+
         // Generate an access token
         $accessToken = SecureKey::make();
-        $refreshToken = (AuthServer::hasGrantType('refresh_token')) ? SecureKey::make() : null;
+        $refreshToken = ($this->authServer->hasGrantType('refresh_token')) ? SecureKey::make() : null;
 
-        $accessTokenExpires = time() + AuthServer::getExpiresIn();
-        $accessTokenExpiresIn = AuthServer::getExpiresIn();
+        $accessTokenExpires = time() + $this->authServer->getExpiresIn();
+        $accessTokenExpiresIn = $this->authServer->getExpiresIn();
 
         // Delete any existing sessions just to be sure
-        AuthServer::getStorage('session')->deleteSession($authParams['client_id'], 'client', $authParams['client_id']);
+        $this->authServer->getStorage('session')->deleteSession($authParams['client_id'], 'client', $authParams['client_id']);
 
         // Create a new session
-        AuthServer::getStorage('session')->createSession(
+        $sessionId = $this->authServer->getStorage('session')->createSession(
             $authParams['client_id'],
             null,
             'client',
@@ -104,6 +147,12 @@ class ClientCredentials implements GrantTypeInterface {
             'granted'
         );
 
+        // Associate scopes with the new session
+        foreach ($authParams['scopes'] as $scope)
+        {
+            $this->authServer->getStorage('session')->associateScope($sessionId, $scope['id']);
+        }
+
         $response = array(
             'access_token'  =>  $accessToken,
             'token_type'    =>  'bearer',
@@ -111,7 +160,7 @@ class ClientCredentials implements GrantTypeInterface {
             'expires_in'    =>  $accessTokenExpiresIn
         );
 
-        if (AuthServer::hasGrantType('refresh_token')) {
+        if ($this->authServer->hasGrantType('refresh_token')) {
             $response['refresh_token'] = $refreshToken;
         }
 

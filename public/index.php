@@ -3,22 +3,11 @@
 //development 
 
 require '../localvendor/Slim/Slim.php';
-
 require '../localvendor/paris/idiorm.php';
 require '../localvendor/paris/paris.php';
-
 require '../config/connection.php';
+require 'oauthserver.php';
 
-require '../localvendor/OAuth2/Storage/ScopeInterface.php';
-require '../localvendor/OAuth2/Storage/SessionInterface.php';
-require '../localvendor/OAuth2/Util/RequestInterface.php';
-require '../localvendor/OAuth2/Util/Request.php';
-require '../localvendor/OAuth2/Exception/OAuth2Exception.php';
-require '../localvendor/OAuth2/Exception/InvalidAccessTokenException.php';
-require '../localvendor/OAuth2/ResourceServer.php';
-
-include 'models/model_scope.php';
-include 'models/model_session.php';
 
 
 $app = new Slim(array(
@@ -27,38 +16,6 @@ $app = new Slim(array(
 
 
 
-// Initiate the Request handler
-$request = new \OAuth2\Util\Request();
-
-// Initiate the auth server with the models
-$server = new \OAuth2\ResourceServer(new SessionModel, new ScopeModel);
-
-
-$checkToken = function () use ($server) {
-
-    return function() use ($server)
-    {
-        // Test for token existance and validity
-        try {
-            $server->isValid();
-        }
-        // The access token is missing or invalid...
-        catch (\OAuth2\Exception\InvalidAccessTokenException $e)
-        {
-
-
-            $app = Slim::getInstance();
-            $res = $app->response();
-            $res['Content-Type'] = 'application/json';
-            $res->status(403);
-
-            $res->body(json_encode(array(
-                'error' =>  $e->getMessage()
-            )));
-        }
-    };
-
-};
 
 
 function requestJson(){
@@ -82,37 +39,16 @@ function responseJson ($json=null)  {
 
 
 // Define routes
-$app->get('/', function () use ($app,$server) {
+$app->get('/', function () use ($app) {
     
         $app->render('index.html');
     
 });
 
 // MySql
-$app->get('/mysql/', function () use ($server,$app) {
+$app->get('/mysql/', function () use ($app) {
    
             $app->render('../server/mysql/phpminiadmin.php');
-      
-  
-});
-
-// MySql
-$app->get('/oauth/', function () use ($server,$app) {
-   
-            $app->render('../server/oauth/index.html');
-      
-  
-});
-$app->get('/oauth/php-oauth/', function () use ($server,$app) {
-   
-            $app->render('../server/oauth/php-oauth/www/index.html');
-      
-  
-});
-
-$app->get('/oauth/php-oauth-grades-rs/', function () use ($server,$app) {
-   
-            $app->render('../server/oauth/php-oauth-grades-rs/www/index.html');
       
   
 });
@@ -124,7 +60,7 @@ $app->get('/oauth/php-oauth-grades-rs/', function () use ($server,$app) {
 require 'models/proveedor.php';
 require 'api/proveedores.php';
 /*$app->get('/api/proveedores/',$checkToken(), 'getProveedores') ;*/
-$app->get('/api/proveedores/',function () use ($server,$app){
+$app->get('/api/proveedores/',function () use ($app){
 
         $app = Slim::getInstance();
         $res = $app->response();
@@ -151,29 +87,62 @@ $app->delete('/api/tiendas/:id','deleteTienda');
 
 //test
 $app->get('/api/tiendas/test',function () use ($app){
+
     $app-render('api/test/testtiendas.php');
 
 });
 
 $app->post('/api/login', function () use ($app){
+    
+    $app = Slim::getInstance();
+    $request = $app->request();
+    $res = $app->response();
+    $body = $request->getBody();
+    $data = json_decode($body);
+    
+    try{
 
-        $json = '{
-            "user" : {  
-                "id": "1",    
-                "email": "ivan.altamirano@gmail.com", 
-                "firstName": "ivan", 
-                "lastName": "altamirano", 
-                "admin": true    
-            }
-        } ';
-        $app = Slim::getInstance();
-        $res = $app->response();
+
+        //Obtener los parametros
+        $_POST['grant_type'] = 'password';
+        $_POST['client_id'] = '2Kv9vbSb9yc311L3H9k4wPPJXna9o586';
+        $_POST['client_secret'] = 'QIWaZ82U9vHs7p2G2J6OGHTgGcK3y9oz';
+        $_POST['username'] = $data->email;
+        $_POST['password'] = $data->password;
+        $_POST['scope'] = 'access';
+
+        $tokenInfo=PasswordGrantAuthentication($_POST);
+
+        $user=array(
+            'user' => array(
+                'id'=>'1',
+                'email'=>'ivan.altamirano@gmail.com',
+                'firstName'=>'Ivan',
+                'lastName'=> 'Altamirano',
+                'admin' => 'true'
+            ),
+            'token'=> array(
+                'access_token'=>$tokenInfo['access_token'],
+                'token_type'=> $tokenInfo['token_type'],
+                'expires' => $tokenInfo['expires'],
+                'expires_in' => $tokenInfo['expires_in'],
+                'refresh_token'=>$tokenInfo['refresh_token'],
+            )
+        );
+
+        $json = json_encode($user);
+
         $res['Content-Type'] = 'application/json';
         $res->status(200);
         $res->body($json);
 
+    }catch(Exception $ex){
+        $json = '{"error":{"text":'. $ex->getMessage() .'}}';
 
-   
+        $res['Content-Type'] = 'application/json';
+        $res->status(403);
+        $res->body($json);
+    }  
 });
 
 $app->get('/api/current-user', function() use ($app){
@@ -187,6 +156,8 @@ $app->get('/api/current-user', function() use ($app){
                 "admin": true    
             }
         } ';
+
+
         $json = null;
         $app = Slim::getInstance();
         $res = $app->response();
@@ -195,9 +166,6 @@ $app->get('/api/current-user', function() use ($app){
         $res->body($json);
 
 });
-/*
-
-*/
 
 
 //Categorias Routes
