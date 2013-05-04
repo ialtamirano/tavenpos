@@ -45,7 +45,7 @@ function PasswordGrantAuthentication($parameters){
 	 	$validateCredentials = function($u, $p) { 
 	 		//throw exception if 
 	 		//throw new Exception('Missing auth parameters'); 
-	 		return 100; 
+	 		return 3 ; 
 
 	 	};
 
@@ -66,17 +66,17 @@ function PasswordGrantAuthentication($parameters){
 
 }
 
-$resourceserver = new \OAuth2\ResourceServer( new SessionModel, new ScopeModel);
+$resourceServer = new \OAuth2\ResourceServer( new SessionModel, new ScopeModel);
 
 
 
-$checkToken = function () use ($resourceserver) {
+$checkToken = function () use ($resourceServer) {
 
-	return function() use ($resourceserver)
+	return function() use ($resourceServer)
 	{
 		// Test for token existance and validity
     	try {
-    		$resourceserver->isValid();
+    		$resourceServer->isValid();
     	}
 
     	// The access token is missing or invalid...
@@ -85,14 +85,37 @@ $checkToken = function () use ($resourceserver) {
     		$app = Slim::getInstance();
     		$res = $app->response();
 			$res['Content-Type'] = 'application/json';
-			$res->status(403);
+			$res->status(401);
 
 			$res->body(json_encode(array(
 				'error'	=>	$e->getMessage()
 			)));
+			$app->stop();
     	}
     };
 
 };
 
+ function getOwnerId()
+ {
+		try {
+			$resourceServer = new \OAuth2\ResourceServer(new SessionModel, new ScopeModel);
+	    	$resourceServer->isValid();
+	    	return $resourceServer->getOwnerId();
+	    }
+    	// The access token is missing or invalid...
+    	catch (\OAuth2\Exception\InvalidAccessTokenException $e)
+    	{
+    		$app = Slim::getInstance();
+    		$res = $app->response();
+			$res['Content-Type'] = 'application/json';
+			$res->status(401);
+
+			$res->body(json_encode(array(
+				'error'	=>	$e->getMessage()
+			)));
+			$app->stop();
+    	}
+   
+}
 ?>

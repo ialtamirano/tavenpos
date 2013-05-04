@@ -1,16 +1,6 @@
 <?php
 function getCategorias() {
-    /*$sql = "select * FROM categorias ORDER BY categoriaNombre";
-    try {
-        $db = getConnection();
-        $stmt = $db->query($sql);
-        $categorias = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-        //echo '{"categoria": ' . json_encode($categorias) . '}';
-        echo  json_encode($categorias);
-    } catch(PDOException $e) {
-        echo '{"error":{"text":'. $e->getMessage() .'}}';
-    }*/
+
     
     $categorias = Model::factory('Categoria')->find_many();
     

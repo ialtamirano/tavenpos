@@ -5,7 +5,7 @@
    </div>
 
       
-    {{ errorMessage }}
+    
       
    <div class="row-fluid">
         <div class="span12">
@@ -46,7 +46,16 @@
                             
                                 <br>
                                 <span><textarea class="span12" type="text" ng-model="articulo.ArticuloDescripcion" placeholder="Descripcion"></textarea>
+
                                 </span>
+                                <span><imageupload 
+                    input-id="inputImage"
+                    original-image="articulo.imageOriginal"        
+                    resize-image="articulo.image"
+                    resize-quality="0.7"
+                    resize-max-height="96"
+                    resize-max-width="96">
+                </imageupload></span>
                             </div>
 
                             <div>
@@ -60,7 +69,7 @@
                         </div>
 
                         <div ng-hide="inEditMode" class="">
-                            <span class="span1"> {{articulo.ArticuloCodigo}} </span>
+                            <span class="span1"> {{articulo.ArticuloCodigo}} <img src="{{articulo.ArticuloMiniatura}}" ></span>
                             <span class="span3">
                                
                                 <span class="taven-text-title">{{articulo.ArticuloNombre}}</span>   

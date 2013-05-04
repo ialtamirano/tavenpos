@@ -174,9 +174,32 @@
     .taven-listing {
         margin: 0 0 0px 0px;
     }
+
     .taven-listing li{
         
         min-height: 40px;
+        display:block;
+        /*margin: 0 0 0px 0px;*/ 
+        
+        padding-left :5px;
+        padding-right:5px;
+        padding-bottom: 6px;
+        padding-top: 6px;
+        
+        
+       
+        border-bottom: 1px solid #d4d1d2;
+  
+
+        }
+
+    .taven-products-list {
+        margin: 0 0 0px 0px;
+    }
+
+    .taven-products-list li{
+        
+        min-height: 25px;
         display:block;
         /*margin: 0 0 0px 0px;*/ 
         
@@ -236,6 +259,7 @@
     .taven-text-title {
          color: #4BB0DB    ;
          font-size:16px;
+         white-space: nowrap;
     }
 
     .taven-text-price {
@@ -255,4 +279,355 @@
         margin-top:5px;
         vertical-align: middle;
     }
+
+
+.product-list {
+    margin: 0px 0px 0px 0px;
+    list-style: none;
+}
+ 
+.product-list td {
+    
+    min-height: 66px;
+    display: block;
+       
+    padding-left: 2px;
+    padding-right: 10px;
+    padding-bottom: 2px;
+    padding-top:  2px;
+    
+    list-style-type:none;
+}
+
+.product-thumbnail 
+{       
+   float:left;       
+}
+
+.product-info 
+{
+    display:inline;
+    float:left;
+    padding-left:  8px;
+    padding-right: 8px;
+}
+
+.product-extras 
+{
+    display:inline-block;
+    float:left;  
+    padding-right: 8px;
+}
+
+
+.product-title 
+{
+    font-weight:bold;
+    color: #363636;
+}
+
+.product-description 
+{    
+    white-space:normal;
+}
+
+.product-price 
+{
+  float:left;
+  padding-top: 12px;
+  padding-left: 4px;    
+}
+
+.product-actions 
+{
+   float:left;
+   padding-top: 12px;  
+   padding-bottom: 5px;
+}
+
+.product-qty
+{
+    width: 35px !important;
+    font-size: 11px !important;
+    font-weight:bold;
+}
+
+
+
+
+.price-tags 
+{
+    display: inline-block;
+    padding: 0;
+    list-style-type: none;    
+}
+
+.price-tags span 
+{
+    float: left;
+    line-height: 22px;
+    position: relative;  
+}
+
+.price-tags a 
+{
+    
+    background: #B04CA5;
+    color: #FFFFFF;
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.99em;
+    padding: 3px 3px;
+    text-decoration: none;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    
+    -webkit-border-top-left-radius: 3px;
+    -moz-border-radius-topleft: 3px;
+    border-top-left-radius: 3px;
+        
+    -webkit-border-bottom-left-radius: 3px;
+    -moz-border-radius-bottomleft: 3px;
+    border-bottom-left-radius: 3px;
+
+    opacity: 0.8;
+             
+}
+
+
+.price-tags a:after 
+{
+    
+    border-top: 11px solid transparent;
+    border-left: 13px solid #B04CA5;
+    border-bottom: 11px solid transparent;    
+    content: "";
+    float: right;
+    height: 0px;
+    width: 0px;
+    
+}
+
+
+.price-tags a:before {
+    content: "";
+    position: absolute;
+    top: 9px;
+    right: 5px;
+    width: 4px;
+    height: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    background: #ffffff;
+    -moz-box-shadow: -1px -1px 1px #424444;
+    -webkit-box-shadow: -1px -1px 1px #424444;
+    box-shadow: -1px -1px 1px #424444;
+}
+
+
+
+.list-container {
+    height: 400px;
+    display:block;
+    overflow-x : hidden;
+    overflow-y: auto;
+    margin-right : 10px;
+}
+
+.list-container::-webkit-scrollbar {
+    width: 10px;
+    height: 16px;
+    /*background-color: #859CE6;*/
+}
+
+.list-container::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.2);
+    -webkit-box-shadow : inset 1px 1px 0 rgba(0, 0, 0, 0.10),inset 0 -1px 0 rgba(0, 0, 0, 0.07);
+}
+
+.list-container::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+    display: none;
+}
+
+.list-container::-webkit-scrollbar-corner{
+    background-color: rgba(0,0,0,0);
+}
+
+
+
+
+.product-grid {
+   margin: 5px 0px 0px 0px;
+}
+
+.product-grid li{
+    
+    float:left;
+    display: inline;
+    
+    
+}
+
+.product-grid .cell {
+    
+    background: rgba(255,255,255,1);
+    margin-right: 6px;
+    margin-bottom: 6px;
+    border : 1px solid #DDD;
+    display:block;
+    height: 96px;
+    width: 96px;
+    position:relative;
+    text-align:center;
+    padding: 2px;
+   -webkit-box-shadow: 1px 1px 1px #ddd;
+    
+}
+
+.product-grid .cell img
+{
+    position:absolute;
+    left:50%;
+    margin-left: -48px;
+    top:0;
+}
+
+.product-grid .cell span {
+    display:block;
+    text-align:center;
+}
+
+.order {
+   /*-webkit-box-shadow: 1px 1px 1px #DDD;
+   box-shadow: 2px 1px 3px #DDD;    
+   display:block;
+   padding: 4px;*/
+}
+
+.order-header {
+    min-height:40px;
+}
+
+.order-header-title {
+    
+    
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.2em;
+}
+
+.order-header-actions {
+    text-align:right;
+    
+}
+
+.order-list {
+    margin: 0px 0px 0px 0px;
+    list-style: none;
+}
+
+
+ 
+.order-list td {
+    
+    min-height: 30px;
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+    
+    padding-left:0px !important;
+    
+}
+
+.order-item-thumbnail 
+{       
+   float:left;  
+   padding-right: 5px;
+}
+
+
+.order-item-info 
+{
+    display:inline;
+    float:left;    
+    padding-right: 4px;
+    width: 128px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding-right: 5px;
+}
+
+.order-item-title {
+    word-wrap: break-word;
+    
+}
+
+.order-item-qty {
+    float:left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 5px;
+    font-weight: normal;
+    min-width:30px;
+        
+    
+}
+
+
+.order-item-total {
+    float:left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+    margin-right: 5px; 
+    min-width:64px;
+    text-align:right;
+}
+
+
+.order-item-actions 
+{
+   float:left;
+   margin-right: 5px;
+ 
+}
+
+.order-item-delete 
+{  
+    float:right;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 5px; 
+    
+    
+}
+
+.order-footer {
+    min-height: 80px;
+    background-color: #f9f9f9;
+}
+
+.order-footer-subtotal-text {
+    text-align:right;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+.order-footer-subtotal-value {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.2em;
+}
+
+.order-item-actions .btn-toolbar
+{
+   
+   margin: 0px;
+   
+ 
+}
+
+
+
+
 

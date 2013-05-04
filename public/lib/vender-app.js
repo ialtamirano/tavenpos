@@ -43,7 +43,7 @@ angular.module('venderapp').constant('I18N.MESSAGES', {
         templateUrl: 'partials/mercancias.html', 
         controller: MercanciasCtrl, 
         resolve: { mainmodule : ['AuthenticationService',function(AuthenticationService){
-            return AuthenticationService.requireAdminUser();
+            return AuthenticationService.requireAuthenticatedUser();
           }] 
         }
     });
@@ -73,25 +73,6 @@ angular.module('venderapp').constant('I18N.MESSAGES', {
 
     $routeProvider.otherwise({redirectTo: '/home'});
 
-    
-    /*$httpProvider.interceptors.push(function($q,tokenHandler) {
-     return {
-         'request': function(config) {
-          var tokenInfo = tokenHandler.info;//$cookieStore.get('info');
-          console.log(tokenInfo.info);
-          if(config.method ==='POST'){
-              
-              config.headers['Auth']=  'bearer ' + tokenInfo.access_token;
-          }
-          return config || $q.when(config);
-          },
-          'response': function(response) {
-            // same as above
-            return response;
-          }
-       }});*/
-
-    $httpProvider.interceptors.push('myhttpinterceptor');
 
      
   });

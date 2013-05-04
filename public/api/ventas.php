@@ -15,6 +15,9 @@ function getVentas() {
     
 }
 
+
+
+
 function getVenta($id) {
         
     $venta = Model::factory('Venta')->find_one($id);

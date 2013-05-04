@@ -22,45 +22,45 @@ class SessionModel implements \OAuth2\Storage\SessionInterface {
     )
     {
 
-      $this->db->query('
-      	INSERT INTO oauth_sessions (
-      		client_id, 
-      		redirect_uri, 
-      		owner_type,
-      		owner_id, 
-      		auth_code, 
-      		access_token, 
-      		refresh_token,
-      		access_token_expires, 
-      		stage, 
-      		first_requested,
-      		last_updated
-      	) 
-      	VALUES(
-      		:clientId, 
-      		:redirectUri, 
-      		:type,
-      		:typeId,
-      		:authCode,
-      		:accessToken,
-      		:refreshToken,
-      		:accessTokenExpire, 
-      		:stage, 
-      		UNIX_TIMESTAMP(NOW()), 
-      		UNIX_TIMESTAMP(NOW())
-      	)',
-      	array (
-      		':clientId' => $clientId, 
-      		':redirectUri' => $redirectUri, 
-      		':type'=>$type, 
-      		':typeId'=>$typeId, 
-      		':authCode' =>$authCode,
-        	':accessToken' => $accessToken, 
-        	':refreshToken'=> $refreshToken,
-        	':stage' =>$stage, 
-        	':accessTokenExpire' => $accessTokenExpire
-      	)
-	);
+        $this->db->query('
+          	INSERT INTO oauth_sessions (
+          		client_id, 
+          		redirect_uri, 
+          		owner_type,
+          		owner_id, 
+          		auth_code, 
+          		access_token, 
+          		refresh_token,
+          		access_token_expires, 
+          		stage, 
+          		first_requested,
+          		last_updated
+          	) 
+          	VALUES(
+          		:clientId, 
+          		:redirectUri, 
+          		:type,
+          		:typeId,
+          		:authCode,
+          		:accessToken,
+          		:refreshToken,
+          		:accessTokenExpire, 
+          		:stage, 
+          		UNIX_TIMESTAMP(NOW()), 
+          		UNIX_TIMESTAMP(NOW())
+          	)',
+          	array (
+          		':clientId' => $clientId, 
+          		':redirectUri' => $redirectUri, 
+          		':type'=>$type, 
+          		':typeId'=>$typeId, 
+          		':authCode' =>$authCode,
+            	':accessToken' => $accessToken, 
+            	':refreshToken'=> $refreshToken,
+            	':stage' =>$stage, 
+            	':accessTokenExpire' => $accessTokenExpire
+          	)
+	    );
 
 		return $this->db->getInsertId();
     }
@@ -166,8 +166,7 @@ class SessionModel implements \OAuth2\Storage\SessionInterface {
                 FROM oauth_sessions 
                 WHERE access_token = :accessToken',
                 array(
-                        ':accessToken',
-                        $accessToken
+                    ':accessToken' => $accessToken
                 )
         );
 

@@ -51,9 +51,10 @@ function getArticulo($id){
 function addArticulo(){
     $id = 0;
     $request = Slim::getInstance()->request();
+    
     $body = $request->getBody();
     $articulo_json = json_decode($body);
-    
+    echo $body;
     saveOrUpdateArticulo($id, $articulo_json);
    
 }
@@ -63,6 +64,7 @@ function updateArticulo($id)
     $request = Slim::getInstance()->request();
     $body = $request->getBody();    
     $articulo_json = json_decode($body);
+    
     
     saveOrUpdateArticulo($id, $articulo_json);
 
@@ -81,6 +83,22 @@ function saveOrUpdateArticulo($id,$articulo_json)
         
             $articulo = Model::factory('Articulo')->find_one($id);
         }
+      
+        if(isset($_FILES["imageOriginal"])){
+           
+           if(move_uploaded_file($_FILES["imageOriginal"]["tmp_name"],UPLOAD_IMAGES_PATH.$_FILES['imageOriginal']["name"])){
+              $articulo->ArticuloFoto=UPLOAD_IMAGES_PATH.$_FILES['imageOriginal']["name"];
+           }
+
+        }
+
+        if(isset($_FILES["image"])){
+           
+           if(move_uploaded_file($_FILES["image"]["tmp_name"],UPLOAD_IMAGES_PATH.'min'.$_FILES['image']["name"])){
+              $articulo->ArticuloMiniatura=UPLOAD_IMAGES_PATH.'min'.$_FILES['image']["name"];
+           }
+
+        }
                 
         
         if(isset($articulo_json->ArticuloCodigo)) $articulo->ArticuloCodigo=$articulo_json->ArticuloCodigo;
@@ -89,7 +107,6 @@ function saveOrUpdateArticulo($id,$articulo_json)
         if(isset($articulo_json->IvaId)) $articulo->IvaId=$articulo_json->IvaId;
         if(isset($articulo_json->ArticuloPeso)) $articulo->ArticuloPeso=$articulo_json->ArticuloPeso;
         if(isset($articulo_json->ArticuloBarcode)) $articulo->ArticuloBarcode=$articulo_json->ArticuloBarcode;
-        if(isset($articulo_json->ArticuloFoto)) $articulo->ArticuloFoto=$articulo_json->ArticuloFoto;
         if(isset($articulo_json->ArticuloDescripcion)) $articulo->ArticuloDescripcion=$articulo_json->ArticuloDescripcion;
         if(isset($articulo_json->ArticuloParentId)) $articulo->ArticuloParentId=$articulo_json->ArticuloParentId;
         if(isset($articulo_json->ArticuloTipo)) $articulo->ArticuloTipo=$articulo_json->ArticuloTipo;

@@ -75,7 +75,7 @@ InboxCtrl.$inject = [];
 
 function  POSCtrl($scope,Categoria)
 {
-    $scope.categorias =Categoria.query();
+    $scope.categorias = Categoria.query();
     $scope.venta = {
         currentArticulo : { ArticuloId : 1,ArticuloDescripcion: "Articulo Actual", ArticuloCantidad: 10 , ArticuloPrecio: 100.00 },
         articulos :[{ "ArticuloId": "1","ArticuloDescripcion": "Articulo 1", "ArticuloCantidad" : 10, "ArticuloPrecio": "100.00"},{ "ArticuloId": "2","ArticuloDescripcion": "Articulo 2", "ArticuloCantidad" : 20, "ArticuloPrecio": "55.00"},                        { "ArticuloId": "3","ArticuloDescripcion": "Articulo 3", "ArticuloCantidad" : 5, "ArticuloPrecio": "145.00"},{ "ArticuloId": "4","ArticuloDescripcion": "Articulo 4", "ArticuloCantidad" : 20, "ArticuloPrecio": "199.00"},{ "ArticuloId": "5","ArticuloDescripcion": "Articulo 5", "ArticuloCantidad" : 30, "ArticuloPrecio": "25.00"}],
@@ -244,7 +244,7 @@ function VentasCtrl($scope,$filter,Venta,i18nNotifications)
 }
 
 
-function MercanciasCtrl($scope,Articulo,Categoria,$location){
+function MercanciasCtrl($scope,Articulo,Categoria,$location,$http){
 
     $scope.errorMessage = "";
     $scope.articulos  = [];
@@ -294,7 +294,21 @@ function MercanciasCtrl($scope,Articulo,Categoria,$location){
 
      $scope.updateArticulo = function(articulo){
         
-        articulo.$save({ArticuloId: articulo.ArticuloId } , 
+        var formData = new FormData();
+        formData.append('image', articulo.image, articulo.image.name);
+        formData.append('imageOriginal', articulo.imageOriginal, articulo.imageOriginal.name);
+        
+        $http.post('/api/articulos/'+articulo.ArticuloId , formData, {
+                        headers: { 'Content-Type': false },
+                        transformRequest: angular.identity
+                    }).success(function(result) {
+                        $scope.uploadedImgSrc = result.src;
+                        $scope.sizeInBytes = result.size;
+                    });
+
+
+   
+       /* articulo.$save({ArticuloId: articulo.ArticuloId } , 
         function(){
             
             //Si el valor del resource agregado trajo algun valor de regreso entonces nos regresamos, 
@@ -303,10 +317,14 @@ function MercanciasCtrl($scope,Articulo,Categoria,$location){
             {
               // $scope.modalShown = false;
             }
+
+            $scope.updateimage(articulo);
             
             
-        });  
+        }); */ 
     };
+
+
 
     
     $scope.setPage = function(page) {

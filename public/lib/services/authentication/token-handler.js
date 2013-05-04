@@ -23,7 +23,7 @@ angular.module('services.authentication.token-handler').factory('tokenHandler',f
   return currentToken;
 });
 
-angular.module('services.authentication.token-handler').factory('myhttpinterceptor',function($q,$cookies,$cookieStore,tokenHandler){
+angular.module('services.authentication.token-handler').factory('TokenInterceptor',function($q,$cookies,$cookieStore,tokenHandler){
         return {
             request : function(config){
       
@@ -37,5 +37,8 @@ angular.module('services.authentication.token-handler').factory('myhttpintercept
 
  });
 
+angular.module('services.authentication.token-handler').config(['$httpProvider', function($httpProvider) {
+  $httpProvider.interceptors.push('TokenInterceptor');
+}]);
 
 

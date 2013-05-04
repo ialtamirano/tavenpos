@@ -5,14 +5,14 @@
 require '../localvendor/Slim/Slim.php';
 require '../localvendor/paris/idiorm.php';
 require '../localvendor/paris/paris.php';
+require '../config/config.php';
 require '../config/connection.php';
-
-
 
 
 $app = new Slim(array(
     'templates.path' => 'client/'
 ));
+
 require 'oauthserver.php';
 
 
@@ -40,15 +40,16 @@ function responseJson ($json=null)  {
 
 
 // Define routes
-$app->get('/', $checkToken(),function () use ($app) {
+$app->get('/', function () use ($app) {
     
-        $app->render('index.html');
+        $app->render('../client/index.html');
     
 });
 
 // MySql
 $app->get('/mysql/', function () use ($app) {
-   
+
+
             $app->render('../server/mysql/phpminiadmin.php');
       
   
@@ -60,7 +61,6 @@ $app->get('/mysql/', function () use ($app) {
 //Proveedores Routes
 require 'models/proveedor.php';
 require 'api/proveedores.php';
-/*$app->get('/api/proveedores/',$checkToken(), 'getProveedores') ;*/
 $app->get('/api/proveedores/',function () use ($app){
 
         $app = Slim::getInstance();
@@ -80,7 +80,7 @@ $app->delete('/api/proveedores/:id', 'deleteProveedor');
 //Tiendas
 require 'models/tienda.php';
 require 'api/tiendas.php';
-$app->get('/api/tiendas/','getTiendas');
+$app->get('/api/tiendas/',$checkToken(),'getTiendas');
 $app->get('/api/tiendas/:id','getTienda');
 $app->post('/api/tiendas/new','addTienda');
 $app->post('/api/tiendas/:id','updateTienda');
@@ -147,25 +147,21 @@ $app->post('/api/login', function () use ($app){
     }  
 });
 
+require 'server/models/user.php';
+require 'server/controllers/usercontroller.php';
+
 $app->get('/api/current-user', function() use ($app){
 
-         $json = '{
-            "user" : {  
-                "id": "1",    
-                "email": "ivan.altamirano@gmail.com", 
-                "firstName": "ivan", 
-                "lastName": "altamirano", 
-                "admin": true    
-            }
-        } ';
+    $id = getOwnerId();
+    
+    $userController = new UserController();
 
+    $user = $userController->getUser($id);
 
-        $json = null;
-        $app = Slim::getInstance();
-        $res = $app->response();
-        $res['Content-Type'] = 'application/json';
-        $res->status(200);
-        $res->body($json);
+    $json = json_encode(array('user' => $user));
+
+    responseJson($json);
+
 
 });
 
@@ -175,7 +171,7 @@ require 'models/articulo.php';
 require 'models/categoria.php';
 
 require 'api/categorias.php';
-$app->get('/api/categorias/', 'getCategorias') ;
+$app->get('/api/categorias/',$checkToken(), 'getCategorias') ;
 $app->get('/api/categorias/:id','getCategoria');
 $app->get('/api/categorias/:id/articulos','getCategoriaArticulos');
 $app->post('/api/categorias/new','addCategoria');
@@ -208,15 +204,15 @@ $app->delete('/api/clientes/:id', 'deleteCliente');
 //Ventas Routes
 require 'models/venta.php';
 require 'api/ventas.php';
-$app->get('/api/ventas/', 'getVentas') ;
+//$app->get('/api/ventas/',$checkToken(), 'getVentas') ;
+$app->get('/api/ventas/','getVentas') ;
 $app->get('/api/ventas/:id','getVenta');
 $app->post('/api/ventas/new','addVenta');
 $app->post('/api/ventas/:id', 'updateVenta');
 $app->delete('/api/ventas/:id', 'deleteVenta');
 
 //User routes
-require 'server/models/user.php';
-require 'server/controllers/usercontroller.php';
+
 $app->get('/api/users/', function() use ($app){ 
 
     $user_ctrl = new UserController();
