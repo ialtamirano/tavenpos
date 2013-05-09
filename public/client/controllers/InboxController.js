@@ -1,0 +1,6 @@
+function InboxCtrl()
+{
+    
+}
+
+InboxCtrl.$inject = [];

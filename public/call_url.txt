@@ -1,1 +1,0 @@
-http://tavenpos.localhost.com/oauth.php?client_id=2Kv9vbSb9yc311L3H9k4wPPJXna9o586&redirect_uri=http://tavenpos.localhost.com&response_type=code&scope=access

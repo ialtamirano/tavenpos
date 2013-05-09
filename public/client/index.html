@@ -7,15 +7,15 @@
         <meta name="description" content="">
         <meta name="author" content="">
         
-        <link rel="stylesheet" href="css/bootstrap/2.2.2/bootstrap.css" />
-        <link rel="stylesheet" href="css/bootstrap/2.2.2/bootstrap-responsive.css" />
-        <link rel="stylesheet" href="css/smoothness/jquery-ui-1.8.24.custom.css" />
-        <link rel="stylesheet" href="js/angular-ui/0.4.0/lib/angular-ui.css" />
+        <link rel="stylesheet" href="client/css/bootstrap/2.2.2/bootstrap.css" />
+        <link rel="stylesheet" href="client/css/bootstrap/2.2.2/bootstrap-responsive.css" />
+        <link rel="stylesheet" href="client/css/smoothness/jquery-ui-1.8.24.custom.css" />
+        <link rel="stylesheet" href="client/js/angular-ui/0.4.0/lib/angular-ui.css" />
         
-        <link rel="stylesheet" href="js/bootstrap-datepicker.css" />    
-        <link rel="stylesheet" href="css/font-awesome.css" />
-        <link rel="stylesheet" href="css/app.css"  />
-        <link rel="stylesheet" href="js/select2/3.2.0/select2.css" />
+        <link rel="stylesheet" href="client/js/bootstrap-datepicker.css" />    
+        <link rel="stylesheet" href="client/css/font-awesome.css" />
+        <link rel="stylesheet" href="client/css/app.css"  />
+        <link rel="stylesheet" href="client/js/select2/3.2.0/select2.css" />
         
         <style>
           body {
@@ -76,7 +76,7 @@
                                     <li ng-class="getClass('/ventas')"><a href="#/ventas"><i class="icon-book"></i> Ventas</a></li>
                                     <li ng-class="getClass('/mercancias')"><a href="#/mercancias"><i class="icon-list"></i> Mis Mercancias</a></li>
                                     <li ng-class="getClass('/clientes')"><a href="#/clientes"><i class="icon-group"></i> Mis Clientes</a></li>
-                                    <li ng-class="getClass('/compras')"><a href="#/compras"><i class="icon-shopping-cart"></i> Compras</a></li>
+                                  
                                     <li ng-class="getClass('/proveedores')"><a href="#/proveedores"><i class="icon-book"></i> Proveedores</a></li>                                
                                 </ul>
                             </li>
@@ -84,62 +84,77 @@
                             <li ng-class="getClass('/configuracion')"><a href="#/configuracion" ><i class="icon-cog"></i> Ajustes</a></li>
                         </ul>
                     </div><!--/.nav-collapse -->
+                    <login-toolbar></login-toolbar>
                 </div>
             </div>
         </div>
 
         <login-form></login-form>
 
-        <div ng-include="'notifications.tpl.html'" class="container-fluid" ng-show="notifications.getCurrent().length"></div>
+
+        <div ng-include="'client/notifications.tpl.html'" class="container-fluid" ng-show="notifications.getCurrent().length"></div>
 
         <div class="" ng-view>
                          
         </div>
     
     
-        <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-        <script src="js/jquery-1.8.2.min.js"></script>
-        <script src="js/jquery-ui-1.8.24.custom.min.js"></script>
-         <script src="js/bootstrap/2.2.2/bootstrap.js"></script>
-        <script src="js/angular/1.1.4/angular.js"></script>
-        <script src="js/angular/1.1.4/angular-resource.js"></script>
-        <script src="js/angular/1.1.4/angular-cookies.js"></script>
+     
+        <script src="client/js/jquery-1.8.2.min.js"></script>
+        <script src="client/js/jquery-ui-1.8.24.custom.min.js"></script>
+        <script src="client/js/bootstrap/2.2.2/bootstrap.js"></script>
+        <script src="client/js/angular/1.1.4/angular.js"></script>
+        <script src="client/js/angular/1.1.4/angular-resource.js"></script>
+        <script src="client/js/angular/1.1.4/angular-cookies.js"></script>
         
 
-        <script src="js/angular-ui/0.4.0/lib/angular-ui.js"></script>
+        <script src="client/js/angular-ui/0.4.0/lib/angular-ui.js"></script>
      
-        <script src="js/select2/3.2.0/select2.js"></script>
-     
-        <script src="js/imageupload/canvas-to-blob.min.js"></script>
+        <script src="client/js/select2/3.2.0/select2.js"></script>     
+        <script src="client/js/imageupload/canvas-to-blob.min.js"></script>
 
 
 
-        <script src="lib/vender-app.js"></script>
-        <script src="lib/vender-controllers.js"></script>
-        <script src="lib/vender-directives.js"></script>
-        <script src="lib/vender-filters.js"></script>
-        <script src="lib/vender-services.js"></script>
-
-        <script src="js/imageupload/imageupload.js"></script>
+        <script src="client/lib/vender-app.js"></script>
+        <script src="client/lib/vender-controllers.js"></script>
+        <script src="client/lib/vender-directives.js"></script>
+        <script src="client/lib/vender-filters.js"></script>
+        <script src="client/lib/vender-services.js"></script>
 
         
-        <script src="lib/services/authentication/authentication.js"></script>
-        <script src="lib/services/authentication/token-handler.js"></script>
-        <script src="lib/services/authentication/current-user.js"></script>
-        <script src="lib/services/authentication/interceptor.js"></script>
-        <script src="lib/services/authentication/retry-queue.js"></script>
+        <script src="client/controllers/LoadingController.js"></script>
+        <script src="client/controllers/HomeController.js"></script>
+        <script src="client/controllers/InboxController.js"></script>
+        <script src="client/controllers/ApplicationController.js"></script>
+        <script src="client/controllers/ProductController.js"></script>
+        <script src="client/controllers/CategoriaController.js"></script>
+        <script src="client/controllers/VentaController.js"></script>
+        <script src="client/controllers/POSController.js"></script>
+        <script src="client/controllers/ProveedorController.js"></script>
+        
 
-        <script src="lib/services/httpRequestTracker.js"></script>
-        <script src="lib/services/notifications.js"></script>
-        <script src="lib/services/i18nNotifications.js"></script>
-        <script src="lib/services/exceptionHandler.js"></script>
+
+
+        <script src="client/js/imageupload/imageupload.js"></script>
+
+        
+        <script src="client/lib/services/authentication/authentication.js"></script>
+        <script src="client/lib/services/authentication/token-handler.js"></script>
+        <script src="client/lib/services/authentication/current-user.js"></script>
+        <script src="client/lib/services/authentication/interceptor.js"></script>
+        <script src="client/lib/services/authentication/retry-queue.js"></script>
+
+        <script src="client/lib/services/httpRequestTracker.js"></script>
+        <script src="client/lib/services/notifications.js"></script>
+        <script src="client/lib/services/i18nNotifications.js"></script>
+        <script src="client/lib/services/exceptionHandler.js"></script>
 
 
 
-        <script src="lib/services/localizedMessages.js"></script>
+        <script src="client/lib/services/localizedMessages.js"></script>
 
-        <script src="lib/login/login.js"></script>
-        <script src="lib/directives/modal.js"></script>
+        <script src="client/lib/login/login.js"></script>
+        <script src="client/lib/directives/modal.js"></script>
 
 
         
