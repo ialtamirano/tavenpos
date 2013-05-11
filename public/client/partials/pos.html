@@ -20,10 +20,11 @@
           <ul class="product-grid">
           <li ng-repeat="articulo in articulos">
               <div class="cell">
-                  <img ng-src="{{ articulo.ArticuloMiniatura }}" />
+                
+                  <img ng-src="{{ articulo.ArticuloMiniatura }}" alt="{{ articulo.ArticuloNombre }}" />
                   <span>
                       <div class="price-tags">
-                          <span><a href="#">$ {{ articulo.ArticuloPrecio }}</a> </span>
+                          <span><a href="#">{{ articulo.ArticuloPrecio | currency:"$"}}</a> </span>
                       </div>
                       
                       

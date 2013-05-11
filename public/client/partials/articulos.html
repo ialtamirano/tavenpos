@@ -26,7 +26,7 @@
             </div> 
 
             <div class=" taven-horizontal-margin">  
-                <div ng-include src=" 'partials/articulos/articulos-edit.html' "></div>
+                <div ng-include src=" 'client/partials/articulos/articulos-edit.html' "></div>
             </div>
 
             <div class=" taven-horizontal-margin">
@@ -72,12 +72,12 @@
                         <div ng-hide="inEditMode" class="">
                     
                             <span class="span1"> {{articulo.ArticuloCodigo}} </span>
-                            <span class="span3">
+                            <span class="span4">
                                
                                 <span class="taven-text-title">{{articulo.ArticuloNombre}}</span>   
                                 
                             </span>
-                            <span class="taven-text-description span3"><img ng-src="{{articulo.ArticuloMiniatura}}" style="width:48px;height:48px;" > </span>  
+                            <span class="taven-text-description span2"><img ng-src="{{articulo.ArticuloMiniatura}}" style="width:48px;height:48px;" alt="{{articulo.ArticuloNombre}}"> </span>  
                             <span class="span1"><span class="label">{{articulo.categoria.CategoriaNombre}}</span> </span>
                             <span class="span2">{{articulo.ArticuloPrecio | currency}} </span>
                             <span class="span2 ">

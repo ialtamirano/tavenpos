@@ -26,7 +26,7 @@ angular.module('venderapp').constant('I18N.MESSAGES', {
   'crud.project.save.error':"Something went wrong when saving a project...",
 
   'login.error.notAuthorized':"You do not have the necessary access permissions.  Do you want to login as someone else?",
-  'login.error.notAuthenticated':"You must be logged in to access this part of the application."
+  'login.error.notAuthenticated':"Inicia sesión para acceder a esta aplicación."
 });
 
 
@@ -64,6 +64,7 @@ angular.module('venderapp').constant('I18N.MESSAGES', {
     
     $routeProvider.when('/configuracion', {templateUrl: 'client/partials/configuracion/configuracion.html', controller: TiendaCtrl});
     $routeProvider.when('/mistiendas', {templateUrl: 'client/partials/configuracion/tiendas.html', controller: TiendaCtrl});
+    $routeProvider.when('/usuarios', {templateUrl: 'client/partials/configuracion/usuarios.html', controller: TiendaCtrl});
 
     $routeProvider.otherwise({redirectTo: '/home'});
 
