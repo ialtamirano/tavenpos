@@ -55,6 +55,7 @@
                                         resize-max-height="96"
                                         resize-max-width="96">
                                     </imageupload>
+                                    <img ng-src="{{articulo.ArticuloMiniatura}}" style="width:48px;height:48px;" alt="{{articulo.ArticuloNombre}}">
                                 </span>
                             </div>
 
@@ -88,6 +89,9 @@
                             </span>
                  
                         <div>
+                    </li>
+                    <li ng-hide="(articulos | filter:search).length > 0">
+                        <span class="Muted taven-empty"> No se ha encontrado ningun articulo.</span>
                     </li>
                 <ul>
              

@@ -59,11 +59,13 @@
                     
                     <ul class="nav">
                         <li>
-                            <div ng-controller="LoadingCtrl">  <span class="taven-preloader" ng-show="hasPendingRequests()">&nbsp;</span></div>                        
+                            <div ng-controller="LoadingCtrl">  
+                                <span class="taven-preloader" ng-show="hasPendingRequests()">&nbsp;</span>
+                            </div>                        
                         </li>
                         <li ><a href="#"><i class="icon-home"></i></a></li>
                         <li ng-class="getClass('/inbox')"><a href="#/inbox"><i class="icon-envelope"></i></a></li>
-                        <li ng-class="getClass('/mitienda')"><a href="#/mitienda"><i class="icon-qrcode"></i>Punto de Venta</a>
+                        <li ng-class="getClass('/mitienda')"><a href="#/mitienda"><i class="icon-qrcode"></i> Punto de Venta</a>
                         </li>
                     </ul>
                     
@@ -77,7 +79,7 @@
                                     <li ng-class="getClass('/mercancias')"><a href="#/mercancias"><i class="icon-list"></i> Mis Mercancias</a></li>
                                     <li ng-class="getClass('/clientes')"><a href="#/clientes"><i class="icon-group"></i> Mis Clientes</a></li>
                                   
-                                    <li ng-class="getClass('/proveedores')"><a href="#/proveedores"><i class="icon-book"></i> Proveedores</a></li>                                
+                                    <li ng-class="getClass('/proveedores')"><a href="#/proveedores"><i class="icon-book"></i> Contactos</a></li>                                
                                 </ul>
                             </li>
                             
@@ -94,7 +96,7 @@
 
         <div ng-include="'client/notifications.tpl.html'" class="container-fluid" ng-show="notifications.getCurrent().length"></div>
 
-        <div class="" ng-view>
+        <div class="container-fluid" ng-view>
                          
         </div>
     

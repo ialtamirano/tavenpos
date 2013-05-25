@@ -461,11 +461,18 @@
    margin: 5px 0px 0px 0px;
 }
 
-.product-grid li{
+.product-grid li {
     
     float:left;
     display: inline;
     padding: 6px;
+    text-align: center;
+    
+}
+
+.product-grid .title {
+    font-size: 11px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     
 }
 
@@ -476,14 +483,20 @@
     margin-bottom: 6px;
     border : 1px solid #DDD;
     display:block;
-    height: 96px;
-    width: 96px;
+    height: 98px;
+    width: 98px;
     position:relative;
     text-align:center;
     padding: 2px;
     border-radius: 5px;
     box-shadow: 1px 1px 2px #d7d7d7;
     
+}
+
+.product-grid .cell:active {
+
+    background-color: #ffffff;
+    box-shadow: inset 1px 1px 2px #d7d7d7;
 }
 
 
@@ -508,12 +521,12 @@
 
 .product-grid .cell img
 {
-    position:absolute;
+    /*position:absolute;
     left:50%;
     margin-left: -48px;
 
     text-align: center;
-    top:0;
+    top:1px;*/
 }
 
 .product-grid .cell .price-tags{
@@ -521,6 +534,15 @@
     position: absolute;
     right: 0px;
     top:0px;
+    background-color: #B04CA5;
+    color: #ffffff;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.99em;
+    text-shadow : 0 -1px 0 rgba(0,0,0,0.25);
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    opacity: 0.8;
 }
 
 .product-grid .cell span {
@@ -563,8 +585,8 @@
     min-height: 30px;
     padding-top: 4px !important;
     padding-bottom: 4px !important;
-    
     padding-left:0px !important;
+    padding-right: 0px !important;
     
 }
 
@@ -574,29 +596,36 @@
    padding-right: 5px;
 }
 
+.order-item-thumbnail img {
+    height:48px; width:48px
+}
 
-.order-item-info 
-{
+.order-item-description {
+    float:left;
+    padding-right: 4px;
+    width: 148px;
+}
+
+.order-item-info {
     display:inline;
     float:left;    
-    padding-right: 4px;
-    width: 128px;
+    
+    
     margin-bottom: 10px;
     margin-top: 10px;
     padding-right: 5px;
 }
 
-.order-item-title {
-    word-wrap: break-word;
-    
-}
+
+
+
 
 .order-item-qty {
     float:left;
-    margin-top: 10px;
+
     margin-bottom: 10px;
     margin-right: 5px;
-    font-weight: normal;
+    font-weight: normal !important;
     min-width:30px;
         
     
@@ -605,7 +634,7 @@
 
 .order-item-total {
     float:left;
-    margin-top: 10px;
+
     margin-bottom: 10px;
     
     margin-right: 5px; 
@@ -624,11 +653,25 @@
 .order-item-delete 
 {  
     float:right;
-    margin-top: 10px;
+    
     margin-bottom: 10px;
     margin-right: 5px; 
     
     
+}
+
+.order-item-main-info {
+    
+}
+.order-item-aditional-info{
+
+    display: block;
+    
+    background-color: #e5f7ea;
+    border-top : 1px solid #e5e5e5;
+    /*border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;*/
+    box-shadow: inset 0px 1px 2px #f3f3f3;  
 }
 
 .order-footer {

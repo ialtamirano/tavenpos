@@ -12,6 +12,8 @@ angular.module('services.authentication.interceptor').factory('AuthenticationInt
         // The request bounced because it was not authorized - add a new request to the retry queue
         promise = queue.pushPromiseFn(function() { return $http(originalResponse.config); }, 'unauthorized-server');
       }
+
+     
       return promise;
     });
   };

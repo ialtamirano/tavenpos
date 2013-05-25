@@ -17,16 +17,12 @@ var mainmodule = angular.module('venderapp', [
 //TODO: move those messages to a separate module
 angular.module('venderapp').constant('I18N.MESSAGES', {
   'errors.route.changeError':'Route change error',
-  'crud.user.save.success':"A user with id '{{id}}' was saved successfully.",
-  'crud.user.remove.success':"A user with id '{{id}}' was removed successfully.",
-  'crud.user.save.error':"Something went wrong when saving a user...",
-  'crud.project.save.success':"A project with id '{{id}}' was saved successfully.",
-  'crud.venta.save.success':"A sale with date '{{date}}' was saved successfully.",
-  'crud.project.remove.success':"A project with id '{{id}}' was removed successfully.",
-  'crud.project.save.error':"Something went wrong when saving a project...",
-
-  'login.error.notAuthorized':"You do not have the necessary access permissions.  Do you want to login as someone else?",
-  'login.error.notAuthenticated':"Inicia sesión para acceder a esta aplicación."
+  'crud.user.save.success':"El usuario con el id '{{id}}' fue guardado correctamente.",
+  'crud.user.remove.success':"El usuario con el id '{{id}}' fue eliminado correctamente.",
+  'crud.user.save.error':"Ocurrio un error al tratar de guardar el usuario...",
+  'venta.save.success':"La venta del '{{date}}' fue agregada correctamente.",
+  'login.error.notAuthorized':"No tiene permisos para acceder.  Desea ingresar como otro usuario?",
+  'login.error.notAuthenticated':"Inicie sesión para acceder a esta aplicación."
 });
 
 

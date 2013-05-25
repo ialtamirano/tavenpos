@@ -16,22 +16,22 @@
           </div>
           <div class="span2"></div>
         </div>
-        <div >
+         <div class="row-fluid"> 
+          <div><span class="muted">Ordenar por</span></div>
+        </div>
+        <div class="row-fluid">
           <ul class="product-grid">
           <li ng-repeat="articulo in articulos">
-              <div class="cell">
+              <button class="cell" ng-click="agregaArticulo(articulo)" >
                 
                   <img ng-src="{{ articulo.ArticuloMiniatura }}" alt="{{ articulo.ArticuloNombre }}" />
-                  <span>
+                  
                       <div class="price-tags">
-                          <span><a href="#">{{ articulo.ArticuloPrecio | currency:"$"}}</a> </span>
+                          <span>{{ articulo.ArticuloPrecio | currency:"$"}}</span>
                       </div>
-                      
-                      
-                  </span>
-              </div>
-          </li>
-          
+              </button>
+               <span class="title">{{articulo.ArticuloNombre}}</span>
+          </li>          
           </ul>
         </div>
       </div>
@@ -46,34 +46,50 @@
                 </div>
                 <div class="list-container" >
                     <table class="table order-list">
-                        <tr>
+                        <tr ng-repeat="articulo in venta.articulos">
                             <td>
-                                <span class="order-item-actions">
-                                    <div class="btn-group-vertical" >
-                                        <button class="btn btn-mini" type="button"><i class=" icon-plus"></i></button>                  
-                                        <button class="btn btn-mini" type="button"><i class=" icon-minus"></i></button>
-                                    </div>                                
-                                </span> 
-                                <span class="order-item-thumbnail">
-                                    <img src="client/img/glasses96x96.png" style="height:48px; width:48px" />
-                                </span>
+                                <div class="row-fluid order-item-main-info">
+
+                                  <span class="order-item-actions">
+                                      <div class="btn-group-vertical" >
+                                          <button class="btn btn-mini" type="button" ng-click="aumentarCantidad(articulo)"><i class=" icon-plus"></i></button>                  
+                                          <button class="btn btn-mini" type="button" ng-click="disminuirCantidad(articulo)"><i class=" icon-minus"></i></button>
+                                      </div>                                
+                                  </span> 
+                                  <span class="order-item-thumbnail">
+                                      <img ng-src="{{ articulo.ArticuloMiniatura }}" style="" />
+                                  </span>
+                                  <span class="order-item-description">
+
+                                       <span class="row-fluid"> <span class="text-info">{{articulo.ArticuloNombre}}</span></span>
+                                       <span class="row-fluid">
+                                          <button class="btn btn-mini btn-success" ng-click="agregarDescuento(articulo);"><i class="icon-tags"></i></button>
+                                        </span>
+                                  </span>
                                 
-                                <span class="order-item-info">
-                                    <span class="order-item-title">Google Glasses V1</span>                                
-                                </span>
-                      
-                                <span class="order-item-qty">
-                                    <span class="label label-inverse">x99</span>
-                                </span>                            
-                                
-                                <span class="order-item-total"> 
-                                    <span class="text-info">$ 999.99 </span>
-                                </span>
-                                <span class="order-item-delete">
-                                    <button class="btn btn-mini btn-danger" type="button"><i class="icon-trash icon-white"></i></button>                  
-                                </span> 
+
+                          
+                            
+                                  <span class="order-item-qty">
+                                      <span class="label label-info">x{{articulo.ArticuloCantidad}}</span>
+                                  </span>                            
+                                  
+                                  <span class="order-item-total"> 
+                                      <span class="text-info">{{ articulo.ArticuloCantidad * articulo.ArticuloPrecio | currency:"$" }}</span>
+                                  </span>
+                                  <span class="order-item-delete">
+                                      <button class="btn btn-mini btn-danger" type="button" ng-click="removerArticulo($index)"><i class="icon-trash icon-white"></i></button>                  
+                                  </span> 
+                              </div>
+                              <div class="row-fluid order-item-aditional-info" ng-show="false">
+                                  <span class="muted description">70% Descuento</span>
+                                  <span class="action" ><a  ng-click="quitarDescuento(articulo);" style="color:red"> <i class="icon-remove-circle icon-red"></i></a></span>
+                              </div> 
                             </td>
                             
+                        </tr>
+                        <tr>
+                          <td ng-hide="venta.articulos.length > 0"><span class="muted taven-empty">Agregue un articulo para iniciar una venta.</span></td>
                         </tr>
                        
                         
@@ -82,10 +98,15 @@
                 <div class="order-footer">
                     <div class="row-fluid order-footer-subtotal ">                    
                         <span class="span8 order-footer-subtotal-text">Subtotal</span>
-                        <span class="span4 order-footer-subtotal-value">$ 99999.00</span>
+                        <span class="span4 order-footer-subtotal-value">{{subtotal() | currency:"$"  }}</span>
+                    </div>
+                    <div class="row-fluid order-footer-subtotal ">                    
+                        <span class="span8 order-footer-subtotal-text">Total</span>
+                        <span class="span4 order-footer-subtotal-value">{{total() | currency:"$"  }}</span>
                     </div>
                     <div class="row-fluid order-fotter-actions">
-                        <button type="reset" class="btn btn-large btn-block btn-success">PAGAR</button>
+                        <button type="button" class="btn  span6 btn-success">PAGAR</button>
+                        <button type="button" class="btn  span3 ">CANCELAR</button>
                     </div>                    
                 </div>
             </div>

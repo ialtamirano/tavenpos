@@ -47,7 +47,8 @@ angular.module('services.authentication').factory('AuthenticationService', ['$ht
       return request.then(function(response) {
         //set the authorization token
 
-
+       
+      
         updateCurrentToken(response.data.token);
         updateCurrentUser(response.data.user);
         return currentUser.isAuthenticated();

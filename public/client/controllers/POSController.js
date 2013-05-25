@@ -15,19 +15,62 @@ function  POSCtrl($scope,Categoria,Articulo)
     });
 
 
-
     $scope.venta = {
-        currentArticulo : { ArticuloId : 1,ArticuloDescripcion: "Articulo Actual", ArticuloCantidad: 10 , ArticuloPrecio: 100.00 },
-        articulos :[{ "ArticuloId": "1","ArticuloDescripcion": "Articulo 1", "ArticuloCantidad" : 10, "ArticuloPrecio": "100.00"},{ "ArticuloId": "2","ArticuloDescripcion": "Articulo 2", "ArticuloCantidad" : 20, "ArticuloPrecio": "55.00"},                        { "ArticuloId": "3","ArticuloDescripcion": "Articulo 3", "ArticuloCantidad" : 5, "ArticuloPrecio": "145.00"},{ "ArticuloId": "4","ArticuloDescripcion": "Articulo 4", "ArticuloCantidad" : 20, "ArticuloPrecio": "199.00"},{ "ArticuloId": "5","ArticuloDescripcion": "Articulo 5", "ArticuloCantidad" : 30, "ArticuloPrecio": "25.00"}],
-        iva : 16
+        currentArticulo : { ArticuloId : 1,ArticuloNombre: "Articulo Actual", ArticuloCantidad: 10 , ArticuloPrecio: 100.00 },
+        articulos :[],
+        iva : 0
     };
     
-    $scope.agregaArticulo = function()
-    {
-        var articulo = angular.copy($scope.venta.currentArticulo);
-        
-        $scope.venta.articulos.push(articulo);
+    $scope.aumentarCantidad = function(articulo){
+        articulo.ArticuloCantidad += 1;
     };
+
+    $scope.disminuirCantidad = function(articulo){
+
+         articulo.ArticuloCantidad -= 1;
+
+
+        if (articulo.ArticuloCantidad <= 0){
+
+            var indice = $scope.venta.articulos.indexOf(articulo,0); 
+
+            if(indice >= 0){
+                $scope.removerArticulo(indice);
+            }
+                
+        }
+        
+    };
+
+    $scope.agregarDescuento = function(articulo)
+    {
+        articulo.ArticuloDescuento = 20;
+
+    }
+
+    $scope.quitarDescuento = function(articulo)
+    {
+        articulo.ArticuloDescuento = 0;
+
+    }
+
+    /*articulos :[{ "ArticuloId": "1","ArticuloNombre": "Articulo 1", "ArticuloCantidad" : 10, "ArticuloPrecio": "100.00"},{ "ArticuloId": "2","ArticuloNombre": "Articulo 2", "ArticuloCantidad" : 20, "ArticuloPrecio": "55.00"},                        { "ArticuloId": "3","ArticuloNombre": "Articulo 3", "ArticuloCantidad" : 5, "ArticuloPrecio": "145.00"},{ "ArticuloId": "4","ArticuloNombre": "Articulo 4", "ArticuloCantidad" : 20, "ArticuloPrecio": "199.00"},{ "ArticuloId": "5","ArticuloNombre": "Articulo 5", "ArticuloCantidad" : 30, "ArticuloPrecio": "25.00"}],*/
+    $scope.agregaArticulo = function(articulo){
+    
+        var indice = $scope.venta.articulos.indexOf(articulo,0); 
+            
+        if (indice != -1 )
+        {
+            var found = $scope.venta.articulos[indice];
+            found.ArticuloCantidad += 1;
+        }
+        else
+        {
+            articulo.ArticuloCantidad = 1;
+            $scope.venta.articulos.push(articulo);
+        }
+    };
+
     
     $scope.removerArticulo = function(index) {        
         $scope.venta.articulos.splice(index,1);
