@@ -9,3 +9,12 @@ angular.module('venderapp.directives', []).
       elm.text(version);
     };
   }]);
+
+  angular.module('venderapp.directives', []).
+  directive('selectOnClick', function(){
+  		return function (scope,element,attrs){
+  			element.click(function(){
+  				element.select();
+  			});
+  		};
+  });

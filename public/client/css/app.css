@@ -5,6 +5,18 @@
     background-repeat: repeat-x repeat-y;
   }
   
+  .tl{
+    text-align: left;
+  }
+  .tr{
+    text-align: right;;
+  }
+  .tc{
+    text-align: center;
+  }
+  .tb {
+    text-align: block;
+  }
   .avatar 
   {
     width:48px;
@@ -679,6 +691,9 @@
     background-color: #f9f9f9;
 }
 
+.order-footer-actions {
+    display: block;
+}
 .order-footer-subtotal-text {
     text-align:right;
     margin-top: 10px;

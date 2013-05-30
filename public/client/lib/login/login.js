@@ -33,7 +33,7 @@ angular.module('login', ['services.authentication', 'services.localizedMessages'
         var message = "";
         switch(reason) {
           case 'user-request':
-            message = "Please enter you login details below";
+            message = "Por favor introduzca sus datos de acceso a continuación";
             break;
           case 'unauthenticated-client':
           case 'unauthorized-client':
@@ -64,7 +64,7 @@ angular.module('login', ['services.authentication', 'services.localizedMessages'
         $scope.authError = null;
         AuthenticationService.login($scope.user.email, $scope.user.password).then(function(loggedIn) {
           if ( !loggedIn ) {
-            $scope.authError = "Login failed.  Please check your credentials and try again.";
+            $scope.authError = "Error de acceso. Compruebe sus credenciales y vuelva a intentarlo.";
           }
         });
       };

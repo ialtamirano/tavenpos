@@ -25,6 +25,10 @@
     Services.factory( 'Venta', function($resource){
         return $resource('api/ventas/:VentaId',{},{});
     });
+
+    Services.factory( 'POS', function($resource){
+        return $resource('api/pos/:VentaId',{},{});
+    });
     
     
  

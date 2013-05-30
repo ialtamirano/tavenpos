@@ -104,12 +104,37 @@
                         <span class="span8 order-footer-subtotal-text">Total</span>
                         <span class="span4 order-footer-subtotal-value">{{total() | currency:"$"  }}</span>
                     </div>
-                    <div class="row-fluid order-fotter-actions">
-                        <button type="button" class="btn  span6 btn-success">PAGAR</button>
-                        <button type="button" class="btn  span3 ">CANCELAR</button>
+                    <div class="row-fluid order-footer-actions tc">
+                        <button type="button" class="btn btn-primary" ng-disabled=" total() <= 0" ng-click="mostrarPago()">PAGAR</button>
+                        <button type="button" class="btn btn-danger">CANCELAR</button>
                     </div>                    
                 </div>
             </div>
+      </div>
+    </div>
+    <div modal="showPaymentForm" close="cancelaPago()">
+     <div class="modal-header">
+        <h4>Total a pagar: {{ total() | currency:"$"  }} </h4>
+    </div>
+      <div class="modal-body">
+         <div class="row-fluid">
+          <span class="span4">Restante a pagar:</span>
+          <span class="pull-right">{{ restante() | currency:"$" }}</span>
+        </div>
+        <div class="row-fluid">Importe Recibido:</span>
+              <span class="pull-right"><input type="text" class="input-small tr" ng-model="venta.efectivo" select-on-click autofocus></span>
+        </div>
+
+       
+        <div class="row-fluid">
+          <span class="span4">Cambio:</span>
+          <span class="pull-right">{{ cambio() | currency:"$" }}</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" ng-disabled="restante() > 0" ng-click="guardarVenta()"><i class="icon-check"></i> Completar venta</button>
+        <button class="btn " ng-click=""> Limpiar</button>
+        <button class="btn btn-warning cancel" ng-click="cancelaPago()">Cancelar</button>
       </div>
     </div>
   </div>

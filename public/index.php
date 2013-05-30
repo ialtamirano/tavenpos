@@ -132,7 +132,7 @@ $app->post('/api/login', function () use ($app){
         $json = json_encode(array('error' => $e->getMessage()));
 
         $res['Content-Type'] = 'application/json';
-        $res->status(401);
+        $res->status(200);
         $res->body($json);
     }  
 });
